@@ -1,11 +1,11 @@
 # FM26 Staff & Training Tools
 
-Unofficial fan-made tools for evaluating staff, training assignments and coach
-quality in Football Manager 2026.
+Unofficial fan-made tools for evaluating staff and coach assignment fit in
+Football Manager 2026.
 
-The first tool is the FM26 Coach Rating Calculator. It uses the word-level staff
-attributes shown in FM26, then applies an internal fan-made approximation model
-to estimate a 0-100 score, a 0.5-5 star rating and a rating range.
+The main tool is the FM26 Coach Assignment Calculator. It uses the word-level
+staff attributes shown in FM26, then applies an internal fan-made approximation
+model to estimate stars for the 9 visible coach assignment categories.
 
 ## Features
 
@@ -13,9 +13,21 @@ to estimate a 0-100 score, a 0.5-5 star rating and a rating range.
 - No database, no user accounts and no server-only runtime requirements
 - Static-export friendly configuration
 - FM26 word-level staff attributes throughout the calculator UI
-- Category-specific weighting for training assignments
-- Estimated score, stars, label, uncertainty range and improvement tip
+- Assignment-specific weighting for the 9 coach assignment slots
+- Recommended assignments, estimated stars and uncertainty ranges
 - Formula data kept in reusable `lib/` files
+
+## Main Calculator Inputs
+
+The visible calculator inputs are limited to the attributes used by the 9 main
+FM26 coach assignment estimates:
+
+- Coaching attributes: Attacking, Defending, Fitness, Goalkeeping, Possession,
+  Set Pieces, Tactical and Technical
+- Mental attributes: Authority, Determination and Motivating
+
+Legacy or unrelated staff fields are not shown in the main calculator and do not
+affect assignment stars.
 
 ## File Structure
 
@@ -93,11 +105,11 @@ and canonical metadata use the live domain.
 
 ## Formula Notes
 
-The model is intentionally presented as an estimated rating model. The internal
-attribute level model can be changed in `lib/attributeLevels.ts`, and category
-weights can be tuned in `lib/trainingCategories.ts`. These values are for the
-fan-made approximation only and are not presented as official Football Manager
-data.
+The model is intentionally presented as an estimated assignment model. The
+internal attribute level model can be changed in `lib/attributeLevels.ts`, and
+assignment weights can be tuned in `lib/trainingCategories.ts`. These values are
+for the fan-made approximation only and are not presented as official Football
+Manager data.
 
 This project is not affiliated with Sports Interactive, SEGA, or Football
 Manager.

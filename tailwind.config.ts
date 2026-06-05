@@ -17,10 +17,10 @@ const config: Config = {
         bench: "#315f8d"
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["Inter", "Segoe UI", "ui-sans-serif", "system-ui", "sans-serif"],
         display: [
-          "var(--font-archivo)",
-          "var(--font-inter)",
+          "Segoe UI",
+          "Inter",
           "ui-sans-serif",
           "sans-serif"
         ]

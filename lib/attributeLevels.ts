@@ -81,10 +81,8 @@ export const coachingAttributes = [
 
 export const staffQualityAttributes = [
   { key: "determination", label: "Determination" },
-  { key: "discipline", label: "Level of Discipline" },
-  { key: "motivating", label: "Motivating" },
-  { key: "workingWithYoungsters", label: "Working With Youngsters" },
-  { key: "tacticalKnowledge", label: "Tactical Knowledge" }
+  { key: "discipline", label: "Authority" },
+  { key: "motivating", label: "Motivating" }
 ] as const;
 
 export const allAttributes = [

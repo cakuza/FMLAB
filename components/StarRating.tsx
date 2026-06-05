@@ -2,9 +2,19 @@ import { Star } from "lucide-react";
 
 type StarRatingProps = {
   value: number;
+  size?: "xs" | "sm" | "md" | "lg";
 };
 
-export function StarRating({ value }: StarRatingProps) {
+const sizeClasses = {
+  xs: "h-4 w-4",
+  sm: "h-5 w-5",
+  md: "h-8 w-8",
+  lg: "h-10 w-10"
+};
+
+export function StarRating({ value, size = "md" }: StarRatingProps) {
+  const starClassName = sizeClasses[size];
+
   return (
     <div
       aria-label={`Estimated star rating: ${value} out of 5`}
@@ -15,14 +25,21 @@ export function StarRating({ value }: StarRatingProps) {
         const fillPercent = Math.max(0, Math.min(1, value - index)) * 100;
 
         return (
-          <span key={index} className="relative h-8 w-8 text-ink/18">
-            <Star aria-hidden="true" className="h-8 w-8" strokeWidth={1.8} />
+          <span key={index} className={`relative ${starClassName} text-ink/18`}>
+            <Star
+              aria-hidden="true"
+              className={starClassName}
+              strokeWidth={1.8}
+            />
             <span
               aria-hidden="true"
               className="absolute inset-0 overflow-hidden text-signal"
               style={{ width: `${fillPercent}%` }}
             >
-              <Star className="h-8 w-8 fill-current" strokeWidth={1.8} />
+              <Star
+                className={`${starClassName} fill-current`}
+                strokeWidth={1.8}
+              />
             </span>
           </span>
         );

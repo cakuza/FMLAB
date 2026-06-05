@@ -7,41 +7,49 @@ import { RatingResult } from "@/components/RatingResult";
 import {
   type AttributeKey,
   type AttributeLevelId,
-  allAttributes,
+  attributeLabels,
   coachingAttributes,
   createDefaultSelections,
   staffQualityAttributes
 } from "@/lib/attributeLevels";
-import { calculateRating } from "@/lib/ratingFormula";
+import {
+  calculateAssignmentRatings,
+  getRecommendedAssignments
+} from "@/lib/ratingFormula";
 import {
   type TrainingCategoryId,
+  defaultTrainingCategoryId,
   trainingCategoryById
 } from "@/lib/trainingCategories";
 
 export function CoachRatingCalculator() {
-  const [categoryId, setCategoryId] =
-    useState<TrainingCategoryId>("attacking");
+  const [highlightAssignmentId, setHighlightAssignmentId] =
+    useState<TrainingCategoryId>(defaultTrainingCategoryId);
   const [selections, setSelections] = useState(createDefaultSelections);
 
-  const result = useMemo(
-    () => calculateRating(categoryId, selections),
-    [categoryId, selections]
+  const assignmentRatings = useMemo(
+    () => calculateAssignmentRatings(selections),
+    [selections]
   );
-  const category = trainingCategoryById[categoryId];
-  const weightedAttributes = useMemo(
-    () =>
-      (Object.entries(category.weights) as [AttributeKey, number][])
-        .filter(([, weight]) => weight > 0)
-        .sort((a, b) => b[1] - a[1]),
-    [category]
+  const recommendedAssignments = useMemo(
+    () => getRecommendedAssignments(selections, 3),
+    [selections]
   );
-  const primaryWeight = weightedAttributes[0]?.[1] ?? 0;
-  const weightedAttributeKeys = new Set(
-    weightedAttributes.map(([attributeKey]) => attributeKey)
+  const highlightedAssignment = trainingCategoryById[highlightAssignmentId];
+  const highlightedWeights = new Map<AttributeKey, number>(
+    Object.entries(highlightedAssignment.weights) as [AttributeKey, number][]
   );
-  const otherAttributes = allAttributes.filter(
-    (attribute) => !weightedAttributeKeys.has(attribute.key)
-  );
+  const primaryAttributeKeys = new Set(highlightedAssignment.keyAttributes);
+
+  const getAttributeEmphasis = (attributeKey: AttributeKey) => {
+    const weight = highlightedWeights.get(attributeKey);
+
+    if (!weight) {
+      return "normal";
+    }
+
+    return primaryAttributeKeys.has(attributeKey) ? "primary" : "support";
+  };
 
   const updateSelection = (
     attributeKey: AttributeKey,
@@ -53,121 +61,90 @@ export function CoachRatingCalculator() {
     }));
   };
 
+  const primaryText = highlightedAssignment.keyAttributes
+    .map((key) => attributeLabels[key])
+    .join(", ");
+  const supportText = Object.keys(highlightedAssignment.weights)
+    .filter(
+      (key): key is AttributeKey =>
+        !primaryAttributeKeys.has(key as AttributeKey) &&
+        Boolean(attributeLabels[key as AttributeKey])
+    )
+    .map((key) => attributeLabels[key])
+    .join(", ");
+
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px]">
-      <section className="order-2 rounded-2xl border border-ink/10 bg-white/80 p-4 shadow-panel sm:p-5 lg:order-1">
-        <div className="mb-5 grid gap-4 rounded-xl border border-ink/10 bg-chalk p-4 md:grid-cols-[0.55fr_1fr]">
-          <CategorySelect value={categoryId} onChange={setCategoryId} />
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_430px]">
+      <section className="order-2 rounded-lg border border-ink/10 bg-white/80 p-3 shadow-panel lg:order-1">
+        <div className="mb-3 grid gap-3 rounded-lg border border-ink/10 bg-chalk p-3 md:grid-cols-[0.42fr_1fr]">
+          <CategorySelect
+            value={highlightAssignmentId}
+            onChange={setHighlightAssignmentId}
+          />
           <div>
             <p className="text-sm font-black uppercase tracking-[0.14em] text-pitch">
-              What this coach needs
+              Highlighted for {highlightedAssignment.label}
             </p>
-            <p className="mt-2 leading-7 text-ink/72">
-              For <strong className="text-ink">{category.label}</strong>, only
-              the highlighted attributes below affect the estimate. Start with
-              the gold-outlined primary attribute, then tune the support ones.
+            <p className="mt-2 text-sm leading-6 text-ink/72">
+              Main levers: <strong className="text-ink">{primaryText}</strong>.
+              {supportText ? (
+                <>
+                  {" "}
+                  Support:{" "}
+                  <span className="font-semibold text-ink/80">
+                    {supportText}
+                  </span>
+                  .
+                </>
+              ) : null}
             </p>
           </div>
         </div>
 
-        <div>
-          <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h2 className="text-xl font-black text-ink">
-                Needed for {category.label}
-              </h2>
-              <p className="mt-1 text-sm leading-6 text-ink/64">
-                These are the attributes used for this selected coaching role.
-              </p>
-            </div>
-            <span className="rounded-full bg-ink px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-chalk">
-              {weightedAttributes.length} inputs
-            </span>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {weightedAttributes.map(([attributeKey, weight]) => {
-              const attribute = allAttributes.find(
-                (item) => item.key === attributeKey
-              );
-
-              if (!attribute) {
-                return null;
-              }
-
-              return (
+        <div className="grid gap-4 xl:grid-cols-2">
+          <section>
+            <h2 className="mb-2 text-lg font-black text-ink">
+              Coaching Attributes
+            </h2>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {coachingAttributes.map((attribute) => (
                 <AttributeSelect
+                  emphasis={getAttributeEmphasis(attribute.key)}
                   id={`attribute-${attribute.key}`}
                   key={attribute.key}
-                  emphasis={weight === primaryWeight ? "primary" : "support"}
                   label={attribute.label}
-                  weight={weight}
-                  value={selections[attribute.key]}
                   onChange={(value) => updateSelection(attribute.key, value)}
+                  value={selections[attribute.key]}
                 />
-              );
-            })}
-          </div>
-        </div>
-
-        {otherAttributes.length > 0 ? (
-          <details className="mt-5 rounded-lg border border-ink/10 bg-chalk/70 p-4">
-            <summary className="cursor-pointer text-sm font-black uppercase tracking-[0.12em] text-ink/72">
-              Other attributes not used for {category.label}
-            </summary>
-            <div className="mt-4 grid gap-5 xl:grid-cols-2">
-              <div>
-                <h3 className="mb-3 text-base font-black text-ink">
-                  Coaching attributes
-                </h3>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {coachingAttributes
-                    .filter(
-                      (attribute) => !weightedAttributeKeys.has(attribute.key)
-                    )
-                    .map((attribute) => (
-                      <AttributeSelect
-                        id={`attribute-${attribute.key}`}
-                        key={attribute.key}
-                        label={attribute.label}
-                        value={selections[attribute.key]}
-                        onChange={(value) =>
-                          updateSelection(attribute.key, value)
-                        }
-                      />
-                    ))}
-                </div>
-              </div>
-              <div>
-                <h3 className="mb-3 text-base font-black text-ink">
-                  Mental & staff attributes
-                </h3>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {staffQualityAttributes
-                    .filter(
-                      (attribute) => !weightedAttributeKeys.has(attribute.key)
-                    )
-                    .map((attribute) => (
-                      <AttributeSelect
-                        id={`attribute-${attribute.key}`}
-                        key={attribute.key}
-                        label={attribute.label}
-                        value={selections[attribute.key]}
-                        onChange={(value) =>
-                          updateSelection(attribute.key, value)
-                        }
-                      />
-                    ))}
-                </div>
-              </div>
+              ))}
             </div>
-          </details>
-        ) : null}
+          </section>
+
+          <section>
+            <h2 className="mb-2 text-lg font-black text-ink">
+              Staff / Mental Attributes
+            </h2>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {staffQualityAttributes.map((attribute) => (
+                <AttributeSelect
+                  emphasis={getAttributeEmphasis(attribute.key)}
+                  id={`attribute-${attribute.key}`}
+                  key={attribute.key}
+                  label={attribute.label}
+                  onChange={(value) => updateSelection(attribute.key, value)}
+                  value={selections[attribute.key]}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
       </section>
 
       <RatingResult
+        assignmentRatings={assignmentRatings}
         className="order-1 lg:order-2"
-        result={result}
-        categoryLabel={category.label}
+        recommendedAssignments={recommendedAssignments}
+        selectedAssignmentId={highlightAssignmentId}
       />
     </div>
   );

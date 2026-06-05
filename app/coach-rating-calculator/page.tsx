@@ -4,9 +4,9 @@ import { type AttributeKey, attributeLabels } from "@/lib/attributeLevels";
 import { siteName } from "@/lib/siteMetadata";
 import { trainingCategories } from "@/lib/trainingCategories";
 
-const pageTitle = "FM26 Coach Rating Calculator";
+const pageTitle = "FM26 Coach Assignment Calculator";
 const pageDescription =
-  "Estimate coach star ratings in Football Manager 2026 using the new word-based staff attribute system.";
+  "Estimate which Football Manager 2026 training assignment a coach fits best using the new word-based staff attribute system.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -33,15 +33,15 @@ export default function CoachRatingCalculatorPage() {
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <div className="mb-8 max-w-3xl">
         <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-bench">
-          Staff calculator
+          Coach assignment calculator
         </p>
         <h1 className="text-3xl font-black leading-tight text-ink sm:text-5xl">
-          FM26 Coach Rating Calculator
+          FM26 Coach Assignment Calculator
         </h1>
         <p className="mt-4 text-lg leading-8 text-ink/72">
-          This tool estimates training star ratings using the word attribute
-          levels shown in FM26. It is a fan-made approximation, not an official
-          formula or exact reverse-engineered model.
+          Enter the word levels from a coach profile and estimate which FM26
+          training assignments they should handle. This is an unofficial
+          fan-made approximation, not an official formula.
         </p>
       </div>
 
@@ -50,63 +50,64 @@ export default function CoachRatingCalculatorPage() {
       <section className="mt-10 grid gap-5 text-ink/78 lg:grid-cols-2">
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
           <h2 className="text-xl font-black text-ink">
-            What does the FM26 coach rating calculator do?
+            How do FM26 coach assignments work?
           </h2>
           <p className="mt-3 leading-7">
-            It turns FM26 staff word levels into an estimated training rating for
-            a chosen category. The result is designed for quick staff-room
-            decisions, not as a claim about the exact game formula.
+            The practical decision is not a single overall coach score. You need
+            to know whether a coach fits Attacking Tactical, Possession
+            Technical, Fitness, Set Pieces or another training slot.
           </p>
         </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
           <h2 className="text-xl font-black text-ink">
-            Why FM26 staff attributes use words instead of numbers
+            Attacking Tactical vs Attacking Technical
           </h2>
           <p className="mt-3 leading-7">
-            Word levels make staff profiles easier to read at a glance and avoid
-            implying more precision than the game shows. This calculator keeps
-            that presentation and treats each level as an approximate band.
+            Both lean on Attacking. Tactical pairs it with Tactical coaching,
+            while Technical pairs it with Technical coaching. Mental support
+            helps separate similar profiles.
           </p>
         </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
           <h2 className="text-xl font-black text-ink">
-            Which attributes matter most for each training category?
+            Defending Tactical vs Defending Technical
           </h2>
           <p className="mt-3 leading-7">
-            Each category leans on its matching coaching attribute, then adds
-            supporting mental, technical or tactical qualities. Youth development
-            puts Working With Youngsters at the center.
+            Defending Tactical values defensive organization with Tactical.
+            Defending Technical keeps Defending as the base but rewards a coach
+            who is stronger at Technical work.
           </p>
         </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
           <h2 className="text-xl font-black text-ink">
-            How to read the estimated star rating
+            Possession Tactical vs Possession Technical
           </h2>
           <p className="mt-3 leading-7">
-            The star rating is a readable summary of the 0-100 estimate. Use it
-            to compare coaches for a category, then check the influential
-            attributes to see why the rating moved.
+            Possession Tactical favors structure and control. Possession
+            Technical favors ball work and technique. The best choice depends on
+            which second attribute is stronger.
           </p>
         </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5 lg:col-span-2">
           <h2 className="text-xl font-black text-ink">
-            Why the result is shown as a range
+            Fitness, Goalkeeping and Set Pieces
           </h2>
           <p className="mt-3 leading-7">
-            A word level can cover more than one hidden value, so a single star
-            number can look more certain than it really is. The range gives a
-            more honest view of the likely outcome in this fan-made model.
+            Fitness mainly follows Fitness. Goalkeeping mainly follows
+            Goalkeeping with smaller tactical and technical support. Set Pieces
+            needs Set Pieces first, then Tactical, Technical and mental
+            support.
           </p>
         </article>
       </section>
 
       <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5">
         <h2 className="text-xl font-black text-ink">
-          Category attribute emphasis
+          Assignment attribute emphasis
         </h2>
         <p className="mt-2 max-w-3xl leading-7 text-ink/72">
-          The model gives each training category its own weighting. These are
-          the three strongest levers in the current approximation.
+          The fan-made model keeps the weights centralized by assignment. These
+          are the visible attributes that drive each estimate most clearly.
         </p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {trainingCategories.map((category) => {
@@ -114,7 +115,7 @@ export default function CoachRatingCalculatorPage() {
               Object.entries(category.weights) as [AttributeKey, number][]
             )
               .sort((a, b) => b[1] - a[1])
-              .slice(0, 3)
+              .slice(0, 4)
               .map(([key]) => attributeLabels[key]);
 
             return (
@@ -137,34 +138,42 @@ export default function CoachRatingCalculatorPage() {
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
           {[
             {
-              question: "Is this the official FM26 coach rating formula?",
+              question: "Is this the official FM26 coach assignment formula?",
               answer:
-                "No. It is an unofficial fan-made model that estimates ratings from the attributes shown in the game."
+                "No. It is an unofficial fan-made model built to help compare coaches, not a claim about the exact hidden calculation."
             },
             {
-              question: "Why are FM26 staff attributes shown as words?",
+              question:
+                "What is the difference between Attacking Tactical and Attacking Technical?",
               answer:
-                "FM26 presents staff attributes as descriptive levels, so this tool uses those same words instead of asking for hidden numbers."
+                "Both use Attacking. The tactical version rewards Tactical more, while the technical version rewards Technical more."
             },
             {
-              question: "How accurate is this calculator?",
+              question:
+                "What is the difference between Defending Tactical and Defending Technical?",
               answer:
-                "It is useful for comparison and planning, but the result should be treated as approximate because the official calculation is not exposed here."
+                "Both use Defending. Choose the tactical slot for a coach with stronger Tactical, or the technical slot for stronger Technical."
             },
             {
-              question: "Which attributes matter most for 5-star coaches?",
+              question:
+                "What is the difference between Possession Tactical and Possession Technical?",
               answer:
-                "The main category attribute matters most, backed by relevant mental qualities such as Determination, Discipline and Motivating."
+                "Both use Possession. Tactical fits structure and control; Technical fits ball work and technique."
             },
             {
-              question: "Can I use this calculator for every training category?",
+              question: "Which attributes matter most for Fitness coaches?",
               answer:
-                "Yes. Choose the category first, then adjust the coach profile to see the estimate update instantly."
+                "Fitness matters most, with Determination, Authority and Motivating acting as support."
             },
             {
-              question: "What does Elite mean in FM26 staff attributes?",
+              question: "Which attributes matter most for Set Pieces coaches?",
               answer:
-                "Elite is the strongest visible word level in this calculator and represents top-end staff quality for the selected attribute."
+                "Set Pieces is the main lever, supported by Tactical, Technical and the three mental staff attributes."
+            },
+            {
+              question: "Why are results shown as a range?",
+              answer:
+                "FM26 shows word levels rather than exact numbers, so a range is more honest than pretending the estimate is exact."
             }
           ].map((item) => (
             <details

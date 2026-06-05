@@ -68,6 +68,8 @@ if "%NPM_CMD%"=="" (
   )
 )
 
+set "PATH=%ProgramFiles%\nodejs;%ProgramFiles(x86)%\nodejs;%PATH%"
+
 if not exist "node_modules" (
   echo.
   echo Ilk kurulum yapiliyor: npm install

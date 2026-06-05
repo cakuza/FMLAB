@@ -9,7 +9,6 @@ type AttributeSelectProps = {
   label: string;
   value: AttributeLevelId;
   onChange: (value: AttributeLevelId) => void;
-  weight?: number;
   emphasis?: "primary" | "support" | "normal";
 };
 
@@ -18,7 +17,6 @@ export function AttributeSelect({
   label,
   value,
   onChange,
-  weight,
   emphasis = "normal"
 }: AttributeSelectProps) {
   const selectedIndex = attributeLevels.findIndex((level) => level.id === value);
@@ -38,28 +36,37 @@ export function AttributeSelect({
   return (
     <div
       className={[
-        "rounded-lg border p-3 transition",
-        isHighlighted
-          ? "border-pitch/40 bg-white shadow-sm"
-          : "border-ink/10 bg-white/64",
-        emphasis === "primary" ? "ring-2 ring-signal/60" : ""
+        "relative overflow-hidden rounded-md border p-2 transition",
+        emphasis === "primary"
+          ? "border-signal/80 bg-signal/10 shadow-sm"
+          : "",
+        emphasis === "support"
+          ? "border-pitch/35 bg-touchline/28 shadow-sm"
+          : "",
+        !isHighlighted ? "border-ink/10 bg-white/70" : ""
       ].join(" ")}
     >
-      <div className="mb-3 flex items-start justify-between gap-3">
-        <label className="text-sm font-black leading-5 text-ink" htmlFor={id}>
-          {label}
-        </label>
-        {typeof weight === "number" ? (
-          <span className="shrink-0 rounded-full bg-touchline px-2 py-1 text-xs font-black text-pitch">
-            {Math.round(weight * 100)}%
-          </span>
-        ) : null}
-      </div>
+      {isHighlighted ? (
+        <span
+          aria-hidden="true"
+          className={[
+            "absolute inset-y-0 left-0 w-1",
+            emphasis === "primary" ? "bg-signal" : "bg-pitch"
+          ].join(" ")}
+        />
+      ) : null}
 
-      <div className="grid grid-cols-[42px_minmax(0,1fr)_42px] overflow-hidden rounded-md border border-ink/12 bg-chalk">
+      <label
+        className="mb-1.5 block text-sm font-black leading-5 text-ink"
+        htmlFor={id}
+      >
+        {label}
+      </label>
+
+      <div className="grid grid-cols-[32px_minmax(0,1fr)_32px] overflow-hidden rounded-md border border-ink/12 bg-chalk">
         <button
           aria-label={`Decrease ${label}`}
-          className="flex h-11 items-center justify-center border-r border-ink/10 text-ink transition hover:bg-touchline disabled:cursor-not-allowed disabled:opacity-35"
+          className="flex h-9 items-center justify-center border-r border-ink/10 text-ink transition hover:bg-touchline disabled:cursor-not-allowed disabled:opacity-35"
           disabled={!canDecrease}
           onClick={() => step(-1)}
           type="button"
@@ -68,7 +75,7 @@ export function AttributeSelect({
         </button>
         <select
           aria-label={`${label} level`}
-          className="h-11 min-w-0 border-0 bg-transparent px-2 text-center text-base font-black text-ink outline-none"
+          className="h-9 w-full min-w-0 border-0 bg-transparent px-1.5 text-center text-sm font-black text-ink outline-none"
           id={id}
           onChange={(event) => onChange(event.target.value as AttributeLevelId)}
           value={selectedLevel.id}
@@ -81,7 +88,7 @@ export function AttributeSelect({
         </select>
         <button
           aria-label={`Increase ${label}`}
-          className="flex h-11 items-center justify-center border-l border-ink/10 text-ink transition hover:bg-touchline disabled:cursor-not-allowed disabled:opacity-35"
+          className="flex h-9 items-center justify-center border-l border-ink/10 text-ink transition hover:bg-touchline disabled:cursor-not-allowed disabled:opacity-35"
           disabled={!canIncrease}
           onClick={() => step(1)}
           type="button"

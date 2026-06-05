@@ -1,22 +1,8 @@
 import type { Metadata } from "next";
-import { Archivo, Inter } from "next/font/google";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { defaultDescription, siteName, siteUrl } from "@/lib/siteMetadata";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap"
-});
-
-const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
-  variable: "--font-archivo",
-  display: "swap"
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -48,7 +34,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable}`}>
+    <html lang="en">
       <body className="font-sans antialiased">
         <div className="flex min-h-screen flex-col">
           <header className="sticky top-0 z-30 border-b border-ink/10 bg-chalk/80 backdrop-blur-md">
