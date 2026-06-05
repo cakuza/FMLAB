@@ -149,7 +149,7 @@ export function RatingResult({
 
       {isDefaultProfile ? (
         <p className="mt-3 rounded-lg border border-touchline/20 bg-touchline/10 p-3 text-sm font-semibold leading-6 text-chalk/82">
-          Select a coach's word levels to generate a more meaningful
+          Select a coach&apos;s word levels to generate a more meaningful
           recommendation.
         </p>
       ) : null}
