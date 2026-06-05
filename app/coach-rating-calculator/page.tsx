@@ -6,7 +6,7 @@ import { trainingCategories } from "@/lib/trainingCategories";
 
 const pageTitle = "FM26 Coach Assignment Calculator";
 const pageDescription =
-  "Estimate which Football Manager 2026 training assignment a coach fits best using the new word-based staff attribute system.";
+  "Estimate Football Manager 2026 coach assignment stars from visible word-based staff attributes before offering a contract.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -45,9 +45,57 @@ export default function CoachRatingCalculatorPage() {
         </p>
       </div>
 
+      <section className="mb-5 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <article className="rounded-lg border border-ink/10 bg-white/78 p-5 shadow-panel">
+          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
+            How to use it
+          </h2>
+          <ol className="mt-4 grid gap-3 text-sm leading-6 text-ink/72 sm:grid-cols-2">
+            <li>
+              <strong className="text-ink">1.</strong> Open a coach profile in
+              FM26.
+            </li>
+            <li>
+              <strong className="text-ink">2.</strong> Copy the visible word
+              levels into the matching fields.
+            </li>
+            <li>
+              <strong className="text-ink">3.</strong> Pick an assignment to see
+              its main levers.
+            </li>
+            <li>
+              <strong className="text-ink">4.</strong> Use the highest star
+              results as your shortlist.
+            </li>
+          </ol>
+        </article>
+        <article className="rounded-lg border border-signal/30 bg-touchline/80 p-5 shadow-panel">
+          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-pitch">
+            Estimated, not official
+          </h2>
+          <p className="mt-4 text-sm leading-6 text-ink/72">
+            FM Lab uses a fan-made model based on visible FM26 word levels.
+            Results are approximate comparison ratings and may differ from exact
+            in-game stars.
+          </p>
+        </article>
+      </section>
+
       <CoachRatingCalculator />
 
       <section className="mt-10 grid gap-5 text-ink/78 lg:grid-cols-2">
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 lg:col-span-2">
+          <h2 className="text-xl font-black text-ink">
+            What is the FM26 Coach Assignment Calculator?
+          </h2>
+          <p className="mt-3 leading-7">
+            FM Lab helps you turn Football Manager 2026 staff word attributes
+            into practical training assignment estimates. Instead of judging a
+            coach by one overall impression, you can compare where they are most
+            useful across Attacking, Defending, Possession, Fitness,
+            Goalkeeping and Set Pieces work.
+          </p>
+        </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
           <h2 className="text-xl font-black text-ink">
             How do FM26 coach assignments work?
@@ -94,9 +142,19 @@ export default function CoachRatingCalculatorPage() {
           </h2>
           <p className="mt-3 leading-7">
             Fitness mainly follows Fitness. Goalkeeping mainly follows
-            Goalkeeping with smaller tactical and technical support. Set Pieces
-            needs Set Pieces first, then Tactical, Technical and mental
-            support.
+            Goalkeeping. Set Pieces needs Set Pieces first, then Tactical,
+            Technical and mental support.
+          </p>
+        </article>
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 lg:col-span-2">
+          <h2 className="text-xl font-black text-ink">
+            How should you read the star rating?
+          </h2>
+          <p className="mt-3 leading-7">
+            Use the stars as a quick comparison layer before offering a contract
+            or changing staff responsibilities. The top result is the cleanest
+            fit for that coach, while nearby results are useful backups when
+            your staff room is thin.
           </p>
         </article>
       </section>
@@ -143,6 +201,11 @@ export default function CoachRatingCalculatorPage() {
                 "No. It is an unofficial fan-made model built to help compare coaches, not a claim about the exact hidden calculation."
             },
             {
+              question: "How accurate is the FM26 coach calculator?",
+              answer:
+                "It is calibrated as a practical estimate from visible word levels. Treat it as a comparison aid, not a guaranteed in-game result."
+            },
+            {
               question:
                 "What is the difference between Attacking Tactical and Attacking Technical?",
               answer:
@@ -174,6 +237,16 @@ export default function CoachRatingCalculatorPage() {
               question: "Why are results shown as a range?",
               answer:
                 "FM26 shows word levels rather than exact numbers, so a range is more honest than pretending the estimate is exact."
+            },
+            {
+              question: "Why can my in-game stars differ?",
+              answer:
+                "FM Lab only uses visible word attributes. Hidden game context, staff setup or future FM26 changes can make real in-game stars differ."
+            },
+            {
+              question: "Can I use this for FM25 or FM24?",
+              answer:
+                "It is built for FM26 word-based staff attributes. Older games may not line up with the same input system or calibration."
             }
           ].map((item) => (
             <details

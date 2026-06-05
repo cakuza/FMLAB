@@ -7,6 +7,14 @@ The main tool is the FM26 Coach Assignment Calculator. It uses the word-level
 staff attributes shown in FM26, then applies an internal fan-made approximation
 model to estimate stars for the 9 visible coach assignment categories.
 
+## How to Use
+
+1. Open a coach profile in FM26.
+2. Match the visible word levels in the calculator.
+3. Pick an assignment to see its main levers.
+4. Use the highest estimated stars as a shortlist before offering a contract or
+   changing staff responsibilities.
+
 ## Features
 
 - Next.js App Router with TypeScript and Tailwind CSS
@@ -111,5 +119,7 @@ assignment weights can be tuned in `lib/trainingCategories.ts`. These values are
 for the fan-made approximation only and are not presented as official Football
 Manager data.
 
-This project is not affiliated with Sports Interactive, SEGA, or Football
-Manager.
+FM Lab is an unofficial fan-made tool and is not affiliated with, endorsed by,
+sponsored by, or connected to Sports Interactive, SEGA, or Football Manager. All
+trademarks belong to their respective owners. Ratings are estimates for
+comparison only.

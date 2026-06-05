@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { CoachRatingCalculator } from "@/components/CoachRatingCalculator";
+
+export const metadata: Metadata = {
+  title: "FM26 Coach Assignment Calculator",
+  description:
+    "Estimate Football Manager 2026 coach assignment stars from visible word-based staff attributes before offering a contract."
+};
 
 export default function Home() {
   return (
@@ -23,7 +30,54 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="mb-3 grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
+        <article className="rounded-lg border border-ink/10 bg-white/78 p-4 shadow-panel">
+          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
+            How to use it
+          </h2>
+          <ol className="mt-3 grid gap-2 text-sm leading-6 text-ink/72 sm:grid-cols-2 lg:grid-cols-4">
+            <li>
+              <strong className="text-ink">1.</strong> Open a coach profile in
+              FM26.
+            </li>
+            <li>
+              <strong className="text-ink">2.</strong> Match the visible word
+              levels here.
+            </li>
+            <li>
+              <strong className="text-ink">3.</strong> Check the estimated
+              stars by assignment.
+            </li>
+            <li>
+              <strong className="text-ink">4.</strong> Use the top results
+              before offering a contract.
+            </li>
+          </ol>
+        </article>
+        <article className="rounded-lg border border-signal/30 bg-touchline/80 p-4 shadow-panel">
+          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-pitch">
+            Unofficial estimate
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-ink/72">
+            FM Lab is a fan-made comparison tool. Ratings are approximate and
+            may differ from exact in-game stars.
+          </p>
+        </article>
+      </section>
+
       <CoachRatingCalculator />
+
+      <section className="mt-4 rounded-lg border border-ink/10 bg-white/76 p-4 shadow-panel">
+        <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
+          How the estimate works
+        </h2>
+        <p className="mt-3 max-w-4xl text-sm leading-6 text-ink/72">
+          Each training assignment combines its main coaching attributes with
+          supporting mental attributes: Determination, Authority and Motivating.
+          FM Lab then ranks the 9 assignment slots from strongest to weakest so
+          you can compare coaches quickly and consistently.
+        </p>
+      </section>
     </div>
   );
 }

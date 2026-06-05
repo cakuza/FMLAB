@@ -67,8 +67,11 @@ export default function RootLayout({
                 FM26 Staff &amp; Training Tools
               </span>
               <span className="leading-6">
-                This is an unofficial fan-made tool and is not affiliated with
-                Sports Interactive, SEGA, or Football Manager.
+                FM Lab is an unofficial fan-made tool and is not affiliated
+                with, endorsed by, sponsored by, or connected to Sports
+                Interactive, SEGA, or Football Manager. All trademarks belong to
+                their respective owners. Ratings are estimates for comparison
+                only.
               </span>
             </div>
           </footer>
