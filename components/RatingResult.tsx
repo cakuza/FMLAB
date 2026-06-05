@@ -225,20 +225,25 @@ export function RatingResult({
         </p>
       )}
 
-      <ol className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+      <div
+        aria-label="Next best assignment fits"
+        className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1"
+        role="list"
+      >
         {secondaryAssignments.map((assignment, index) => (
-          <li
+          <article
             className="rounded-lg border border-chalk/12 bg-chalk/10 p-3"
             key={assignment.id}
+            role="listitem"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/70">
+                <span className="block text-xs font-black uppercase tracking-[0.12em] text-touchline/70">
                   #{index + 2}
-                </p>
-                <h2 className="mt-1 text-base font-black leading-5">
+                </span>
+                <h3 className="mt-1 text-base font-black leading-5">
                   {assignment.label}
-                </h2>
+                </h3>
               </div>
               <p className="text-2xl font-black leading-none text-signal">
                 {assignment.stars.toFixed(1)}
@@ -250,9 +255,9 @@ export function RatingResult({
                 {formatRange(assignment)} range
               </span>
             </div>
-          </li>
+          </article>
         ))}
-      </ol>
+      </div>
 
       <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/6 p-3">
         <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.12em] text-touchline/68">
