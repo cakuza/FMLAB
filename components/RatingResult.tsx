@@ -334,8 +334,8 @@ export function RatingResult({
       </div>
 
       <p className="mt-4 rounded-lg border border-signal/35 bg-signal/12 p-2.5 text-sm font-semibold leading-6 text-chalk">
-        The strongest roles rise to the top, so every coach gets a clear job
-        before you hire or reassign them.
+        The strongest roles rise to the top, so every coach has a clear job
+        before he joins your club.
       </p>
     </aside>
   );

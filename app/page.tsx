@@ -6,7 +6,7 @@ import { trainingCategories } from "@/lib/trainingCategories";
 export const metadata: Metadata = {
   title: "FM26 Coach Assignment Calculator",
   description:
-    "Turn FM26 word-based coach attributes into clear training assignment ratings before offering a contract."
+    "See what a coach is likely to bring to your training setup before you hire him."
 };
 
 export default function Home() {
@@ -24,13 +24,12 @@ export default function Home() {
               FM26 Coach Assignment Calculator
             </h1>
             <p className="mt-1 max-w-3xl text-sm leading-6 text-ink/70">
-              Turn FM26&apos;s word-based coach attributes into clear training
-              assignment ratings before you offer the contract.
+              See what a coach is likely to bring to your training setup before
+              you hire him.
             </p>
             <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-ink/76">
-              Stop guessing in the staff room. Compare a coach&apos;s best
-              training roles in seconds and see where they actually belong
-              before they join your club.
+              Stop guessing in the staff room. The strongest roles rise to the
+              top, so every coach has a clear job before he joins your club.
             </p>
             <p className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
               Updated for FM26
@@ -52,10 +51,11 @@ export default function Home() {
               Match the visible word levels here.
             </li>
             <li>
-              Check the estimated stars by assignment.
+              See which training assignments he is most suited for.
             </li>
             <li>
-              Use the top results before offering a contract.
+              Decide whether the coach fits the job you need before you commit
+              wages.
             </li>
           </ol>
         </article>
@@ -68,9 +68,11 @@ export default function Home() {
           How it works
         </h2>
         <p className="mt-3 max-w-4xl text-sm leading-6 text-ink/72">
-          FM Lab ranks all 9 coach assignment slots from strongest to weakest,
-          helping you compare candidates quickly and give each coach the right
-          job.
+          Each training assignment combines its main coaching attributes with
+          supporting mental attributes: Determination, Authority and Motivating.
+          FM Lab ranks all 9 assignment slots so you can compare staff
+          candidates, avoid wasting wage budget, and assign each coach where he
+          actually helps.
         </p>
       </section>
 

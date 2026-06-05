@@ -139,8 +139,8 @@ export function CoachRatingCalculator() {
       <section className="order-2 rounded-lg border border-ink/10 bg-white/80 p-3 shadow-panel lg:order-1">
         <div className="mb-3 rounded-lg border border-ink/10 bg-touchline/45 p-3">
           <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/80">
-            Choose a preset or match the coach&apos;s visible word levels to reveal
-            their best assignment fits.
+            Choose a preset or enter a coach&apos;s attributes to see his best
+            training role.
           </p>
           <div className="flex flex-wrap items-center gap-2">
             {examplePresets.map((preset) => (
