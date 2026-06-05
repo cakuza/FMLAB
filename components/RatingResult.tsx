@@ -334,8 +334,8 @@ export function RatingResult({
       </div>
 
       <p className="mt-4 rounded-lg border border-signal/35 bg-signal/12 p-2.5 text-sm font-semibold leading-6 text-chalk">
-        Stop guessing in the staff room. The strongest roles rise to the top, so
-        every coach has a clear job before they join your club.
+        The strongest roles rise to the top, so every coach gets a clear job
+        before you hire or reassign them.
       </p>
     </aside>
   );

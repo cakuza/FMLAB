@@ -6,7 +6,7 @@ import { trainingCategories } from "@/lib/trainingCategories";
 
 const pageTitle = "FM26 Coach Assignment Calculator";
 const pageDescription =
-  "Estimate Football Manager 2026 coach assignment stars from visible word-based staff attributes before offering a contract.";
+  "Turn FM26 word-based coach attributes into clear training assignment ratings before offering a contract.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -39,11 +39,16 @@ export default function CoachRatingCalculatorPage() {
           FM26 Coach Assignment Calculator
         </h1>
         <p className="mt-4 text-lg leading-8 text-ink/72">
-          Enter the word levels from a coach profile and estimate which FM26
-          training assignments they should handle before offering a contract.
+          Turn FM26&apos;s word-based coach attributes into clear training
+          assignment ratings before you offer the contract.
+        </p>
+        <p className="mt-3 max-w-3xl text-base font-semibold leading-7 text-ink/76">
+          Stop guessing in the staff room. Compare a coach&apos;s best training
+          roles in seconds and see where they actually belong before they join
+          your club.
         </p>
         <p className="mt-3 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
-          Last updated for FM26
+          Updated for FM26
         </p>
       </div>
 
@@ -78,8 +83,8 @@ export default function CoachRatingCalculatorPage() {
           </h2>
           <p className="mt-3 leading-7">
             FM Lab helps you turn Football Manager 2026 staff word attributes
-            into practical training assignment estimates. Instead of judging a
-            coach by one overall impression, you can compare where they are most
+            into clear training assignment ratings. Instead of judging a coach
+            by one overall impression, you can compare where they are most
             useful across Attacking, Defending, Possession, Fitness,
             Goalkeeping and Set Pieces work.
           </p>
@@ -89,9 +94,10 @@ export default function CoachRatingCalculatorPage() {
             How do FM26 coach assignments work?
           </h2>
           <p className="mt-3 leading-7">
-            The practical decision is not a single overall coach score. You need
-            to know whether a coach fits Attacking Tactical, Possession
-            Technical, Fitness, Set Pieces or another training slot.
+            FM Lab ranks the 9 coach assignment slots from strongest to weakest
+            using the visible FM26 word levels you enter. Use it to compare
+            candidates quickly, spot specialists, and avoid wasting wages on the
+            wrong staff role.
           </p>
         </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">

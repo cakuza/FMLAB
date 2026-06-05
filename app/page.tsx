@@ -6,7 +6,7 @@ import { trainingCategories } from "@/lib/trainingCategories";
 export const metadata: Metadata = {
   title: "FM26 Coach Assignment Calculator",
   description:
-    "Estimate Football Manager 2026 coach assignment stars from visible word-based staff attributes before offering a contract."
+    "Turn FM26 word-based coach attributes into clear training assignment ratings before offering a contract."
 };
 
 export default function Home() {
@@ -24,12 +24,16 @@ export default function Home() {
               FM26 Coach Assignment Calculator
             </h1>
             <p className="mt-1 max-w-3xl text-sm leading-6 text-ink/70">
-              FM26 hides exact staff numbers behind word levels. FM Lab turns
-              those visible words into a consistent assignment estimate before
-              you offer the contract.
+              Turn FM26&apos;s word-based coach attributes into clear training
+              assignment ratings before you offer the contract.
+            </p>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-ink/76">
+              Stop guessing in the staff room. Compare a coach&apos;s best
+              training roles in seconds and see where they actually belong
+              before they join your club.
             </p>
             <p className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
-              Last updated for FM26
+              Updated for FM26
             </p>
           </div>
         </div>
@@ -61,13 +65,12 @@ export default function Home() {
 
       <section className="mt-4 rounded-lg border border-ink/10 bg-white/76 p-4 shadow-panel">
         <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
-          How the estimate works
+          How it works
         </h2>
         <p className="mt-3 max-w-4xl text-sm leading-6 text-ink/72">
-          Each training assignment combines its main coaching attributes with
-          supporting mental attributes: Determination, Authority and Motivating.
-          FM Lab then ranks the 9 assignment slots from strongest to weakest so
-          you can compare coaches quickly and consistently.
+          FM Lab ranks all 9 coach assignment slots from strongest to weakest,
+          helping you compare candidates quickly and give each coach the right
+          job.
         </p>
       </section>
 
