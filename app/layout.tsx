@@ -41,9 +41,13 @@ export default function RootLayout({
             <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
               <Link
                 href="/"
+                aria-label="FM Lab, FM26 Staff Tools"
                 className="group flex items-center gap-2.5 rounded-lg outline-none focus-visible:ring-4 focus-visible:ring-pitch/25"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-pitch text-base font-display font-black text-chalk shadow-sm transition group-hover:bg-ink">
+                <span
+                  aria-hidden="true"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-pitch text-base font-display font-black text-chalk shadow-sm transition group-hover:bg-ink"
+                >
                   26
                 </span>
                 <span className="flex flex-col leading-none">

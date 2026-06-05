@@ -15,6 +15,8 @@ type RatingResultProps = {
 const formatRange = (assignment: AssignmentRating) =>
   `${assignment.range.minStars.toFixed(1)}-${assignment.range.maxStars.toFixed(1)}`;
 
+const meaningfulWeakFitGap = 0.5;
+
 const getVerdictTier = (stars: number) => {
   if (stars >= 4.5) {
     return {
@@ -95,6 +97,10 @@ export function RatingResult({
   const verdict = topAssignment
     ? getVerdictTier(topAssignment.stars)
     : getVerdictTier(0);
+  const shouldShowWeakestAssignment =
+    Boolean(topAssignment && weakestAssignment) &&
+    topAssignment.id !== weakestAssignment.id &&
+    topAssignment.stars - weakestAssignment.stars >= meaningfulWeakFitGap;
 
   const copyResult = async () => {
     if (!topAssignment) {
@@ -195,12 +201,17 @@ export function RatingResult({
         </section>
       ) : null}
 
-      {weakestAssignment ? (
+      {shouldShowWeakestAssignment && weakestAssignment ? (
         <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
           Weakest current fit: {weakestAssignment.label}. Use lower-ranked roles
           only when staff depth is limited.
         </p>
-      ) : null}
+      ) : (
+        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
+          No clear weak assignment yet. Change the coach&apos;s word levels to
+          reveal stronger and weaker fits.
+        </p>
+      )}
 
       <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/10 p-3">
         <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.12em] text-touchline/78">
