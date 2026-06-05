@@ -47,7 +47,7 @@ export default function CoachRatingCalculatorPage() {
         </p>
       </div>
 
-      <section className="mb-5 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+      <section className="mb-5">
         <article className="rounded-lg border border-ink/10 bg-white/78 p-5 shadow-panel">
           <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
             How to use it
@@ -66,15 +66,6 @@ export default function CoachRatingCalculatorPage() {
               Use the highest star results as your shortlist.
             </li>
           </ol>
-        </article>
-        <article className="rounded-lg border border-signal/30 bg-touchline/80 p-5 shadow-panel">
-          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-pitch">
-            Estimate note
-          </h2>
-          <p className="mt-4 text-sm leading-6 text-ink/72">
-            Unofficial estimate &middot; Ratings may differ from exact in-game
-            stars.
-          </p>
         </article>
       </section>
 

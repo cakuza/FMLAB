@@ -21,34 +21,35 @@ const getVerdictTier = (stars: number) => {
   if (stars >= 4.5) {
     return {
       label: "Elite assignment fit",
-      meaning: "This coach is likely worth prioritizing for the top assignment."
+      meaning:
+        "Use this coach here first. This looks like a premium assignment fit."
     };
   }
 
   if (stars >= 4) {
     return {
       label: "Strong specialist",
-      meaning: "This coach is likely worth prioritizing for that assignment."
+      meaning: "Worth prioritizing for this assignment."
     };
   }
 
   if (stars >= 3) {
     return {
       label: "Useful club-level option",
-      meaning: "Useful, but not necessarily elite."
+      meaning: "Good enough as a useful staff option, but not a premium hire."
     };
   }
 
   if (stars >= 2) {
     return {
       label: "Backup or depth option",
-      meaning: "Probably most useful as staff depth."
+      meaning: "Use as cover or depth, not as your main specialist."
     };
   }
 
   return {
     label: "Weak fit",
-    meaning: "This coach is unlikely to be a strong assignment choice."
+    meaning: "Avoid this assignment unless you have no better staff option."
   };
 };
 
@@ -144,32 +145,39 @@ export function RatingResult({
       ].join(" ")}
     >
       <div className="flex items-start justify-between gap-3">
-        <p className="text-sm font-black uppercase tracking-[0.16em] text-signal">
-          Recommended Assignments
-        </p>
-        <button
-          className="rounded-full border border-chalk/15 bg-chalk/10 px-3 py-1.5 text-xs font-black text-chalk transition hover:bg-chalk/18 focus:outline-none focus:ring-4 focus:ring-signal/20"
-          onClick={copyResult}
-          type="button"
-        >
-          {copyState === "copied"
-            ? "Copied"
-            : copyState === "failed"
-              ? "Copy failed"
-              : "Copy result"}
-        </button>
+        <div>
+          <p className="text-sm font-black uppercase tracking-[0.16em] text-signal">
+            Recommended Assignments
+          </p>
+          <p className="mt-1 text-xs font-semibold leading-5 text-chalk/48">
+            Copy a short result for Discord, Reddit or your notes.
+          </p>
+        </div>
+        <div className="shrink-0">
+          <button
+            className="rounded-full border border-chalk/15 bg-chalk/10 px-3 py-1.5 text-xs font-black text-chalk transition hover:bg-chalk/18 focus:outline-none focus:ring-4 focus:ring-signal/20"
+            onClick={copyResult}
+            type="button"
+          >
+            {copyState === "copied"
+              ? "Copied"
+              : copyState === "failed"
+                ? "Copy failed"
+                : "Copy result"}
+          </button>
+        </div>
       </div>
 
       {isDefaultProfile ? (
-        <p className="mt-2 text-xs font-semibold leading-5 text-chalk/54">
-          Select a coach&apos;s word levels to generate a more meaningful
-          recommendation.
+        <p className="mt-3 rounded-md border border-chalk/10 bg-chalk/6 p-2 text-xs font-semibold leading-5 text-chalk/56">
+          Select a preset or match a coach&apos;s word levels to generate a more
+          meaningful recommendation.
         </p>
       ) : null}
 
-      {topAssignment ? (
-        <section className="mt-3 rounded-lg border border-signal/50 bg-signal/12 p-4">
-          <div className="grid gap-3">
+      <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+        {topAssignment ? (
+          <section className="rounded-lg border border-signal/50 bg-signal/12 p-4">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
@@ -183,49 +191,18 @@ export function RatingResult({
                 {topAssignment.stars.toFixed(1)}
               </p>
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
               <StarRating size="md" value={topAssignment.stars} />
               <span className="text-xs font-bold text-touchline">
                 {formatRange(topAssignment)} range
               </span>
             </div>
-            <div>
-              <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
-                Verdict
-              </p>
-              <p className="mt-1 text-sm font-black text-chalk">
-                {verdict.label}
-              </p>
-              <p className="mt-1 text-xs font-semibold leading-5 text-chalk/58">
-                {verdict.meaning}
-              </p>
-            </div>
-          </div>
-        </section>
-      ) : null}
+            <p className="mt-3 text-sm font-black text-chalk">
+              {verdict.label}
+            </p>
+          </section>
+        ) : null}
 
-      {secondaryAssignments.length > 0 ? (
-        <p className="mt-3 text-sm font-semibold leading-6 text-chalk/76">
-          <span className="font-black text-touchline/80">Also useful for:</span>{" "}
-          <span className="font-bold text-chalk">
-            {formatAlsoUseful(secondaryAssignments)}
-          </span>
-        </p>
-      ) : null}
-
-      {shouldShowWeakestAssignment && weakestAssignment ? (
-        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
-          Weakest current fit: {weakestAssignment.label}. Use lower-ranked roles
-          only when staff depth is limited.
-        </p>
-      ) : (
-        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
-          No clear weak assignment yet. Change the coach&apos;s word levels to
-          reveal stronger and weaker fits.
-        </p>
-      )}
-
-      <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
         {secondaryAssignments.map((assignment, index) => (
           <div
             aria-label={`Rank ${index + 2}: ${assignment.label}`}
@@ -255,6 +232,33 @@ export function RatingResult({
         ))}
       </div>
 
+      {secondaryAssignments.length > 0 ? (
+        <p className="mt-3 text-sm font-semibold leading-6 text-chalk/76">
+          <span className="font-black text-touchline/80">Also useful for:</span>{" "}
+          <span className="font-bold text-chalk">
+            {formatAlsoUseful(secondaryAssignments)}
+          </span>
+        </p>
+      ) : null}
+
+      {topAssignment ? (
+        <p className="mt-2 text-xs font-semibold leading-5 text-chalk/60">
+          {verdict.meaning}
+        </p>
+      ) : null}
+
+      {shouldShowWeakestAssignment && weakestAssignment ? (
+        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
+          Weakest current fit: {weakestAssignment.label}. Use lower-ranked roles
+          only when staff depth is limited.
+        </p>
+      ) : (
+        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
+          No clear weak assignment yet. Change the coach&apos;s word levels to
+          reveal stronger and weaker fits.
+        </p>
+      )}
+
       <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/6 p-3">
         <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.12em] text-touchline/68">
           What do the stars mean?
@@ -269,9 +273,8 @@ export function RatingResult({
       </details>
 
       <p className="mt-2 text-xs font-semibold leading-5 text-chalk/50">
-        FM Lab estimates the rating for a single assignment. In-game stars may
-        look lower if a coach is assigned to multiple areas or if workload is
-        high.
+        Note: FM Lab is an unofficial estimate for quick coach comparison. Exact
+        in-game stars can vary with workload and assignments.
       </p>
 
       <div className="mt-4">

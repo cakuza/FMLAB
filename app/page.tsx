@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mb-3 grid gap-3 lg:grid-cols-[1.2fr_0.8fr]">
+      <section className="mb-3">
         <article className="rounded-lg border border-ink/10 bg-white/78 p-4 shadow-panel">
           <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
             How to use it
@@ -54,15 +54,6 @@ export default function Home() {
               Use the top results before offering a contract.
             </li>
           </ol>
-        </article>
-        <article className="rounded-lg border border-signal/30 bg-touchline/80 p-4 shadow-panel">
-          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-pitch">
-            Estimate note
-          </h2>
-          <p className="mt-3 text-sm leading-6 text-ink/72">
-            Unofficial estimate &middot; Ratings may differ from exact in-game
-            stars.
-          </p>
         </article>
       </section>
 

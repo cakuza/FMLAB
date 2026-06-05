@@ -137,24 +137,29 @@ export function CoachRatingCalculator() {
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_430px]">
       <section className="order-2 rounded-lg border border-ink/10 bg-white/80 p-3 shadow-panel lg:order-1">
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          {examplePresets.map((preset) => (
+        <div className="mb-3 rounded-lg border border-ink/10 bg-touchline/45 p-3">
+          <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/80">
+            Start fast
+          </p>
+          <div className="flex flex-wrap items-center gap-2">
+            {examplePresets.map((preset) => (
+              <button
+                className="rounded-full border border-pitch/18 bg-white px-3.5 py-2 text-xs font-black text-ink transition hover:border-pitch/45 hover:bg-touchline focus:outline-none focus:ring-4 focus:ring-pitch/16"
+                key={preset.label}
+                onClick={() => setSelections(preset.selections)}
+                type="button"
+              >
+                {preset.label}
+              </button>
+            ))}
             <button
-              className="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-xs font-black text-ink transition hover:border-pitch/40 hover:bg-touchline focus:outline-none focus:ring-4 focus:ring-pitch/16"
-              key={preset.label}
-              onClick={() => setSelections(preset.selections)}
+              className="rounded-full border border-ink/12 bg-chalk px-3.5 py-2 text-xs font-black text-ink/70 transition hover:border-pitch/40 hover:text-ink focus:outline-none focus:ring-4 focus:ring-pitch/16"
+              onClick={() => setSelections(createDefaultSelections())}
               type="button"
             >
-              {preset.label}
+              Reset
             </button>
-          ))}
-          <button
-            className="rounded-full border border-ink/12 bg-chalk px-3 py-1.5 text-xs font-black text-ink/70 transition hover:border-pitch/40 hover:text-ink focus:outline-none focus:ring-4 focus:ring-pitch/16"
-            onClick={() => setSelections(createDefaultSelections())}
-            type="button"
-          >
-            Reset
-          </button>
+          </div>
         </div>
 
         <div className="mb-3 grid gap-3 rounded-lg border border-ink/10 bg-chalk p-3 md:grid-cols-[0.42fr_1fr]">
