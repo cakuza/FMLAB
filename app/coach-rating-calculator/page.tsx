@@ -40,11 +40,10 @@ export default function CoachRatingCalculatorPage() {
         </h1>
         <p className="mt-4 text-lg leading-8 text-ink/72">
           Enter the word levels from a coach profile and estimate which FM26
-          training assignments they should handle. This is an unofficial
-          fan-made approximation, not an official formula.
+          training assignments they should handle before offering a contract.
         </p>
         <p className="mt-3 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
-          Last updated for FM26 &middot; Unofficial fan-made estimate
+          Last updated for FM26
         </p>
       </div>
 
@@ -70,12 +69,11 @@ export default function CoachRatingCalculatorPage() {
         </article>
         <article className="rounded-lg border border-signal/30 bg-touchline/80 p-5 shadow-panel">
           <h2 className="text-sm font-black uppercase tracking-[0.16em] text-pitch">
-            Estimated, not official
+            Estimate note
           </h2>
           <p className="mt-4 text-sm leading-6 text-ink/72">
-            FM Lab uses a fan-made model based on visible FM26 word levels.
-            Results are approximate comparison ratings and may differ from exact
-            in-game stars.
+            Unofficial estimate &middot; Ratings may differ from exact in-game
+            stars.
           </p>
         </article>
       </section>
@@ -163,8 +161,8 @@ export default function CoachRatingCalculatorPage() {
           Assignment attribute emphasis
         </h2>
         <p className="mt-2 max-w-3xl leading-7 text-ink/72">
-          The fan-made model keeps the weights centralized by assignment. These
-          are the visible attributes that drive each estimate most clearly.
+          The model keeps the weights centralized by assignment. These are the
+          visible attributes that drive each estimate most clearly.
         </p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {trainingCategories.map((category) => {
@@ -245,7 +243,7 @@ export default function CoachRatingCalculatorPage() {
             {
               question: "Is this the official FM26 coach assignment formula?",
               answer:
-                "No. It is an unofficial fan-made model built to help compare coaches, not a claim about the exact hidden calculation."
+                "No. It is built to help compare coaches, not to claim the exact hidden calculation."
             },
             {
               question: "How accurate is the FM26 coach calculator?",

@@ -59,9 +59,6 @@ export default function RootLayout({
                   </span>
                 </span>
               </Link>
-              <span className="hidden rounded-full border border-pitch/25 bg-touchline/60 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-pitch sm:inline-block">
-                Unofficial
-              </span>
             </div>
           </header>
           <main className="flex-1">{children}</main>

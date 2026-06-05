@@ -17,7 +17,7 @@ export default function Home() {
         <div className="relative flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <span className="inline-flex items-center gap-2 rounded-full border border-pitch/20 bg-touchline/60 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-pitch">
             <span className="h-1.5 w-1.5 rounded-full bg-signal" />
-            Unofficial FM26 tool
+            FM26 Staff Tool
           </span>
           <div className="lg:flex-1">
             <h1 className="text-2xl font-black leading-tight text-ink sm:text-3xl">
@@ -29,7 +29,7 @@ export default function Home() {
               you offer the contract.
             </p>
             <p className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
-              Last updated for FM26 &middot; Unofficial fan-made estimate
+              Last updated for FM26
             </p>
           </div>
         </div>
@@ -57,11 +57,11 @@ export default function Home() {
         </article>
         <article className="rounded-lg border border-signal/30 bg-touchline/80 p-4 shadow-panel">
           <h2 className="text-sm font-black uppercase tracking-[0.16em] text-pitch">
-            Unofficial estimate
+            Estimate note
           </h2>
           <p className="mt-3 text-sm leading-6 text-ink/72">
-            FM Lab is a fan-made comparison tool. Ratings are approximate and
-            may differ from exact in-game stars.
+            Unofficial estimate &middot; Ratings may differ from exact in-game
+            stars.
           </p>
         </article>
       </section>

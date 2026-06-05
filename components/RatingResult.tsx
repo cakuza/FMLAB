@@ -78,7 +78,7 @@ const formatCopyText = (
     `Best fit: ${topAssignment.label} - ${topAssignment.stars.toFixed(1)} stars`,
     secondaryText ? `Also useful for: ${secondaryText}` : "",
     `Verdict: ${verdictLabel}`,
-    "Note: Unofficial estimate for comparison only."
+    "Note: Estimate for comparison only."
   ]
     .filter(Boolean)
     .join("\n");

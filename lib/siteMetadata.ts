@@ -4,4 +4,4 @@ export const siteUrl =
 
 export const siteName = "FM Lab";
 export const defaultDescription =
-  "Unofficial Football Manager 2026 coach assignment tool for estimating training stars from word-based staff attributes.";
+  "Football Manager 2026 coach assignment tool for estimating training stars from word-based staff attributes.";
