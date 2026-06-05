@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { CoachRatingCalculator } from "@/components/CoachRatingCalculator";
+import { type AttributeKey, attributeLabels } from "@/lib/attributeLevels";
+import { trainingCategories } from "@/lib/trainingCategories";
 
 export const metadata: Metadata = {
   title: "FM26 Coach Assignment Calculator",
@@ -76,6 +78,50 @@ export default function Home() {
           FM Lab then ranks the 9 assignment slots from strongest to weakest so
           you can compare coaches quickly and consistently.
         </p>
+      </section>
+
+      <section className="mt-4 rounded-lg border border-ink/10 bg-white/76 p-4 shadow-panel">
+        <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
+          Best attributes by FM26 coach assignment
+        </h2>
+        <div className="mt-3 overflow-x-auto rounded-lg border border-ink/10">
+          <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+            <thead className="bg-chalk text-xs uppercase tracking-[0.12em] text-ink/62">
+              <tr>
+                <th className="px-4 py-3 font-black">Assignment</th>
+                <th className="px-4 py-3 font-black">Main attributes</th>
+                <th className="px-4 py-3 font-black">Support attributes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trainingCategories.map((category) => {
+                const mainAttributes = category.keyAttributes
+                  .map((key) => attributeLabels[key])
+                  .join(" + ");
+                const supportAttributes = (
+                  Object.keys(category.weights) as AttributeKey[]
+                )
+                  .filter((key) => !category.keyAttributes.includes(key))
+                  .map((key) => attributeLabels[key])
+                  .join(", ");
+
+                return (
+                  <tr className="border-t border-ink/10" key={category.id}>
+                    <td className="px-4 py-3 font-black text-ink">
+                      {category.label}
+                    </td>
+                    <td className="px-4 py-3 text-ink/72">
+                      {mainAttributes}
+                    </td>
+                    <td className="px-4 py-3 text-ink/72">
+                      {supportAttributes || "None"}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   );
