@@ -106,10 +106,8 @@ export function RatingResult({
   const verdict = topAssignment
     ? getVerdictTier(topAssignment.stars)
     : getVerdictTier(0);
-  const shouldShowWeakestAssignment = shouldShowWeakestFit(
-    topAssignment,
-    weakestAssignment
-  );
+  const shouldShowWeakestAssignment =
+    !isDefaultProfile && shouldShowWeakestFit(topAssignment, weakestAssignment);
 
   const copyResult = async () => {
     if (!topAssignment) {

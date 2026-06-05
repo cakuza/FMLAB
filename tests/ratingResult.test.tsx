@@ -5,7 +5,13 @@ import {
   RatingResult,
   shouldShowWeakestFit
 } from "@/components/RatingResult";
+import { createDefaultSelections } from "@/lib/attributeLevels";
 import type { AssignmentRating } from "@/lib/ratingFormula";
+import {
+  calculateAssignmentRatings,
+  getRecommendedAssignments
+} from "@/lib/ratingFormula";
+import { defaultTrainingCategoryId } from "@/lib/trainingCategories";
 
 const createAssignment = (
   id: AssignmentRating["id"],
@@ -27,32 +33,32 @@ const createAssignment = (
   keyAttributes: []
 });
 
-const tiedAssignments: AssignmentRating[] = [
-  createAssignment("attackingTactical", "Attacking Tactical"),
-  createAssignment("attackingTechnical", "Attacking Technical"),
-  createAssignment("defendingTactical", "Defending Tactical"),
-  createAssignment("defendingTechnical", "Defending Technical"),
-  createAssignment("possessionTactical", "Possession Tactical"),
-  createAssignment("possessionTechnical", "Possession Technical"),
-  createAssignment("goalkeeping", "Goalkeeping"),
-  createAssignment("fitness", "Fitness"),
-  createAssignment("setPieces", "Set Pieces")
-];
-
 describe("RatingResult verdict display", () => {
-  it("does not show a weakest assignment when all assignment ratings are tied", () => {
+  it("does not show a weakest assignment for the real homepage default state", () => {
+    const defaultSelections = createDefaultSelections();
+    const assignmentRatings = calculateAssignmentRatings(defaultSelections);
+    const recommendedAssignments = getRecommendedAssignments(
+      defaultSelections,
+      3
+    );
+
+    expect(
+      assignmentRatings.every(
+        (assignment) => assignment.stars === assignmentRatings[0]?.stars
+      )
+    ).toBe(true);
+
     const html = renderToStaticMarkup(
       React.createElement(RatingResult, {
-        assignmentRatings: tiedAssignments,
-        recommendedAssignments: tiedAssignments,
-        selectedAssignmentId: "attackingTactical"
+        assignmentRatings,
+        isDefaultProfile: true,
+        recommendedAssignments,
+        selectedAssignmentId: defaultTrainingCategoryId
       })
     );
 
     expect(html).not.toContain("Weakest current fit");
-    expect(html).toContain(
-      "No clear weak assignment yet. Change the coach&#x27;s word levels to reveal stronger and weaker fits."
-    );
+    expect(html).toContain("No clear weak assignment yet");
   });
 
   it("only shows the weakest fit when the gap is meaningful and the assignment differs", () => {
