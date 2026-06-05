@@ -48,7 +48,7 @@ export default function RootLayout({
                 </span>
                 <span className="flex flex-col leading-none">
                   <span className="font-display text-sm font-black uppercase tracking-[0.16em] text-ink">
-                    Coach Calculator
+                    FM Lab
                   </span>
                   <span className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-pitch/80">
                     FM26 Staff Tools

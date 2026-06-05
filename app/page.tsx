@@ -22,9 +22,12 @@ export default function Home() {
               FM26 Coach Assignment Calculator
             </h1>
             <p className="mt-1 max-w-3xl text-sm leading-6 text-ink/70">
-              Turn FM26 word attributes into instant assignment stars and spot
-              the coach who can lift your training week before you offer the
-              contract.
+              FM26 hides exact staff numbers behind word levels. FM Lab turns
+              those visible words into a consistent assignment estimate before
+              you offer the contract.
+            </p>
+            <p className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
+              Last updated for FM26 &middot; Unofficial fan-made estimate
             </p>
           </div>
         </div>

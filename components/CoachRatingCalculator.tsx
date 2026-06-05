@@ -7,6 +7,7 @@ import { RatingResult } from "@/components/RatingResult";
 import {
   type AttributeKey,
   type AttributeLevelId,
+  type AttributeSelections,
   attributeLabels,
   coachingAttributes,
   createDefaultSelections,
@@ -22,10 +23,70 @@ import {
   trainingCategoryById
 } from "@/lib/trainingCategories";
 
+const examplePresets: {
+  label: string;
+  selections: AttributeSelections;
+}[] = [
+  {
+    label: "Try attacking coach",
+    selections: {
+      ...createDefaultSelections(),
+      attacking: "very-good",
+      tactical: "very-good",
+      technical: "good",
+      possession: "good",
+      defending: "competent",
+      fitness: "average",
+      goalkeeping: "reasonable",
+      setPieces: "average",
+      determination: "good",
+      discipline: "good",
+      motivating: "very-good"
+    }
+  },
+  {
+    label: "Try fitness coach",
+    selections: {
+      ...createDefaultSelections(),
+      attacking: "competent",
+      defending: "average",
+      fitness: "outstanding",
+      goalkeeping: "reasonable",
+      possession: "average",
+      setPieces: "competent",
+      tactical: "average",
+      technical: "average",
+      determination: "good",
+      discipline: "good",
+      motivating: "good"
+    }
+  },
+  {
+    label: "Try set pieces coach",
+    selections: {
+      ...createDefaultSelections(),
+      attacking: "average",
+      defending: "average",
+      fitness: "competent",
+      goalkeeping: "reasonable",
+      possession: "average",
+      setPieces: "very-good",
+      tactical: "good",
+      technical: "good",
+      determination: "good",
+      discipline: "good",
+      motivating: "good"
+    }
+  }
+];
+
 export function CoachRatingCalculator() {
   const [highlightAssignmentId, setHighlightAssignmentId] =
     useState<TrainingCategoryId>(defaultTrainingCategoryId);
   const [selections, setSelections] = useState(createDefaultSelections);
+  const isDefaultProfile = Object.values(selections).every(
+    (value) => value === "average"
+  );
 
   const assignmentRatings = useMemo(
     () => calculateAssignmentRatings(selections),
@@ -76,6 +137,26 @@ export function CoachRatingCalculator() {
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_430px]">
       <section className="order-2 rounded-lg border border-ink/10 bg-white/80 p-3 shadow-panel lg:order-1">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          {examplePresets.map((preset) => (
+            <button
+              className="rounded-full border border-ink/12 bg-white px-3 py-1.5 text-xs font-black text-ink transition hover:border-pitch/40 hover:bg-touchline focus:outline-none focus:ring-4 focus:ring-pitch/16"
+              key={preset.label}
+              onClick={() => setSelections(preset.selections)}
+              type="button"
+            >
+              {preset.label}
+            </button>
+          ))}
+          <button
+            className="rounded-full border border-ink/12 bg-chalk px-3 py-1.5 text-xs font-black text-ink/70 transition hover:border-pitch/40 hover:text-ink focus:outline-none focus:ring-4 focus:ring-pitch/16"
+            onClick={() => setSelections(createDefaultSelections())}
+            type="button"
+          >
+            Reset
+          </button>
+        </div>
+
         <div className="mb-3 grid gap-3 rounded-lg border border-ink/10 bg-chalk p-3 md:grid-cols-[0.42fr_1fr]">
           <CategorySelect
             value={highlightAssignmentId}
@@ -143,6 +224,7 @@ export function CoachRatingCalculator() {
       <RatingResult
         assignmentRatings={assignmentRatings}
         className="order-1 lg:order-2"
+        isDefaultProfile={isDefaultProfile}
         recommendedAssignments={recommendedAssignments}
         selectedAssignmentId={highlightAssignmentId}
       />

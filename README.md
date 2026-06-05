@@ -9,11 +9,11 @@ model to estimate stars for the 9 visible coach assignment categories.
 
 ## How to Use
 
-1. Open a coach profile in FM26.
-2. Match the visible word levels in the calculator.
-3. Pick an assignment to see its main levers.
-4. Use the highest estimated stars as a shortlist before offering a contract or
-   changing staff responsibilities.
+- Open a coach profile in FM26.
+- Match the visible word levels in the calculator.
+- Pick an assignment to see its main levers.
+- Use the highest estimated stars as a shortlist before offering a contract or
+  changing staff responsibilities.
 
 ## Features
 
@@ -23,6 +23,9 @@ model to estimate stars for the 9 visible coach assignment categories.
 - FM26 word-level staff attributes throughout the calculator UI
 - Assignment-specific weighting for the 9 coach assignment slots
 - Recommended assignments, estimated stars and uncertainty ranges
+- Practical verdict labels for the strongest assignment fit
+- Example coach presets and reset control for faster testing
+- Copyable result summary for sharing in forums or chat
 - Formula data kept in reusable `lib/` files
 
 ## Main Calculator Inputs

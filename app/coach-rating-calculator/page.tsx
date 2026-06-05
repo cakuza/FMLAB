@@ -43,6 +43,9 @@ export default function CoachRatingCalculatorPage() {
           training assignments they should handle. This is an unofficial
           fan-made approximation, not an official formula.
         </p>
+        <p className="mt-3 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
+          Last updated for FM26 &middot; Unofficial fan-made estimate
+        </p>
       </div>
 
       <section className="mb-5 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
@@ -184,6 +187,54 @@ export default function CoachRatingCalculatorPage() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5">
+        <h2 className="text-xl font-black text-ink">
+          Best attributes by FM26 coach assignment
+        </h2>
+        <p className="mt-2 max-w-3xl leading-7 text-ink/72">
+          Use this as a quick checklist when you are scanning staff profiles in
+          Football Manager 2026.
+        </p>
+        <div className="mt-5 overflow-x-auto rounded-lg border border-ink/10">
+          <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+            <thead className="bg-chalk text-xs uppercase tracking-[0.12em] text-ink/62">
+              <tr>
+                <th className="px-4 py-3 font-black">Assignment</th>
+                <th className="px-4 py-3 font-black">Main attributes</th>
+                <th className="px-4 py-3 font-black">Support attributes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trainingCategories.map((category) => {
+                const mainAttributes = category.keyAttributes
+                  .map((key) => attributeLabels[key])
+                  .join(" + ");
+                const supportAttributes = (
+                  Object.keys(category.weights) as AttributeKey[]
+                )
+                  .filter((key) => !category.keyAttributes.includes(key))
+                  .map((key) => attributeLabels[key])
+                  .join(", ");
+
+                return (
+                  <tr className="border-t border-ink/10" key={category.id}>
+                    <td className="px-4 py-3 font-black text-ink">
+                      {category.label}
+                    </td>
+                    <td className="px-4 py-3 text-ink/72">
+                      {mainAttributes}
+                    </td>
+                    <td className="px-4 py-3 text-ink/72">
+                      {supportAttributes || "None"}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </section>
 
