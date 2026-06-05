@@ -175,9 +175,9 @@ export function RatingResult({
                 <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
                   Best fit
                 </p>
-                <h2 className="mt-1 text-xl font-black leading-6">
+                <p className="mt-1 text-xl font-black leading-6">
                   {topAssignment.label}
-                </h2>
+                </p>
               </div>
               <p className="text-5xl font-black leading-none text-signal">
                 {topAssignment.stars.toFixed(1)}
@@ -241,9 +241,9 @@ export function RatingResult({
                 <span className="block text-xs font-black uppercase tracking-[0.12em] text-touchline/70">
                   #{index + 2}
                 </span>
-                <h3 className="mt-1 text-base font-black leading-5">
+                <p className="mt-1 text-base font-black leading-5">
                   {assignment.label}
-                </h3>
+                </p>
               </div>
               <p className="text-2xl font-black leading-none text-signal">
                 {assignment.stars.toFixed(1)}
