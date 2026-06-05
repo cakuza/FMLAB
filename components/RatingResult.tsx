@@ -147,15 +147,13 @@ export function RatingResult({
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-sm font-black uppercase tracking-[0.16em] text-signal">
-            Recommended Assignments
-          </p>
-          <p className="mt-1 text-xs font-semibold leading-5 text-chalk/48">
-            Copy a short result for Discord, Reddit or your notes.
+            Top Assignment Fits
           </p>
         </div>
         <div className="shrink-0">
           <button
-            className="rounded-full border border-chalk/15 bg-chalk/10 px-3 py-1.5 text-xs font-black text-chalk transition hover:bg-chalk/18 focus:outline-none focus:ring-4 focus:ring-signal/20"
+            className="rounded-full border border-chalk/15 bg-chalk/10 px-3 py-1.5 text-xs font-black text-chalk transition hover:bg-chalk/18 focus:outline-none focus:ring-4 focus:ring-signal/20 disabled:cursor-not-allowed disabled:opacity-45"
+            disabled={isDefaultProfile || !topAssignment}
             onClick={copyResult}
             type="button"
           >
@@ -169,94 +167,125 @@ export function RatingResult({
       </div>
 
       {isDefaultProfile ? (
-        <p className="mt-3 rounded-md border border-chalk/10 bg-chalk/6 p-2 text-xs font-semibold leading-5 text-chalk/56">
-          Select a preset or match a coach&apos;s word levels to generate a more
-          meaningful recommendation.
-        </p>
-      ) : null}
-
-      <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
-        {topAssignment ? (
-          <section className="rounded-lg border border-signal/50 bg-signal/12 p-4">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
-                  Best fit
-                </p>
-                <p className="mt-1 text-xl font-black leading-6">
-                  {topAssignment.label}
-                </p>
-              </div>
-              <p className="text-5xl font-black leading-none text-signal">
-                {topAssignment.stars.toFixed(1)}
-              </p>
-            </div>
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-              <StarRating size="md" value={topAssignment.stars} />
-              <span className="text-xs font-bold text-touchline">
-                {formatRange(topAssignment)} range
-              </span>
-            </div>
-            <p className="mt-3 text-sm font-black text-chalk">
-              {verdict.label}
-            </p>
-          </section>
-        ) : null}
-
-        {secondaryAssignments.map((assignment, index) => (
-          <div
-            aria-label={`Rank ${index + 2}: ${assignment.label}`}
-            className="rounded-lg border border-chalk/12 bg-chalk/10 p-3"
-            key={assignment.id}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <span className="block text-xs font-black uppercase tracking-[0.12em] text-touchline/70">
-                  #{index + 2}
-                </span>
-                <p className="mt-1 text-base font-black leading-5">
-                  {assignment.label}
-                </p>
-              </div>
-              <p className="text-2xl font-black leading-none text-signal">
-                {assignment.stars.toFixed(1)}
-              </p>
-            </div>
-            <div className="mt-2 flex items-center justify-between gap-3">
-              <StarRating size="sm" value={assignment.stars} />
-              <span className="text-xs font-bold text-touchline">
-                {formatRange(assignment)} range
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {secondaryAssignments.length > 0 ? (
-        <p className="mt-3 text-sm font-semibold leading-6 text-chalk/76">
-          <span className="font-black text-touchline/80">Also useful for:</span>{" "}
-          <span className="font-bold text-chalk">
-            {formatAlsoUseful(secondaryAssignments)}
-          </span>
-        </p>
-      ) : null}
-
-      {topAssignment ? (
-        <p className="mt-2 text-xs font-semibold leading-5 text-chalk/60">
-          {verdict.meaning}
-        </p>
-      ) : null}
-
-      {shouldShowWeakestAssignment && weakestAssignment ? (
-        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
-          Weakest current fit: {weakestAssignment.label}. Use lower-ranked roles
-          only when staff depth is limited.
-        </p>
+        <div className="mt-3 rounded-lg border border-chalk/12 bg-chalk/8 p-4">
+          <p className="text-sm font-black leading-6 text-chalk">
+            Choose a preset or enter a coach&apos;s attributes to see his
+            assignment ratings.
+          </p>
+          <p className="mt-2 text-xs font-semibold leading-5 text-chalk/56">
+            Presets are the quickest way to see how a specialist profile changes
+            the ranking.
+          </p>
+        </div>
       ) : (
-        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/58">
-          No clear weak assignment yet. Change the coach&apos;s word levels to
-          reveal stronger and weaker fits.
-        </p>
+        <>
+          <div className="mt-3 grid gap-2">
+            {topAssignment ? (
+              <section className="rounded-lg border border-signal/55 bg-signal/12 p-3.5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
+                      #1
+                    </p>
+                    <p className="mt-1 text-xl font-black leading-6">
+                      {topAssignment.label}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-5xl font-black leading-none text-signal">
+                      {topAssignment.stars.toFixed(1)}
+                    </p>
+                    <p className="mt-1 text-xs font-black uppercase tracking-[0.1em] text-signal/85">
+                      stars
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                  <StarRating size="md" value={topAssignment.stars} />
+                  <span className="text-xs font-bold text-touchline">
+                    {formatRange(topAssignment)} range
+                  </span>
+                </div>
+                <p className="mt-2 text-sm font-black text-chalk">
+                  {verdict.label}
+                </p>
+              </section>
+            ) : null}
+
+            {secondaryAssignments.map((assignment, index) => (
+              <div
+                aria-label={`Rank ${index + 2}: ${assignment.label}`}
+                className="rounded-lg border border-chalk/12 bg-chalk/10 p-3"
+                key={assignment.id}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <span className="text-xs font-black uppercase tracking-[0.12em] text-touchline/70">
+                      #{index + 2}
+                    </span>
+                    <p className="mt-1 truncate text-base font-black leading-5">
+                      {assignment.label}
+                    </p>
+                  </div>
+                  <p className="text-2xl font-black leading-none text-signal">
+                    {assignment.stars.toFixed(1)}
+                  </p>
+                </div>
+                <div className="mt-2 flex items-center justify-between gap-3">
+                  <StarRating size="sm" value={assignment.stars} />
+                  <span className="text-xs font-bold text-touchline">
+                    {formatRange(assignment)} range
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {topAssignment ? (
+            <div className="mt-3 rounded-lg border border-chalk/10 bg-chalk/6 p-3 text-sm leading-6">
+              <div className="grid gap-2">
+                <p className="font-semibold text-chalk/74">
+                  <span className="font-black text-touchline/80">
+                    Best use:
+                  </span>{" "}
+                  <span className="font-bold text-chalk">
+                    {topAssignment.label}
+                  </span>
+                </p>
+                {secondaryAssignments.length > 0 ? (
+                  <p className="font-semibold text-chalk/74">
+                    <span className="font-black text-touchline/80">
+                      Also useful:
+                    </span>{" "}
+                    <span className="font-bold text-chalk">
+                      {formatAlsoUseful(secondaryAssignments)}
+                    </span>
+                  </p>
+                ) : null}
+                <p className="font-semibold text-chalk/74">
+                  <span className="font-black text-touchline/80">
+                    Verdict:
+                  </span>{" "}
+                  <span className="font-bold text-chalk">
+                    {verdict.meaning}
+                  </span>
+                </p>
+              </div>
+            </div>
+          ) : null}
+
+          {shouldShowWeakestAssignment && weakestAssignment ? (
+            <p className="mt-3 text-xs font-semibold leading-5 text-chalk/48">
+              Lowest fit right now: {weakestAssignment.label}. Treat it as
+              staff cover unless your options are thin.
+            </p>
+          ) : (
+            <p className="mt-3 text-xs font-semibold leading-5 text-chalk/48">
+              No clear weak assignment yet. Change the coach&apos;s word levels
+              to reveal stronger and weaker fits.
+            </p>
+          )}
+        </>
       )}
 
       <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/6 p-3">
@@ -275,67 +304,6 @@ export function RatingResult({
       <p className="mt-2 text-xs font-semibold leading-5 text-chalk/50">
         Note: FM Lab is an unofficial estimate for quick coach comparison. Exact
         in-game stars can vary with workload and assignments.
-      </p>
-
-      <div className="mt-4">
-        <h2 className="text-sm font-black uppercase tracking-[0.14em] text-touchline/78">
-          All Assignment Ratings
-        </h2>
-        <div className="mt-2 overflow-hidden rounded-lg border border-chalk/10">
-          <table className="w-full border-collapse text-left text-sm">
-            <thead className="bg-chalk/10 text-xs uppercase tracking-[0.12em] text-touchline/75">
-              <tr>
-                <th className="px-3 py-2 font-black">Assignment</th>
-                <th className="px-3 py-2 font-black">Stars</th>
-                <th className="hidden px-3 py-2 font-black sm:table-cell">
-                  Range
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {assignmentRatings.map((assignment) => {
-                const isSelected = assignment.id === selectedAssignmentId;
-
-                return (
-                  <tr
-                    className={[
-                      "border-t border-chalk/10",
-                      isSelected ? "bg-signal/14" : "bg-chalk/4"
-                    ].join(" ")}
-                    key={assignment.id}
-                  >
-                    <td className="px-3 py-2 align-top">
-                      <div className="font-black leading-5">
-                        {assignment.label}
-                      </div>
-                      <div className="mt-1 text-xs leading-5 text-chalk/60">
-                        {assignment.keyAttributes
-                          .map((attribute) => attribute.label)
-                          .join(", ")}
-                      </div>
-                    </td>
-                    <td className="px-3 py-2 align-top">
-                      <div className="font-black text-signal">
-                        {assignment.stars.toFixed(1)}
-                      </div>
-                      <div className="mt-1">
-                        <StarRating size="xs" value={assignment.stars} />
-                      </div>
-                    </td>
-                    <td className="hidden px-3 py-2 align-top font-bold text-chalk/70 sm:table-cell">
-                      {formatRange(assignment)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p className="mt-4 rounded-lg border border-signal/35 bg-signal/12 p-2.5 text-sm font-semibold leading-6 text-chalk">
-        The strongest roles rise to the top, so every coach has a clear job
-        before he joins your club.
       </p>
     </aside>
   );

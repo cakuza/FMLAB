@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { AttributeSelect } from "@/components/AttributeSelect";
 import { CategorySelect } from "@/components/CategorySelect";
 import { RatingResult } from "@/components/RatingResult";
+import { StarRating } from "@/components/StarRating";
 import {
   type AttributeKey,
   type AttributeLevelId,
@@ -22,6 +23,9 @@ import {
   defaultTrainingCategoryId,
   trainingCategoryById
 } from "@/lib/trainingCategories";
+
+const formatRange = (assignment: ReturnType<typeof calculateAssignmentRatings>[number]) =>
+  `${assignment.range.minStars.toFixed(1)}-${assignment.range.maxStars.toFixed(1)}`;
 
 const examplePresets: {
   label: string;
@@ -135,8 +139,9 @@ export function CoachRatingCalculator() {
     .join(", ");
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_430px]">
-      <section className="order-2 rounded-lg border border-ink/10 bg-white/80 p-3 shadow-panel lg:order-1">
+    <>
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_430px]">
+        <section className="order-2 rounded-lg border border-ink/10 bg-white/80 p-3 shadow-panel lg:order-1">
         <div className="mb-3 rounded-lg border border-ink/10 bg-touchline/45 p-3">
           <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/80">
             Choose a preset or enter a coach&apos;s attributes to see his best
@@ -225,15 +230,69 @@ export function CoachRatingCalculator() {
             </div>
           </section>
         </div>
-      </section>
+        </section>
 
-      <RatingResult
-        assignmentRatings={assignmentRatings}
-        className="order-1 lg:order-2"
-        isDefaultProfile={isDefaultProfile}
-        recommendedAssignments={recommendedAssignments}
-        selectedAssignmentId={highlightAssignmentId}
-      />
-    </div>
+        <RatingResult
+          assignmentRatings={assignmentRatings}
+          className="order-1 lg:order-2"
+          isDefaultProfile={isDefaultProfile}
+          recommendedAssignments={recommendedAssignments}
+          selectedAssignmentId={highlightAssignmentId}
+        />
+      </div>
+
+      <section className="mt-4 rounded-lg border border-ink/10 bg-white/78 p-4 shadow-panel">
+        <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
+          All Assignment Ratings
+        </h2>
+        <div className="mt-3 overflow-x-auto rounded-lg border border-ink/10">
+          <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+            <thead className="bg-chalk text-xs uppercase tracking-[0.12em] text-ink/62">
+              <tr>
+                <th className="px-4 py-3 font-black">Assignment</th>
+                <th className="px-4 py-3 font-black">Stars</th>
+                <th className="px-4 py-3 font-black">Range</th>
+                <th className="px-4 py-3 font-black">Key attributes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {assignmentRatings.map((assignment) => {
+                const isSelected = assignment.id === highlightAssignmentId;
+
+                return (
+                  <tr
+                    className={[
+                      "border-t border-ink/10",
+                      isSelected ? "bg-signal/10" : "bg-white/40"
+                    ].join(" ")}
+                    key={assignment.id}
+                  >
+                    <td className="px-4 py-3 font-black text-ink">
+                      {assignment.label}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <span className="font-black text-pitch">
+                          {assignment.stars.toFixed(1)}
+                        </span>
+                        <StarRating size="xs" value={assignment.stars} />
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 font-bold text-ink/70">
+                      {formatRange(assignment)}
+                    </td>
+                    <td className="px-4 py-3 text-ink/68">
+                      {assignment.keyAttributes
+                        .map((attribute) => attribute.label)
+                        .join(", ")}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </>
   );
 }

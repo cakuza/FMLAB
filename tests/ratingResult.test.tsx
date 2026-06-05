@@ -58,7 +58,10 @@ describe("RatingResult verdict display", () => {
     );
 
     expect(html).not.toContain("Weakest current fit");
-    expect(html).toContain("No clear weak assignment yet");
+    expect(html).not.toContain("Attacking Tactical");
+    expect(html).toContain(
+      "Choose a preset or enter a coach&#x27;s attributes to see his assignment ratings."
+    );
   });
 
   it("only shows the weakest fit when the gap is meaningful and the assignment differs", () => {
