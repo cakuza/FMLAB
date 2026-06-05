@@ -37,20 +37,16 @@ export default function Home() {
           </h2>
           <ol className="mt-3 grid gap-2 text-sm leading-6 text-ink/72 sm:grid-cols-2 lg:grid-cols-4">
             <li>
-              <strong className="text-ink">1.</strong> Open a coach profile in
-              FM26.
+              Open a coach profile in FM26.
             </li>
             <li>
-              <strong className="text-ink">2.</strong> Match the visible word
-              levels here.
+              Match the visible word levels here.
             </li>
             <li>
-              <strong className="text-ink">3.</strong> Check the estimated
-              stars by assignment.
+              Check the estimated stars by assignment.
             </li>
             <li>
-              <strong className="text-ink">4.</strong> Use the top results
-              before offering a contract.
+              Use the top results before offering a contract.
             </li>
           </ol>
         </article>

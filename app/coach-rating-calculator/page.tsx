@@ -52,20 +52,16 @@ export default function CoachRatingCalculatorPage() {
           </h2>
           <ol className="mt-4 grid gap-3 text-sm leading-6 text-ink/72 sm:grid-cols-2">
             <li>
-              <strong className="text-ink">1.</strong> Open a coach profile in
-              FM26.
+              Open a coach profile in FM26.
             </li>
             <li>
-              <strong className="text-ink">2.</strong> Copy the visible word
-              levels into the matching fields.
+              Copy the visible word levels into the matching fields.
             </li>
             <li>
-              <strong className="text-ink">3.</strong> Pick an assignment to see
-              its main levers.
+              Pick an assignment to see its main levers.
             </li>
             <li>
-              <strong className="text-ink">4.</strong> Use the highest star
-              results as your shortlist.
+              Use the highest star results as your shortlist.
             </li>
           </ol>
         </article>
