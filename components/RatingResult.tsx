@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import type { AssignmentRating } from "@/lib/ratingFormula";
 import { StarRating } from "./StarRating";
 
@@ -55,6 +55,15 @@ const getVerdictTier = (stars: number) => {
 const formatAlsoUseful = (assignments: AssignmentRating[]) =>
   assignments.map((assignment) => assignment.label).join(", ");
 
+export const shouldShowWeakestFit = (
+  bestAssignment: Pick<AssignmentRating, "id" | "stars"> | undefined,
+  weakestAssignment: Pick<AssignmentRating, "id" | "stars"> | undefined
+) =>
+  Boolean(bestAssignment && weakestAssignment) &&
+  bestAssignment?.id !== weakestAssignment?.id &&
+  (bestAssignment?.stars ?? 0) - (weakestAssignment?.stars ?? 0) >=
+    meaningfulWeakFitGap;
+
 const formatCopyText = (
   topAssignment: AssignmentRating,
   secondaryAssignments: AssignmentRating[],
@@ -97,10 +106,10 @@ export function RatingResult({
   const verdict = topAssignment
     ? getVerdictTier(topAssignment.stars)
     : getVerdictTier(0);
-  const shouldShowWeakestAssignment =
-    Boolean(topAssignment && weakestAssignment) &&
-    topAssignment.id !== weakestAssignment.id &&
-    topAssignment.stars - weakestAssignment.stars >= meaningfulWeakFitGap;
+  const shouldShowWeakestAssignment = shouldShowWeakestFit(
+    topAssignment,
+    weakestAssignment
+  );
 
   const copyResult = async () => {
     if (!topAssignment) {
