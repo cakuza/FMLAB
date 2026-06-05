@@ -225,16 +225,12 @@ export function RatingResult({
         </p>
       )}
 
-      <div
-        aria-label="Next best assignment fits"
-        className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1"
-        role="list"
-      >
+      <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
         {secondaryAssignments.map((assignment, index) => (
-          <article
+          <div
+            aria-label={`Rank ${index + 2}: ${assignment.label}`}
             className="rounded-lg border border-chalk/12 bg-chalk/10 p-3"
             key={assignment.id}
-            role="listitem"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -255,7 +251,7 @@ export function RatingResult({
                 {formatRange(assignment)} range
               </span>
             </div>
-          </article>
+          </div>
         ))}
       </div>
 
