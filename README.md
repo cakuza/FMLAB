@@ -1,11 +1,11 @@
 # FM26 Staff & Training Tools
 
-Unofficial fan-made tools for evaluating staff and coach assignment fit in
-Football Manager 2026.
+Practical tools for evaluating staff and coach assignment fit in Football
+Manager 2026.
 
 The main tool is the FM26 Coach Assignment Calculator. It uses the word-level
-staff attributes shown in FM26, then applies an internal fan-made approximation
-model to estimate stars for the 9 visible coach assignment categories.
+staff attributes shown in FM26, then applies an internal estimate model to
+compare stars for the 9 visible coach assignment categories.
 
 ## How to Use
 
@@ -119,8 +119,7 @@ and canonical metadata use the live domain.
 The model is intentionally presented as an estimated assignment model. The
 internal attribute level model can be changed in `lib/attributeLevels.ts`, and
 assignment weights can be tuned in `lib/trainingCategories.ts`. These values are
-for the fan-made approximation only and are not presented as official Football
-Manager data.
+for comparison only and are not presented as official Football Manager data.
 
 FM Lab is an unofficial fan-made tool and is not affiliated with, endorsed by,
 sponsored by, or connected to Sports Interactive, SEGA, or Football Manager. All

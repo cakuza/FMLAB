@@ -161,51 +161,56 @@ export function RatingResult({
       </div>
 
       {isDefaultProfile ? (
-        <p className="mt-3 rounded-lg border border-touchline/20 bg-touchline/10 p-3 text-sm font-semibold leading-6 text-chalk/82">
+        <p className="mt-2 text-xs font-semibold leading-5 text-chalk/54">
           Select a coach&apos;s word levels to generate a more meaningful
           recommendation.
         </p>
       ) : null}
 
       {topAssignment ? (
-        <section className="mt-3 rounded-lg border border-signal/45 bg-signal/12 p-3">
-          <div className="flex items-start justify-between gap-4">
+        <section className="mt-3 rounded-lg border border-signal/50 bg-signal/12 p-4">
+          <div className="grid gap-3">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
+                  Best fit
+                </p>
+                <h2 className="mt-1 text-xl font-black leading-6">
+                  {topAssignment.label}
+                </h2>
+              </div>
+              <p className="text-5xl font-black leading-none text-signal">
+                {topAssignment.stars.toFixed(1)}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <StarRating size="md" value={topAssignment.stars} />
+              <span className="text-xs font-bold text-touchline">
+                {formatRange(topAssignment)} range
+              </span>
+            </div>
             <div>
               <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
-                Best fit
+                Verdict
               </p>
-              <h2 className="mt-1 text-xl font-black leading-6">
-                {topAssignment.label}
-              </h2>
+              <p className="mt-1 text-sm font-black text-chalk">
+                {verdict.label}
+              </p>
+              <p className="mt-1 text-xs font-semibold leading-5 text-chalk/58">
+                {verdict.meaning}
+              </p>
             </div>
-            <p className="text-4xl font-black leading-none text-signal">
-              {topAssignment.stars.toFixed(1)}
-            </p>
-          </div>
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-            <StarRating size="sm" value={topAssignment.stars} />
-            <span className="text-xs font-bold text-touchline">
-              {formatRange(topAssignment)} range
-            </span>
-          </div>
-          <div className="mt-3 rounded-md border border-chalk/10 bg-ink/20 p-3">
-            <p className="text-sm font-black text-chalk">{verdict.label}</p>
-            <p className="mt-1 text-sm leading-6 text-chalk/76">
-              {verdict.meaning}
-            </p>
           </div>
         </section>
       ) : null}
 
       {secondaryAssignments.length > 0 ? (
-        <section className="mt-3 rounded-lg border border-chalk/10 bg-chalk/10 p-3">
-          <p className="text-xs font-black uppercase tracking-[0.12em] text-touchline/75">
-            Also useful for
-          </p>
-          <p className="mt-1 text-sm font-bold leading-6 text-chalk">
+        <p className="mt-3 text-sm font-semibold leading-6 text-chalk/76">
+          <span className="font-black text-touchline/80">Also useful for:</span>{" "}
+          <span className="font-bold text-chalk">
             {formatAlsoUseful(secondaryAssignments)}
-          </p>
-        </section>
+          </span>
+        </p>
       ) : null}
 
       {shouldShowWeakestAssignment && weakestAssignment ? (
@@ -219,25 +224,6 @@ export function RatingResult({
           reveal stronger and weaker fits.
         </p>
       )}
-
-      <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/10 p-3">
-        <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.12em] text-touchline/78">
-          What do the stars mean?
-        </summary>
-        <ul className="mt-2 grid gap-1 text-xs font-semibold leading-5 text-chalk/72">
-          <li>4.5-5.0: Elite assignment fit</li>
-          <li>4.0-4.5: Strong specialist</li>
-          <li>3.0-4.0: Useful club-level option</li>
-          <li>2.0-3.0: Backup/depth option</li>
-          <li>Below 2.0: Weak fit</li>
-        </ul>
-      </details>
-
-      <p className="mt-3 rounded-lg border border-chalk/10 bg-chalk/10 p-3 text-xs font-semibold leading-5 text-chalk/68">
-        FM Lab estimates the rating for a single assignment. In-game stars may
-        look lower if a coach is assigned to multiple areas or if workload is
-        high.
-      </p>
 
       <ol className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
         {secondaryAssignments.map((assignment, index) => (
@@ -267,6 +253,25 @@ export function RatingResult({
           </li>
         ))}
       </ol>
+
+      <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/6 p-3">
+        <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.12em] text-touchline/68">
+          What do the stars mean?
+        </summary>
+        <ul className="mt-2 grid gap-1 text-xs font-semibold leading-5 text-chalk/62">
+          <li>4.5-5.0: Elite assignment fit</li>
+          <li>4.0-4.5: Strong specialist</li>
+          <li>3.0-4.0: Useful club-level option</li>
+          <li>2.0-3.0: Backup/depth option</li>
+          <li>Below 2.0: Weak fit</li>
+        </ul>
+      </details>
+
+      <p className="mt-2 text-xs font-semibold leading-5 text-chalk/50">
+        FM Lab estimates the rating for a single assignment. In-game stars may
+        look lower if a coach is assigned to multiple areas or if workload is
+        high.
+      </p>
 
       <div className="mt-4">
         <h2 className="text-sm font-black uppercase tracking-[0.14em] text-touchline/78">
