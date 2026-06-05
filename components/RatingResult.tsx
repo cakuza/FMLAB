@@ -226,6 +226,12 @@ export function RatingResult({
         </ul>
       </details>
 
+      <p className="mt-3 rounded-lg border border-chalk/10 bg-chalk/10 p-3 text-xs font-semibold leading-5 text-chalk/68">
+        FM Lab estimates the rating for a single assignment. In-game stars may
+        look lower if a coach is assigned to multiple areas or if workload is
+        high.
+      </p>
+
       <ol className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
         {secondaryAssignments.map((assignment, index) => (
           <li
