@@ -174,11 +174,12 @@ export function RatingResult({
       {isDefaultProfile ? (
         <div className="mt-3 rounded-lg border border-chalk/12 bg-chalk/8 p-4">
           <p className="text-sm font-black leading-6 text-chalk">
-            Start with a preset or match the coach&apos;s word levels from FM26.
+            Start with a preset, then adjust the word levels to match the coach
+            you are checking.
           </p>
           <p className="mt-2 text-xs font-semibold leading-5 text-chalk/56">
-            Use presets to see how specialist profiles change the ratings, then
-            adjust the attributes to match the coach you are checking.
+            Once you enter a real profile, FM Lab will show the best training
+            roles and what to expect from him.
           </p>
           {presetActions.length > 0 ? (
             <div className="mt-3 flex flex-wrap gap-2">

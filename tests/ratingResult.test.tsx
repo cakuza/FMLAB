@@ -60,7 +60,7 @@ describe("RatingResult verdict display", () => {
     expect(html).not.toContain("Weakest current fit");
     expect(html).not.toContain("Attacking Tactical");
     expect(html).toContain(
-      "Start with a preset or match the coach&#x27;s word levels from FM26."
+      "Start with a preset, then adjust the word levels to match the coach you are checking."
     );
   });
 
