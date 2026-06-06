@@ -4,7 +4,6 @@ import React, { useMemo, useState } from "react";
 import { AttributeSelect } from "@/components/AttributeSelect";
 import { CategorySelect } from "@/components/CategorySelect";
 import { RatingResult } from "@/components/RatingResult";
-import { StarRating } from "@/components/StarRating";
 import {
   type AttributeKey,
   type AttributeLevelId,
@@ -15,9 +14,7 @@ import {
   staffQualityAttributes
 } from "@/lib/attributeLevels";
 import {
-  type AssignmentRating,
-  calculateAssignmentRatings,
-  getRecommendedAssignments
+  calculateAssignmentRatings
 } from "@/lib/ratingFormula";
 import {
   type TrainingCategoryId,
@@ -27,12 +24,10 @@ import {
 
 const examplePresets: {
   label: string;
-  shortLabel: string;
   selections: AttributeSelections;
 }[] = [
   {
     label: "Try attacking coach",
-    shortLabel: "Attacking coach",
     selections: {
       ...createDefaultSelections(),
       attacking: "very-good",
@@ -50,7 +45,6 @@ const examplePresets: {
   },
   {
     label: "Try fitness coach",
-    shortLabel: "Fitness coach",
     selections: {
       ...createDefaultSelections(),
       attacking: "competent",
@@ -68,7 +62,6 @@ const examplePresets: {
   },
   {
     label: "Try set pieces coach",
-    shortLabel: "Set pieces coach",
     selections: {
       ...createDefaultSelections(),
       attacking: "average",
@@ -86,18 +79,6 @@ const examplePresets: {
   }
 ];
 
-export const sortAssignmentRatingsForDisplay = (
-  assignmentRatings: AssignmentRating[]
-) =>
-  assignmentRatings
-    .map((assignment, index) => ({ assignment, index }))
-    .sort(
-      (a, b) =>
-        b.assignment.stars - a.assignment.stars ||
-        b.assignment.score - a.assignment.score ||
-        a.index - b.index
-    );
-
 export function CoachRatingCalculator() {
   const [highlightAssignmentId, setHighlightAssignmentId] =
     useState<TrainingCategoryId>(defaultTrainingCategoryId);
@@ -109,14 +90,6 @@ export function CoachRatingCalculator() {
   const assignmentRatings = useMemo(
     () => calculateAssignmentRatings(selections),
     [selections]
-  );
-  const recommendedAssignments = useMemo(
-    () => getRecommendedAssignments(selections, 3),
-    [selections]
-  );
-  const sortedAssignmentRatings = useMemo(
-    () => sortAssignmentRatingsForDisplay(assignmentRatings),
-    [assignmentRatings]
   );
   const highlightedAssignment = trainingCategoryById[highlightAssignmentId];
   const highlightedWeights = new Map<AttributeKey, number>(
@@ -254,66 +227,9 @@ export function CoachRatingCalculator() {
           assignmentRatings={assignmentRatings}
           className="order-1 lg:order-2"
           isDefaultProfile={isDefaultProfile}
-          presetActions={examplePresets.map((preset) => ({
-            label: preset.shortLabel,
-            onClick: () => applyPreset(preset)
-          }))}
-          recommendedAssignments={recommendedAssignments}
           selectedAssignmentId={highlightAssignmentId}
         />
       </div>
-
-      <section className="mt-4 rounded-lg border border-ink/10 bg-white/78 p-4 shadow-panel">
-        <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
-          All Assignment Ratings
-        </h2>
-        <p className="mt-2 text-sm font-semibold leading-6 text-ink/64">
-          {isDefaultProfile
-            ? "Default values shown. Choose a preset or enter a coach's attributes to see meaningful differences."
-            : "Full rating table for the current coach profile."}
-        </p>
-        <div className="mt-3 overflow-x-auto rounded-lg border border-ink/10">
-          <table className="w-full min-w-[420px] border-collapse text-left text-sm">
-            <thead className="bg-chalk text-xs uppercase tracking-[0.12em] text-ink/62">
-              <tr>
-                <th className="w-14 px-3 py-3 font-black">#</th>
-                <th className="px-3 py-3 font-black">Assignment</th>
-                <th className="px-3 py-3 text-right font-black">Rating</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedAssignmentRatings.map(({ assignment }, index) => {
-                const isSelected = assignment.id === highlightAssignmentId;
-
-                return (
-                  <tr
-                    className={[
-                      "border-t border-ink/10",
-                      isSelected ? "bg-signal/10" : "bg-white/40"
-                    ].join(" ")}
-                    key={assignment.id}
-                  >
-                    <td className="px-3 py-3 font-black text-ink/58">
-                      {index + 1}
-                    </td>
-                    <td className="px-3 py-3 font-black text-ink">
-                      {assignment.label}
-                    </td>
-                    <td className="px-3 py-3">
-                      <div className="flex items-center justify-end gap-3">
-                        <span className="font-black text-pitch">
-                          {assignment.stars.toFixed(1)}
-                        </span>
-                        <StarRating size="xs" value={assignment.stars} />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </section>
     </>
   );
 }

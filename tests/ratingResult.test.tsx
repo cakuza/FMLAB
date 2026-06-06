@@ -6,14 +6,12 @@ import {
   copyTextWithFallback,
   formatCopyText,
   RatingResult,
-  shouldShowWeakestFit
+  sortAssignmentRatingsForDisplay
 } from "@/components/RatingResult";
-import { sortAssignmentRatingsForDisplay } from "@/components/CoachRatingCalculator";
 import { createDefaultSelections } from "@/lib/attributeLevels";
 import type { AssignmentRating } from "@/lib/ratingFormula";
 import {
-  calculateAssignmentRatings,
-  getRecommendedAssignments
+  calculateAssignmentRatings
 } from "@/lib/ratingFormula";
 import { defaultTrainingCategoryId } from "@/lib/trainingCategories";
 
@@ -37,19 +35,15 @@ const createAssignment = (
   keyAttributes: []
 });
 
-describe("RatingResult verdict display", () => {
+describe("RatingResult assignment table display", () => {
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
   });
 
-  it("does not show a weakest assignment for the real homepage default state", () => {
+  it("shows all 9 assignment ratings in the real homepage default state", () => {
     const defaultSelections = createDefaultSelections();
     const assignmentRatings = calculateAssignmentRatings(defaultSelections);
-    const recommendedAssignments = getRecommendedAssignments(
-      defaultSelections,
-      3
-    );
 
     expect(
       assignmentRatings.every(
@@ -61,56 +55,41 @@ describe("RatingResult verdict display", () => {
       React.createElement(RatingResult, {
         assignmentRatings,
         isDefaultProfile: true,
-        recommendedAssignments,
         selectedAssignmentId: defaultTrainingCategoryId
       })
     );
 
+    expect(html).toContain("All Assignment Ratings");
+    expect(html).not.toContain("Top Assignment Fits");
+    expect(html).toContain("Attacking Tactical");
+    expect(html).toContain("Attacking Technical");
+    expect(html).toContain("Defending Tactical");
+    expect(html).toContain("Defending Technical");
+    expect(html).toContain("Possession Tactical");
+    expect(html).toContain("Possession Technical");
+    expect(html).toContain("Goalkeeping");
+    expect(html).toContain("Fitness");
+    expect(html).toContain("Set Pieces");
     expect(html).not.toContain("Weakest current fit");
-    expect(html).not.toContain("Attacking Tactical");
     expect(html).toContain(
-      "Start with a preset, then adjust the word levels to match the coach you are checking."
+      "Default values shown. Choose a preset or enter a coach&#x27;s attributes to see meaningful differences."
     );
-  });
-
-  it("only shows the weakest fit when the gap is meaningful and the assignment differs", () => {
-    expect(
-      shouldShowWeakestFit(
-        createAssignment("attackingTactical", "Attacking Tactical", 3),
-        createAssignment("attackingTactical", "Attacking Tactical", 2)
-      )
-    ).toBe(false);
-    expect(
-      shouldShowWeakestFit(
-        createAssignment("attackingTactical", "Attacking Tactical", 3),
-        createAssignment("fitness", "Fitness", 2.5)
-      )
-    ).toBe(true);
-    expect(
-      shouldShowWeakestFit(
-        createAssignment("attackingTactical", "Attacking Tactical", 3),
-        createAssignment("fitness", "Fitness", 3)
-      )
-    ).toBe(false);
   });
 
   it("formats copy text as a concise coach assignment result", () => {
     const text = formatCopyText(
-      createAssignment("attackingTactical", "Attacking Tactical", 4),
       [
+        createAssignment("attackingTactical", "Attacking Tactical", 4),
         createAssignment("attackingTechnical", "Attacking Technical", 3.5),
         createAssignment("possessionTactical", "Possession Tactical", 3.5)
-      ],
-      "Worth prioritizing for this training role."
+      ]
     );
 
     expect(text).toContain("FM Lab Coach Assignment");
-    expect(text).toContain("Best use: Attacking Tactical — 4.0 stars");
+    expect(text).toContain("Best current fit: Attacking Tactical — 4.0 stars");
+    expect(text).toContain("Top ratings:");
     expect(text).toContain(
-      "Also useful: Attacking Technical — 3.5, Possession Tactical — 3.5"
-    );
-    expect(text).toContain(
-      "Decision: Worth prioritizing for this training role."
+      "2. Attacking Technical — 3.5"
     );
     expect(text).toContain("Note: estimated for quick coach comparison.");
   });
@@ -149,9 +128,9 @@ describe("RatingResult verdict display", () => {
     expect(removeChild).toHaveBeenCalledWith(textarea);
   });
 
-  it("keeps the all assignment table compact and free of range/key-attribute columns", () => {
+  it("keeps the right assignment table compact and free of range/key-attribute columns", () => {
     const source = readFileSync(
-      "components/CoachRatingCalculator.tsx",
+      "components/RatingResult.tsx",
       "utf8"
     );
 
@@ -160,6 +139,7 @@ describe("RatingResult verdict display", () => {
     expect(source).not.toContain("Key attributes");
     expect(source).not.toContain("Range</th>");
     expect(source).not.toContain("formatRange");
+    expect(source).not.toContain("Top Assignment Fits");
   });
 
   it("sorts assignment rows by rating while preserving stable order for ties", () => {
