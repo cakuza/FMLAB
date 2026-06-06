@@ -22,7 +22,7 @@ import {
   trainingCategoryById
 } from "@/lib/trainingCategories";
 
-const examplePresets: {
+export const examplePresets: {
   label: string;
   selections: AttributeSelections;
 }[] = [

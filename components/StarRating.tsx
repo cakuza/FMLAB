@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 type StarRatingProps = {
   value: number;
   size?: "xs" | "sm" | "md" | "lg";
+  tone?: "light" | "dark";
 };
 
 const sizeClasses = {
@@ -13,8 +14,13 @@ const sizeClasses = {
   lg: "h-10 w-10"
 };
 
-export function StarRating({ value, size = "md" }: StarRatingProps) {
+export function StarRating({
+  value,
+  size = "md",
+  tone = "light"
+}: StarRatingProps) {
   const starClassName = sizeClasses[size];
+  const emptyStarClassName = tone === "dark" ? "text-chalk/28" : "text-ink/18";
 
   return (
     <div
@@ -26,7 +32,10 @@ export function StarRating({ value, size = "md" }: StarRatingProps) {
         const fillPercent = Math.max(0, Math.min(1, value - index)) * 100;
 
         return (
-          <span key={index} className={`relative ${starClassName} text-ink/18`}>
+          <span
+            key={index}
+            className={`relative ${starClassName} ${emptyStarClassName}`}
+          >
             <Star
               aria-hidden="true"
               className={starClassName}

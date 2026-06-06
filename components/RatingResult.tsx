@@ -88,7 +88,7 @@ export function RatingResult({
                     title={`${assignment.stars.toFixed(1)} stars`}
                   >
                     <div className="flex items-center justify-end">
-                      <StarRating size="xs" value={assignment.stars} />
+                      <StarRating size="sm" tone="dark" value={assignment.stars} />
                     </div>
                   </td>
                 </tr>

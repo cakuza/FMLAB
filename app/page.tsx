@@ -155,26 +155,26 @@ const structuredData = [
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <section className="relative mb-5 overflow-hidden rounded-lg border border-ink/10 bg-chalk/88 px-5 py-6 shadow-panel sm:px-7 sm:py-8">
+      <section className="relative mb-3 overflow-hidden rounded-lg border border-ink/10 bg-chalk/88 px-4 py-4 shadow-panel sm:px-6 sm:py-5">
         <div className="pitch-lines pointer-events-none absolute inset-0 opacity-[0.075]" />
         <div className="relative max-w-5xl">
-          <h1 className="max-w-4xl text-3xl font-black leading-[1.05] text-ink sm:text-4xl lg:text-5xl">
-            FM26 Coach Calculator
+          <h1 className="max-w-4xl text-2xl font-black leading-tight text-ink sm:text-3xl lg:text-4xl">
+            FM26 Coach Assignment Calculator
           </h1>
-          <p className="mt-3 max-w-3xl text-base leading-7 text-ink/72 sm:text-lg">
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-ink/72 sm:text-base">
             Rate Football Manager 2026 coaches for every training assignment
             using visible staff attributes.
           </p>
-          <p className="mt-4 max-w-3xl border-l-4 border-signal bg-white/45 py-2 pl-4 text-sm font-bold leading-6 text-ink/78">
+          <p className="mt-2 max-w-3xl border-l-4 border-signal bg-white/45 py-1.5 pl-3 text-xs font-bold leading-5 text-ink/78 sm:text-sm">
             Compare Attacking, Defending, Possession, Goalkeeping, Fitness and
             Set Pieces ratings before you offer wages.
           </p>
-          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-pitch/78">
+          <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.12em] text-pitch/78">
             <span className="inline-flex items-center gap-2 rounded-full border border-pitch/20 bg-touchline/65 px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-signal" />
               FM26 Staff Tool
@@ -186,32 +186,62 @@ export default function Home() {
 
       <nav
         aria-label="Page sections"
-        className="mb-5 flex flex-wrap gap-2 text-sm font-black text-pitch"
+        className="mb-3 flex flex-wrap gap-2 text-xs font-black text-pitch sm:text-sm"
       >
-        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55" href="#calculator">
+        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-1.5 hover:bg-touchline/55" href="#calculator">
           Calculator
         </a>
-        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55" href="#how-to-use-it">
+        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-1.5 hover:bg-touchline/55" href="#how-to-use-it">
           How to use it
         </a>
-        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55" href="#best-attributes">
+        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-1.5 hover:bg-touchline/55" href="#best-attributes">
           Best attributes
         </a>
-        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55" href="#faq">
+        <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-1.5 hover:bg-touchline/55" href="#faq">
           FAQ
         </a>
       </nav>
 
-      <section className="mb-5 rounded-lg border border-ink/10 bg-white/78 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.08)]">
-        <h2 className="text-xl font-black text-ink">
+      <section className="mb-3" id="how-to-use-it">
+        <div className="mb-2 flex items-end justify-between gap-4">
+          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
+            How to use it
+          </h2>
+          <span className="hidden h-px flex-1 bg-ink/10 sm:block" />
+        </div>
+        <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          {howToSteps.map((step) => (
+            <li
+              className="rounded-lg border border-ink/10 bg-white/78 p-3 shadow-[0_12px_34px_rgba(23,32,28,0.08)]"
+              key={step.number}
+            >
+              <span className="inline-flex rounded-full bg-pitch px-2 py-0.5 text-[10px] font-black tracking-[0.12em] text-chalk">
+                {step.number}
+              </span>
+              <h3 className="mt-2 text-sm font-black leading-5 text-ink">
+                {step.title}
+              </h3>
+              <p className="mt-1 text-xs leading-5 text-ink/68">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="calculator">
+        <h2 className="sr-only">FM26 coach calculator</h2>
+        <CoachRatingCalculator />
+      </section>
+
+      <section className="mt-5 rounded-lg border border-ink/10 bg-white/78 p-4 shadow-[0_12px_34px_rgba(23,32,28,0.08)]">
+        <h2 className="text-lg font-black text-ink">
           What does this FM26 coach calculator do?
         </h2>
-        <p className="mt-3 max-w-4xl leading-7 text-ink/72">
+        <p className="mt-2 max-w-4xl text-sm leading-6 text-ink/72">
           This tool estimates how well a Football Manager 2026 staff member
           fits each coaching assignment. Enter the coach&apos;s visible attributes,
           then compare assignment ratings from 1 to 5 stars.
         </p>
-        <ul className="mt-4 grid gap-2 text-sm font-bold text-ink/72 sm:grid-cols-3">
+        <ul className="mt-3 grid gap-2 text-xs font-bold text-ink/72 sm:grid-cols-3">
           <li className="rounded-lg border border-ink/10 bg-chalk/72 px-3 py-2">
             Best for: choosing staff assignments before hiring.
           </li>
@@ -222,36 +252,6 @@ export default function Home() {
             Output: all 9 assignment ratings in one table.
           </li>
         </ul>
-      </section>
-
-      <section className="mb-5" id="how-to-use-it">
-        <div className="mb-3 flex items-end justify-between gap-4">
-          <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
-            How to use it
-          </h2>
-          <span className="hidden h-px flex-1 bg-ink/10 sm:block" />
-        </div>
-        <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {howToSteps.map((step) => (
-            <li
-              className="rounded-lg border border-ink/10 bg-white/78 p-4 shadow-[0_12px_34px_rgba(23,32,28,0.08)]"
-              key={step.number}
-            >
-              <span className="inline-flex rounded-full bg-pitch px-2.5 py-1 text-[11px] font-black tracking-[0.12em] text-chalk">
-                {step.number}
-              </span>
-              <h3 className="mt-3 text-base font-black leading-5 text-ink">
-                {step.title}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-ink/68">{step.text}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section id="calculator">
-        <h2 className="sr-only">FM26 coach calculator</h2>
-        <CoachRatingCalculator />
       </section>
 
       <section className="mt-5">
