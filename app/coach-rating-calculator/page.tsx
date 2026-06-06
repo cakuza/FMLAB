@@ -32,9 +32,6 @@ export default function CoachRatingCalculatorPage() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <div className="mb-8 max-w-3xl">
-        <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-bench">
-          Coach assignment calculator
-        </p>
         <h1 className="text-3xl font-black leading-tight text-ink sm:text-5xl">
           FM26 Coach Assignment Calculator
         </h1>
@@ -46,9 +43,13 @@ export default function CoachRatingCalculatorPage() {
           Stop guessing in the staff room. The strongest roles rise to the top,
           so every coach has a clear job before he joins your club.
         </p>
-        <p className="mt-3 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
-          Updated for FM26
-        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
+          <span className="inline-flex items-center gap-2 rounded-full border border-pitch/20 bg-touchline/60 px-3 py-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+            FM26 Staff Tool
+          </span>
+          <span>Updated for FM26</span>
+        </div>
       </div>
 
       <section className="mb-5">
@@ -91,17 +92,33 @@ export default function CoachRatingCalculatorPage() {
           <h2 className="text-xl font-black text-ink">
             How do FM26 coach assignments work?
           </h2>
-          <p className="mt-3 leading-7">
-            Each training assignment combines its main coaching attributes with
-            supporting mental attributes: Determination, Authority and
-            Motivating. FM Lab ranks all 9 assignment slots so you can compare
-            staff candidates, avoid wasting wage budget, and assign each coach
-            where he actually helps.
-          </p>
-          <p className="mt-3 font-semibold leading-7 text-ink/72">
-            Best used to compare staff candidates before committing wages or
-            assigning training responsibilities.
-          </p>
+          <div className="mt-4 grid gap-3">
+            {[
+              {
+                title: "Uses visible FM26 word levels",
+                text:
+                  "Enter the coach attributes you can see in-game, including coaching and mental ratings."
+              },
+              {
+                title: "Ranks training roles",
+                text:
+                  "FM Lab ranks all 9 assignment roles so you can see where the coach helps most."
+              },
+              {
+                title: "Helps hiring decisions",
+                text:
+                  "Use it before committing wages or assigning training responsibilities."
+              }
+            ].map((item) => (
+              <section
+                className="rounded-lg border border-ink/10 bg-chalk/74 p-4"
+                key={item.title}
+              >
+                <h3 className="font-black text-ink">{item.title}</h3>
+                <p className="mt-2 leading-7 text-ink/70">{item.text}</p>
+              </section>
+            ))}
+          </div>
         </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
           <h2 className="text-xl font-black text-ink">
@@ -196,9 +213,9 @@ export default function CoachRatingCalculatorPage() {
           Use this as a quick checklist when you are scanning staff profiles in
           Football Manager 2026.
         </p>
-        <div className="mt-5 overflow-x-auto rounded-lg border border-ink/10">
+        <div className="mt-5 overflow-x-auto rounded-lg border border-ink/10 shadow-sm">
           <table className="w-full min-w-[680px] border-collapse text-left text-sm">
-            <thead className="bg-chalk text-xs uppercase tracking-[0.12em] text-ink/62">
+            <thead className="bg-pitch/8 text-xs uppercase tracking-[0.12em] text-ink/62">
               <tr>
                 <th className="px-4 py-3 font-black">Assignment</th>
                 <th className="px-4 py-3 font-black">Main attributes</th>

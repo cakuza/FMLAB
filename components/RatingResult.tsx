@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import type { AssignmentRating } from "@/lib/ratingFormula";
 import { StarRating } from "./StarRating";
 
@@ -23,73 +23,12 @@ export const sortAssignmentRatingsForDisplay = (
         a.index - b.index
     );
 
-export const formatCopyText = (
-  sortedAssignments: AssignmentRating[]
-) => {
-  const topAssignment = sortedAssignments[0];
-  const topRatings = sortedAssignments
-    .slice(0, 3)
-    .map(
-      (assignment, index) =>
-        `${index + 1}. ${assignment.label} — ${assignment.stars.toFixed(1)}`
-    )
-    .join("\n");
-  const lines = [
-    "FM Lab Coach Assignment",
-    topAssignment
-      ? `Best current fit: ${topAssignment.label} — ${topAssignment.stars.toFixed(1)} stars`
-      : "",
-    "Top ratings:",
-    topRatings
-  ].filter(Boolean);
-
-  return `${lines.join("\n")}\n\nNote: estimated for quick coach comparison.`;
-};
-
-const copyTextWithTextarea = (text: string) => {
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.left = "-9999px";
-  textarea.style.top = "0";
-  document.body.appendChild(textarea);
-  textarea.focus();
-  textarea.select();
-
-  try {
-    return document.execCommand("copy");
-  } finally {
-    document.body.removeChild(textarea);
-  }
-};
-
-export const copyTextWithFallback = async (text: string) => {
-  if (copyTextWithTextarea(text)) {
-    return true;
-  }
-
-  if (navigator.clipboard?.writeText) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  return false;
-};
-
 export function RatingResult({
   assignmentRatings,
   isDefaultProfile = false,
   selectedAssignmentId,
   className = ""
 }: RatingResultProps) {
-  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">(
-    "idle"
-  );
   const sortedAssignments = useMemo(
     () =>
       sortAssignmentRatingsForDisplay(assignmentRatings).map(
@@ -97,30 +36,6 @@ export function RatingResult({
       ),
     [assignmentRatings]
   );
-  const topAssignment = sortedAssignments[0];
-
-  const copyResult = async () => {
-    if (!topAssignment) {
-      return;
-    }
-
-    const text = formatCopyText(sortedAssignments);
-
-    try {
-      const copied = await copyTextWithFallback(text);
-
-      if (!copied) {
-        window.prompt("Copy result", text);
-      }
-
-      setCopyState("copied");
-    } catch {
-      window.prompt("Copy result", text);
-      setCopyState("failed");
-    }
-
-    window.setTimeout(() => setCopyState("idle"), 2200);
-  };
 
   return (
     <aside
@@ -130,27 +45,9 @@ export function RatingResult({
         className
       ].join(" ")}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-sm font-black uppercase tracking-[0.16em] text-signal">
-            All Assignment Ratings
-          </p>
-        </div>
-        <div className="shrink-0">
-          <button
-            className="rounded-full border border-chalk/15 bg-chalk/10 px-3 py-1.5 text-xs font-black text-chalk transition hover:bg-chalk/18 focus:outline-none focus:ring-4 focus:ring-signal/20 disabled:cursor-not-allowed disabled:opacity-45"
-            disabled={!topAssignment}
-            onClick={copyResult}
-            type="button"
-          >
-            {copyState === "copied"
-              ? "Copied"
-              : copyState === "failed"
-                ? "Copy failed"
-                : "Copy result"}
-          </button>
-        </div>
-      </div>
+      <p className="text-sm font-black uppercase tracking-[0.16em] text-signal">
+        All Assignment Ratings
+      </p>
 
       <p className="mt-2 text-xs font-semibold leading-5 text-chalk/56">
         {isDefaultProfile
@@ -185,11 +82,12 @@ export function RatingResult({
                   <td className="px-2 py-2 font-black text-chalk">
                     {assignment.label}
                   </td>
-                  <td className="px-2 py-2">
-                    <div className="flex items-center justify-end gap-2">
-                      <span className="font-black text-signal">
-                        {assignment.stars.toFixed(1)}
-                      </span>
+                  <td
+                    aria-label={`${assignment.label}, ${assignment.stars.toFixed(1)} stars`}
+                    className="px-2 py-2"
+                    title={`${assignment.stars.toFixed(1)} stars`}
+                  >
+                    <div className="flex items-center justify-end">
                       <StarRating size="xs" value={assignment.stars} />
                     </div>
                   </td>
@@ -199,13 +97,6 @@ export function RatingResult({
           </tbody>
         </table>
       </div>
-
-      {topAssignment ? (
-        <p className="mt-3 text-xs font-semibold leading-5 text-chalk/56">
-          Best current fit:{" "}
-          <span className="font-black text-chalk">{topAssignment.label}</span>.
-        </p>
-      ) : null}
 
       <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/6 p-3">
         <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.12em] text-touchline/68">
