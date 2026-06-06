@@ -1,33 +1,37 @@
 import type { Metadata } from "next";
 import { CoachRatingCalculator } from "@/components/CoachRatingCalculator";
 import { type AttributeKey, attributeLabels } from "@/lib/attributeLevels";
-import { siteName } from "@/lib/siteMetadata";
+import { siteName, siteUrl } from "@/lib/siteMetadata";
 import { trainingCategories } from "@/lib/trainingCategories";
 
-const pageTitle = "FM26 Coach Assignment Calculator";
+const pageTitle = "FM26 Coach Calculator - Staff Assignment Ratings | FM Lab";
 const pageDescription =
-  "See what a coach is likely to bring to your training setup before you hire him.";
+  "Estimate Football Manager 2026 coach ratings for Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces assignments using visible staff attributes.";
+const ogDescription =
+  "Compare FM26 staff assignment ratings before you hire or assign coaches.";
+const pageUrl = `${siteUrl}/coach-rating-calculator`;
 
 const howToSteps = [
   {
     number: "01",
-    title: "Open FM26 coach profile",
-    text: "Start from the coach profile you are checking."
+    title: "Enter attributes",
+    text: "Fill in the coach's visible FM26 staff attributes."
   },
   {
     number: "02",
-    title: "Match word levels",
-    text: "Enter the visible FM26 attribute words."
+    title: "Read all ratings",
+    text: "See estimated star ratings for every coaching assignment."
   },
   {
     number: "03",
-    title: "Read assignment ratings",
-    text: "See which training roles he is most suited for."
+    title: "Compare roles",
+    text:
+      "Check Attacking, Defending, Possession, Fitness, Goalkeeping and Set Pieces side by side."
   },
   {
     number: "04",
-    title: "Decide before wages",
-    text: "Check whether he fits the job before you commit wages."
+    title: "Hire smarter",
+    text: "Use the ratings as a quick hiring and assignment guide."
   }
 ];
 
@@ -52,8 +56,86 @@ const howItWorksCards = [
   }
 ];
 
+const faqItems = [
+  {
+    question: "Is this an official Football Manager tool?",
+    answer:
+      "No. FM Lab is an unofficial, fan-made calculator and is not affiliated with Sports Interactive, SEGA or Football Manager."
+  },
+  {
+    question: "What attributes should I enter?",
+    answer:
+      "Enter the visible coaching and mental staff attributes shown in FM26: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical, Technical, Authority, Determination and Motivating."
+  },
+  {
+    question: "What does the assignment rating mean?",
+    answer:
+      "The rating estimates how suitable the coach is for that training assignment, shown as a star-style score for quick comparison."
+  },
+  {
+    question: "Can I use this before hiring a coach?",
+    answer:
+      "Yes. The calculator is designed to help compare staff before offering wages or assigning a role."
+  },
+  {
+    question: "Why do some assignments rate differently?",
+    answer:
+      "Each assignment weighs attributes differently. For example, Attacking Tactical, Defending Technical, Fitness and Goalkeeping do not use the same attribute mix."
+  },
+  {
+    question: "Does this guarantee the exact in-game star rating?",
+    answer:
+      "No. It is an approximation based on visible attributes and should be used as a practical decision aid, not an official formula."
+  }
+];
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "FM26 Coach Calculator",
+    applicationCategory: "SportsApplication",
+    operatingSystem: "Web",
+    description:
+      "An unofficial Football Manager 2026 coach assignment calculator for estimating staff ratings from visible attributes.",
+    url: pageUrl
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "FM26 Coach Calculator",
+        item: pageUrl
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer
+      }
+    }))
+  }
+];
+
 export const metadata: Metadata = {
-  title: pageTitle,
+  title: {
+    absolute: pageTitle
+  },
   description: pageDescription,
   alternates: {
     canonical: "/coach-rating-calculator"
@@ -62,32 +144,36 @@ export const metadata: Metadata = {
     type: "website",
     url: "/coach-rating-calculator",
     siteName,
-    title: `${pageTitle} | Staff & Training Tools`,
-    description: pageDescription
+    title: "FM26 Coach Calculator",
+    description: ogDescription
   },
   twitter: {
     card: "summary",
-    title: `${pageTitle} | Staff & Training Tools`,
-    description: pageDescription
+    title: "FM26 Coach Calculator",
+    description: ogDescription
   }
 };
 
 export default function CoachRatingCalculatorPage() {
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
+    <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <section className="relative mb-5 overflow-hidden rounded-lg border border-ink/10 bg-chalk/88 px-5 py-6 shadow-panel sm:px-7 sm:py-8">
         <div className="pitch-lines pointer-events-none absolute inset-0 opacity-[0.075]" />
         <div className="relative max-w-5xl">
           <h1 className="max-w-4xl text-3xl font-black leading-[1.05] text-ink sm:text-4xl lg:text-5xl">
-            FM26 Coach Assignment Calculator
+            FM26 Coach Calculator
           </h1>
           <p className="mt-3 max-w-3xl text-base leading-7 text-ink/72 sm:text-lg">
-            See what a coach is likely to bring to your training setup before
-            you hire him.
+            Rate Football Manager 2026 coaches for every training assignment
+            using visible staff attributes.
           </p>
           <p className="mt-4 max-w-3xl border-l-4 border-signal bg-white/45 py-2 pl-4 text-sm font-bold leading-6 text-ink/78">
-            Stop guessing in the staff room. The strongest roles rise to the
-            top, so every coach has a clear job before he joins your club.
+            Compare Attacking, Defending, Possession, Goalkeeping, Fitness and
+            Set Pieces ratings before you offer wages.
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-pitch/78">
             <span className="inline-flex items-center gap-2 rounded-full border border-pitch/20 bg-touchline/65 px-3 py-1.5">
@@ -99,7 +185,59 @@ export default function CoachRatingCalculatorPage() {
         </div>
       </section>
 
-      <section className="mb-5">
+      <nav
+        aria-label="Page sections"
+        className="mb-5 flex flex-wrap gap-2 text-sm font-black text-pitch"
+      >
+        <a
+          className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55"
+          href="#calculator"
+        >
+          Calculator
+        </a>
+        <a
+          className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55"
+          href="#how-to-use-it"
+        >
+          How to use it
+        </a>
+        <a
+          className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55"
+          href="#best-attributes"
+        >
+          Best attributes
+        </a>
+        <a
+          className="rounded-full border border-ink/10 bg-white/75 px-3 py-2 hover:bg-touchline/55"
+          href="#faq"
+        >
+          FAQ
+        </a>
+      </nav>
+
+      <section className="mb-5 rounded-lg border border-ink/10 bg-white/78 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.08)]">
+        <h2 className="text-xl font-black text-ink">
+          What does this FM26 coach calculator do?
+        </h2>
+        <p className="mt-3 max-w-4xl leading-7 text-ink/72">
+          This tool estimates how well a Football Manager 2026 staff member
+          fits each coaching assignment. Enter the coach&apos;s visible attributes,
+          then compare assignment ratings from 1 to 5 stars.
+        </p>
+        <ul className="mt-4 grid gap-2 text-sm font-bold text-ink/72 sm:grid-cols-3">
+          <li className="rounded-lg border border-ink/10 bg-chalk/72 px-3 py-2">
+            Best for: choosing staff assignments before hiring.
+          </li>
+          <li className="rounded-lg border border-ink/10 bg-chalk/72 px-3 py-2">
+            Uses: visible FM26 staff attributes only.
+          </li>
+          <li className="rounded-lg border border-ink/10 bg-chalk/72 px-3 py-2">
+            Output: all 9 assignment ratings in one table.
+          </li>
+        </ul>
+      </section>
+
+      <section className="mb-5" id="how-to-use-it">
         <div className="mb-3 flex items-end justify-between gap-4">
           <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
             How to use it
@@ -124,139 +262,58 @@ export default function CoachRatingCalculatorPage() {
         </ol>
       </section>
 
-      <CoachRatingCalculator />
-
-      <section className="mt-10 grid gap-5 text-ink/78 lg:grid-cols-2">
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 lg:col-span-2">
-          <h2 className="text-xl font-black text-ink">
-            What is the FM26 Coach Assignment Calculator?
-          </h2>
-          <p className="mt-3 leading-7">
-            FM Lab helps you turn Football Manager 2026 staff word attributes
-            into clear training assignment ratings. See what a coach is likely
-            to bring to your training setup before you hire him.
-          </p>
-        </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
-          <h2 className="text-xl font-black text-ink">
-            How do FM26 coach assignments work?
-          </h2>
-          <div className="mt-4 grid gap-3">
-            {howItWorksCards.map((item) => (
-              <section
-                className="rounded-lg border border-ink/10 bg-chalk/74 p-4"
-                key={item.title}
-              >
-                <span className="text-[11px] font-black uppercase tracking-[0.14em] text-pitch/72">
-                  {item.marker}
-                </span>
-                <h3 className="font-black text-ink">{item.title}</h3>
-                <p className="mt-2 leading-7 text-ink/70">{item.text}</p>
-              </section>
-            ))}
-          </div>
-        </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
-          <h2 className="text-xl font-black text-ink">
-            Attacking Tactical vs Attacking Technical
-          </h2>
-          <p className="mt-3 leading-7">
-            Both lean on Attacking. Tactical pairs it with Tactical coaching,
-            while Technical pairs it with Technical coaching. Mental support
-            helps separate similar profiles.
-          </p>
-        </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
-          <h2 className="text-xl font-black text-ink">
-            Defending Tactical vs Defending Technical
-          </h2>
-          <p className="mt-3 leading-7">
-            Defending Tactical values defensive organization with Tactical.
-            Defending Technical keeps Defending as the base but rewards a coach
-            who is stronger at Technical work.
-          </p>
-        </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
-          <h2 className="text-xl font-black text-ink">
-            Possession Tactical vs Possession Technical
-          </h2>
-          <p className="mt-3 leading-7">
-            Possession Tactical favors structure and control. Possession
-            Technical favors ball work and technique. The best choice depends on
-            which second attribute is stronger.
-          </p>
-        </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)] lg:col-span-2">
-          <h2 className="text-xl font-black text-ink">
-            Fitness, Goalkeeping and Set Pieces
-          </h2>
-          <p className="mt-3 leading-7">
-            Fitness mainly follows Fitness. Goalkeeping mainly follows
-            Goalkeeping. Set Pieces needs Set Pieces first, then Tactical,
-            Technical and mental support.
-          </p>
-        </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)] lg:col-span-2">
-          <h2 className="text-xl font-black text-ink">
-            How should you read the star rating?
-          </h2>
-          <p className="mt-3 leading-7">
-            Use the stars as a quick comparison layer before offering a contract
-            or changing staff responsibilities. Higher-rated assignments show
-            where the coach can help most, while nearby fits are useful backups
-            when your staff room is thin.
-          </p>
-        </article>
+      <section id="calculator">
+        <h2 className="sr-only">FM26 coach calculator</h2>
+        <CoachRatingCalculator />
       </section>
 
-      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_14px_40px_rgba(23,32,28,0.08)]">
-        <h2 className="text-xl font-black text-ink">
-          Assignment attribute emphasis
+      <section className="mt-5">
+        <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
+          How it works
         </h2>
-        <p className="mt-2 max-w-3xl leading-7 text-ink/72">
-          The model keeps the weights centralized by assignment. These are the
-          visible attributes that drive each estimate most clearly.
+        <p className="mt-3 max-w-4xl rounded-lg border border-ink/10 bg-white/72 p-4 text-sm font-semibold leading-6 text-ink/70">
+          Each training assignment combines its main coaching attributes with
+          supporting mental attributes: Determination, Authority and Motivating.
+          FM Lab ranks all 9 assignment slots so you can compare staff
+          candidates, avoid wasting wage budget, and assign each coach where he
+          actually helps.
         </p>
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {trainingCategories.map((category) => {
-            const topAttributes = (
-              Object.entries(category.weights) as [AttributeKey, number][]
-            )
-              .sort((a, b) => b[1] - a[1])
-              .slice(0, 4)
-              .map(([key]) => attributeLabels[key]);
-
-            return (
-              <div
-                className="rounded-lg border border-ink/10 bg-chalk/74 p-4"
-                key={category.id}
-              >
-                <h3 className="font-black text-ink">{category.label}</h3>
-                <p className="mt-2 text-sm leading-6 text-ink/68">
-                  {topAttributes.join(", ")}
-                </p>
-              </div>
-            );
-          })}
+        <div className="mt-3 grid gap-3 md:grid-cols-3">
+          {howItWorksCards.map((item) => (
+            <article
+              className="rounded-lg border border-ink/10 bg-white/76 p-4 shadow-[0_12px_34px_rgba(23,32,28,0.08)]"
+              key={item.title}
+            >
+              <span className="text-[11px] font-black uppercase tracking-[0.14em] text-pitch/72">
+                {item.marker}
+              </span>
+              <h3 className="mt-2 text-base font-black leading-5 text-ink">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-ink/68">{item.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_14px_40px_rgba(23,32,28,0.08)]">
+      <section
+        className="mt-5 rounded-lg border border-ink/10 bg-white/72 p-4 shadow-[0_14px_40px_rgba(23,32,28,0.08)]"
+        id="best-attributes"
+      >
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-xl font-black text-ink">
+            <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
               Best attributes by FM26 coach assignment
             </h2>
-            <p className="mt-2 max-w-3xl leading-7 text-ink/72">
-              Use this as a quick checklist when you are scanning staff profiles
-              in Football Manager 2026.
+            <p className="mt-2 max-w-4xl text-sm font-semibold leading-6 text-ink/62">
+              Different FM26 training assignments value different attributes.
+              The table below shows which visible staff attributes matter most
+              for each coaching role, so you can understand why a coach rates
+              higher or lower.
             </p>
           </div>
-          <p className="text-sm font-semibold text-ink/55">
-            Staff shortlist reference
-          </p>
         </div>
-        <div className="mt-5 overflow-x-auto rounded-lg border border-ink/10 shadow-sm">
+        <div className="mt-4 overflow-x-auto rounded-lg border border-ink/10 shadow-sm">
           <table className="w-full min-w-[680px] border-collapse text-left text-sm">
             <thead className="bg-pitch/8 text-xs uppercase tracking-[0.12em] text-ink/62">
               <tr>
@@ -296,64 +353,13 @@ export default function CoachRatingCalculatorPage() {
         </div>
       </section>
 
-      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5">
+      <section
+        className="mt-5 rounded-lg border border-ink/10 bg-white/72 p-5"
+        id="faq"
+      >
         <h2 className="text-xl font-black text-ink">FAQ</h2>
         <div className="mt-5 grid gap-4 lg:grid-cols-2">
-          {[
-            {
-              question: "Is this the official FM26 coach assignment formula?",
-              answer:
-                "No. It is built to help compare coaches, not to claim the exact hidden calculation."
-            },
-            {
-              question: "How accurate is the FM26 coach calculator?",
-              answer:
-                "It is calibrated as a practical estimate from visible word levels. Treat it as a comparison aid, not a guaranteed in-game result."
-            },
-            {
-              question:
-                "What is the difference between Attacking Tactical and Attacking Technical?",
-              answer:
-                "Both use Attacking. The tactical version rewards Tactical more, while the technical version rewards Technical more."
-            },
-            {
-              question:
-                "What is the difference between Defending Tactical and Defending Technical?",
-              answer:
-                "Both use Defending. Choose the tactical slot for a coach with stronger Tactical, or the technical slot for stronger Technical."
-            },
-            {
-              question:
-                "What is the difference between Possession Tactical and Possession Technical?",
-              answer:
-                "Both use Possession. Tactical fits structure and control; Technical fits ball work and technique."
-            },
-            {
-              question: "Which attributes matter most for Fitness coaches?",
-              answer:
-                "Fitness matters most, with Determination, Authority and Motivating acting as support."
-            },
-            {
-              question: "Which attributes matter most for Set Pieces coaches?",
-              answer:
-                "Set Pieces is the main lever, supported by Tactical, Technical and the three mental staff attributes."
-            },
-            {
-              question: "Why are results shown as a range?",
-              answer:
-                "FM26 shows word levels rather than exact numbers, so a range is more honest than pretending the estimate is exact."
-            },
-            {
-              question: "Why can my in-game stars differ?",
-              answer:
-                "FM Lab only uses visible word attributes. Hidden game context, staff setup or future FM26 changes can make real in-game stars differ."
-            },
-            {
-              question: "Can I use this for FM25 or FM24?",
-              answer:
-                "It is built for FM26 word-based staff attributes. Older games may not line up with the same input system or calibration."
-            }
-          ].map((item) => (
+          {faqItems.map((item) => (
             <details
               className="rounded-lg border border-ink/10 bg-chalk/74 p-4"
               key={item.question}

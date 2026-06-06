@@ -22,10 +22,9 @@ compare stars for the 9 visible coach assignment categories.
 - Static-export friendly configuration
 - FM26 word-level staff attributes throughout the calculator UI
 - Assignment-specific weighting for the 9 coach assignment slots
-- Recommended assignments, estimated stars and uncertainty ranges
-- Practical verdict labels for the strongest assignment fit
+- Compact 9-row assignment ratings panel
+- Inspect assignment control for seeing the attributes behind each role
 - Example coach presets and reset control for faster testing
-- Copyable result summary for sharing in forums or chat
 - Formula data kept in reusable `lib/` files
 
 ## Main Calculator Inputs
