@@ -8,6 +8,50 @@ const pageTitle = "FM26 Coach Assignment Calculator";
 const pageDescription =
   "See what a coach is likely to bring to your training setup before you hire him.";
 
+const howToSteps = [
+  {
+    number: "01",
+    title: "Open FM26 coach profile",
+    text: "Start from the coach profile you are checking."
+  },
+  {
+    number: "02",
+    title: "Match word levels",
+    text: "Enter the visible FM26 attribute words."
+  },
+  {
+    number: "03",
+    title: "Read assignment ratings",
+    text: "See which training roles he is most suited for."
+  },
+  {
+    number: "04",
+    title: "Decide before wages",
+    text: "Check whether he fits the job before you commit wages."
+  }
+];
+
+const howItWorksCards = [
+  {
+    marker: "WORDS",
+    title: "Visible FM26 word levels",
+    text:
+      "Use the coach attributes you can see in-game, including coaching and mental ratings."
+  },
+  {
+    marker: "RANK",
+    title: "Training role ranking",
+    text:
+      "FM Lab ranks all 9 assignment roles so you can see where the coach helps most."
+  },
+  {
+    marker: "HIRE",
+    title: "Hiring decision support",
+    text:
+      "Use it before committing wages or assigning training responsibilities."
+  }
+];
+
 export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
@@ -30,49 +74,54 @@ export const metadata: Metadata = {
 
 export default function CoachRatingCalculatorPage() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-      <div className="mb-8 max-w-3xl">
-        <h1 className="text-3xl font-black leading-tight text-ink sm:text-5xl">
-          FM26 Coach Assignment Calculator
-        </h1>
-        <p className="mt-4 text-lg leading-8 text-ink/72">
-          See what a coach is likely to bring to your training setup before you
-          hire him.
-        </p>
-        <p className="mt-3 max-w-3xl text-base font-semibold leading-7 text-ink/76">
-          Stop guessing in the staff room. The strongest roles rise to the top,
-          so every coach has a clear job before he joins your club.
-        </p>
-        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/75">
-          <span className="inline-flex items-center gap-2 rounded-full border border-pitch/20 bg-touchline/60 px-3 py-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-signal" />
-            FM26 Staff Tool
-          </span>
-          <span>Updated for FM26</span>
+    <div className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8 lg:py-7">
+      <section className="relative mb-5 overflow-hidden rounded-lg border border-ink/10 bg-chalk/88 px-5 py-6 shadow-panel sm:px-7 sm:py-8">
+        <div className="pitch-lines pointer-events-none absolute inset-0 opacity-[0.075]" />
+        <div className="relative max-w-5xl">
+          <h1 className="max-w-4xl text-3xl font-black leading-[1.05] text-ink sm:text-4xl lg:text-5xl">
+            FM26 Coach Assignment Calculator
+          </h1>
+          <p className="mt-3 max-w-3xl text-base leading-7 text-ink/72 sm:text-lg">
+            See what a coach is likely to bring to your training setup before
+            you hire him.
+          </p>
+          <p className="mt-4 max-w-3xl border-l-4 border-signal bg-white/45 py-2 pl-4 text-sm font-bold leading-6 text-ink/78">
+            Stop guessing in the staff room. The strongest roles rise to the
+            top, so every coach has a clear job before he joins your club.
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-[0.12em] text-pitch/78">
+            <span className="inline-flex items-center gap-2 rounded-full border border-pitch/20 bg-touchline/65 px-3 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+              FM26 Staff Tool
+            </span>
+            <span>Updated for FM26</span>
+          </div>
         </div>
-      </div>
+      </section>
 
       <section className="mb-5">
-        <article className="rounded-lg border border-ink/10 bg-white/78 p-5 shadow-panel">
+        <div className="mb-3 flex items-end justify-between gap-4">
           <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
             How to use it
           </h2>
-          <ol className="mt-4 grid gap-3 text-sm leading-6 text-ink/72 sm:grid-cols-2">
-            <li>
-              Open a coach profile in FM26.
+          <span className="hidden h-px flex-1 bg-ink/10 sm:block" />
+        </div>
+        <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {howToSteps.map((step) => (
+            <li
+              className="rounded-lg border border-ink/10 bg-white/78 p-4 shadow-[0_12px_34px_rgba(23,32,28,0.08)]"
+              key={step.number}
+            >
+              <span className="inline-flex rounded-full bg-pitch px-2.5 py-1 text-[11px] font-black tracking-[0.12em] text-chalk">
+                {step.number}
+              </span>
+              <h3 className="mt-3 text-base font-black leading-5 text-ink">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-ink/68">{step.text}</p>
             </li>
-            <li>
-              Match the visible word levels here.
-            </li>
-            <li>
-              See which training assignments he is most suited for.
-            </li>
-            <li>
-              Decide whether the coach fits the job you need before you commit
-              wages.
-            </li>
-          </ol>
-        </article>
+          ))}
+        </ol>
       </section>
 
       <CoachRatingCalculator />
@@ -88,39 +137,26 @@ export default function CoachRatingCalculatorPage() {
             to bring to your training setup before you hire him.
           </p>
         </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
           <h2 className="text-xl font-black text-ink">
             How do FM26 coach assignments work?
           </h2>
           <div className="mt-4 grid gap-3">
-            {[
-              {
-                title: "Uses visible FM26 word levels",
-                text:
-                  "Enter the coach attributes you can see in-game, including coaching and mental ratings."
-              },
-              {
-                title: "Ranks training roles",
-                text:
-                  "FM Lab ranks all 9 assignment roles so you can see where the coach helps most."
-              },
-              {
-                title: "Helps hiring decisions",
-                text:
-                  "Use it before committing wages or assigning training responsibilities."
-              }
-            ].map((item) => (
+            {howItWorksCards.map((item) => (
               <section
                 className="rounded-lg border border-ink/10 bg-chalk/74 p-4"
                 key={item.title}
               >
+                <span className="text-[11px] font-black uppercase tracking-[0.14em] text-pitch/72">
+                  {item.marker}
+                </span>
                 <h3 className="font-black text-ink">{item.title}</h3>
                 <p className="mt-2 leading-7 text-ink/70">{item.text}</p>
               </section>
             ))}
           </div>
         </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
           <h2 className="text-xl font-black text-ink">
             Attacking Tactical vs Attacking Technical
           </h2>
@@ -130,7 +166,7 @@ export default function CoachRatingCalculatorPage() {
             helps separate similar profiles.
           </p>
         </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
           <h2 className="text-xl font-black text-ink">
             Defending Tactical vs Defending Technical
           </h2>
@@ -140,7 +176,7 @@ export default function CoachRatingCalculatorPage() {
             who is stronger at Technical work.
           </p>
         </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)]">
           <h2 className="text-xl font-black text-ink">
             Possession Tactical vs Possession Technical
           </h2>
@@ -150,7 +186,7 @@ export default function CoachRatingCalculatorPage() {
             which second attribute is stronger.
           </p>
         </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 lg:col-span-2">
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)] lg:col-span-2">
           <h2 className="text-xl font-black text-ink">
             Fitness, Goalkeeping and Set Pieces
           </h2>
@@ -160,7 +196,7 @@ export default function CoachRatingCalculatorPage() {
             Technical and mental support.
           </p>
         </article>
-        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 lg:col-span-2">
+        <article className="rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_12px_34px_rgba(23,32,28,0.06)] lg:col-span-2">
           <h2 className="text-xl font-black text-ink">
             How should you read the star rating?
           </h2>
@@ -173,7 +209,7 @@ export default function CoachRatingCalculatorPage() {
         </article>
       </section>
 
-      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5">
+      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_14px_40px_rgba(23,32,28,0.08)]">
         <h2 className="text-xl font-black text-ink">
           Assignment attribute emphasis
         </h2>
@@ -205,14 +241,21 @@ export default function CoachRatingCalculatorPage() {
         </div>
       </section>
 
-      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5">
-        <h2 className="text-xl font-black text-ink">
-          Best attributes by FM26 coach assignment
-        </h2>
-        <p className="mt-2 max-w-3xl leading-7 text-ink/72">
-          Use this as a quick checklist when you are scanning staff profiles in
-          Football Manager 2026.
-        </p>
+      <section className="mt-8 rounded-lg border border-ink/10 bg-white/72 p-5 shadow-[0_14px_40px_rgba(23,32,28,0.08)]">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-xl font-black text-ink">
+              Best attributes by FM26 coach assignment
+            </h2>
+            <p className="mt-2 max-w-3xl leading-7 text-ink/72">
+              Use this as a quick checklist when you are scanning staff profiles
+              in Football Manager 2026.
+            </p>
+          </div>
+          <p className="text-sm font-semibold text-ink/55">
+            Staff shortlist reference
+          </p>
+        </div>
         <div className="mt-5 overflow-x-auto rounded-lg border border-ink/10 shadow-sm">
           <table className="w-full min-w-[680px] border-collapse text-left text-sm">
             <thead className="bg-pitch/8 text-xs uppercase tracking-[0.12em] text-ink/62">
