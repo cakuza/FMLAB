@@ -24,11 +24,6 @@ import {
   trainingCategoryById
 } from "@/lib/trainingCategories";
 
-const formatRange = (
-  assignment: ReturnType<typeof calculateAssignmentRatings>[number]
-) =>
-  `${assignment.range.minStars.toFixed(1)}-${assignment.range.maxStars.toFixed(1)}`;
-
 const examplePresets: {
   label: string;
   shortLabel: string;
@@ -105,6 +100,18 @@ export function CoachRatingCalculator() {
   const recommendedAssignments = useMemo(
     () => getRecommendedAssignments(selections, 3),
     [selections]
+  );
+  const sortedAssignmentRatings = useMemo(
+    () =>
+      assignmentRatings
+        .map((assignment, index) => ({ assignment, index }))
+        .sort(
+          (a, b) =>
+            b.assignment.stars - a.assignment.stars ||
+            b.assignment.score - a.assignment.score ||
+            a.index - b.index
+        ),
+    [assignmentRatings]
   );
   const highlightedAssignment = trainingCategoryById[highlightAssignmentId];
   const highlightedWeights = new Map<AttributeKey, number>(
@@ -261,17 +268,16 @@ export function CoachRatingCalculator() {
             : "Full rating table for the current coach profile."}
         </p>
         <div className="mt-3 overflow-x-auto rounded-lg border border-ink/10">
-          <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[420px] border-collapse text-left text-sm">
             <thead className="bg-chalk text-xs uppercase tracking-[0.12em] text-ink/62">
               <tr>
-                <th className="px-4 py-3 font-black">Assignment</th>
-                <th className="px-4 py-3 font-black">Stars</th>
-                <th className="px-4 py-3 font-black">Range</th>
-                <th className="px-4 py-3 font-black">Key attributes</th>
+                <th className="w-14 px-3 py-3 font-black">#</th>
+                <th className="px-3 py-3 font-black">Assignment</th>
+                <th className="px-3 py-3 text-right font-black">Rating</th>
               </tr>
             </thead>
             <tbody>
-              {assignmentRatings.map((assignment) => {
+              {sortedAssignmentRatings.map(({ assignment }, index) => {
                 const isSelected = assignment.id === highlightAssignmentId;
 
                 return (
@@ -282,24 +288,19 @@ export function CoachRatingCalculator() {
                     ].join(" ")}
                     key={assignment.id}
                   >
-                    <td className="px-4 py-3 font-black text-ink">
+                    <td className="px-3 py-3 font-black text-ink/58">
+                      #{index + 1}
+                    </td>
+                    <td className="px-3 py-3 font-black text-ink">
                       {assignment.label}
                     </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-3">
+                    <td className="px-3 py-3">
+                      <div className="flex items-center justify-end gap-3">
+                        <StarRating size="xs" value={assignment.stars} />
                         <span className="font-black text-pitch">
                           {assignment.stars.toFixed(1)}
                         </span>
-                        <StarRating size="xs" value={assignment.stars} />
                       </div>
-                    </td>
-                    <td className="px-4 py-3 font-bold text-ink/70">
-                      {formatRange(assignment)}
-                    </td>
-                    <td className="px-4 py-3 text-ink/68">
-                      {assignment.keyAttributes
-                        .map((attribute) => attribute.label)
-                        .join(", ")}
                     </td>
                   </tr>
                 );

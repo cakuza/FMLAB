@@ -16,9 +16,6 @@ type RatingResultProps = {
   className?: string;
 };
 
-const formatRange = (assignment: AssignmentRating) =>
-  `${assignment.range.minStars.toFixed(1)}-${assignment.range.maxStars.toFixed(1)}`;
-
 const meaningfulWeakFitGap = 0.5;
 
 const getVerdictTier = (stars: number) => {
@@ -52,8 +49,8 @@ const getVerdictTier = (stars: number) => {
   }
 
   return {
-      label: "Weak fit",
-      meaning: "Avoid this role unless you have no better staff option."
+    label: "Weak fit",
+    meaning: "Avoid this role unless you have no better staff option."
   };
 };
 
@@ -69,24 +66,49 @@ export const shouldShowWeakestFit = (
   (bestAssignment?.stars ?? 0) - (weakestAssignment?.stars ?? 0) >=
     meaningfulWeakFitGap;
 
-const formatCopyText = (
+export const formatCopyText = (
   topAssignment: AssignmentRating,
   secondaryAssignments: AssignmentRating[],
-  verdictLabel: string
+  verdictMeaning: string
 ) => {
   const secondaryText = secondaryAssignments
     .map((assignment) => `${assignment.label} - ${assignment.stars.toFixed(1)}`)
     .join(", ");
-
-  return [
-    "FM Lab Coach Assignment Estimate",
+  const lines = [
+    "FM Lab Coach Assignment",
     `Best use: ${topAssignment.label} - ${topAssignment.stars.toFixed(1)} stars`,
-    secondaryText ? `Also useful for: ${secondaryText}` : "",
-    `Verdict: ${verdictLabel}`,
-    "Note: Estimate for comparison only."
-  ]
-    .filter(Boolean)
-    .join("\n");
+    secondaryText ? `Also useful: ${secondaryText}` : "",
+    `Decision: ${verdictMeaning}`
+  ].filter(Boolean);
+
+  return `${lines.join("\n")}\n\nNote: estimated for quick coach comparison.`;
+};
+
+const copyTextWithFallback = async (text: string) => {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to the textarea fallback below.
+    }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "0";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  try {
+    return document.execCommand("copy");
+  } finally {
+    document.body.removeChild(textarea);
+  }
 };
 
 export function RatingResult({
@@ -123,18 +145,19 @@ export function RatingResult({
     const text = formatCopyText(
       topAssignment,
       secondaryAssignments,
-      verdict.label
+      verdict.meaning
     );
 
     try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-        setCopyState("copied");
-      } else {
+      const copied = await copyTextWithFallback(text);
+
+      if (!copied) {
         window.prompt("Copy result", text);
-        setCopyState("copied");
       }
+
+      setCopyState("copied");
     } catch {
+      window.prompt("Copy result", text);
       setCopyState("failed");
     }
 
@@ -144,7 +167,7 @@ export function RatingResult({
   return (
     <aside
       className={[
-        "sticky top-[4.75rem] overflow-hidden rounded-lg border border-white/10 p-4",
+        "overflow-hidden rounded-lg border border-white/10 p-4 lg:sticky lg:top-[4.75rem] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto",
         "bg-gradient-to-b from-[#1d2723] to-ink text-chalk shadow-panel",
         className
       ].join(" ")}
@@ -185,7 +208,7 @@ export function RatingResult({
             <div className="mt-3 flex flex-wrap gap-2">
               {presetActions.map((preset) => (
                 <button
-                  className="rounded-full border border-signal/35 bg-signal/12 px-3 py-1.5 text-xs font-black text-chalk transition hover:bg-signal/20 focus:outline-none focus:ring-4 focus:ring-signal/20"
+                  className="rounded-full border border-signal bg-signal px-3 py-1.5 text-xs font-black text-ink transition hover:bg-[#ffd06a] focus:outline-none focus:ring-4 focus:ring-signal/25"
                   key={preset.label}
                   onClick={preset.onClick}
                   type="button"
@@ -221,13 +244,10 @@ export function RatingResult({
                 </div>
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
                   <StarRating size="md" value={topAssignment.stars} />
-                  <span className="text-xs font-bold text-touchline">
-                    {formatRange(topAssignment)} range
+                  <span className="text-xs font-black uppercase tracking-[0.1em] text-touchline">
+                    {verdict.label}
                   </span>
                 </div>
-                <p className="mt-2 text-sm font-black text-chalk">
-                  {verdict.label}
-                </p>
               </section>
             ) : null}
 
@@ -252,9 +272,6 @@ export function RatingResult({
                 </div>
                 <div className="mt-2 flex items-center justify-between gap-3">
                   <StarRating size="sm" value={assignment.stars} />
-                  <span className="text-xs font-bold text-touchline">
-                    {formatRange(assignment)} range
-                  </span>
                 </div>
               </div>
             ))}
@@ -321,8 +338,9 @@ export function RatingResult({
       </details>
 
       <p className="mt-2 text-xs font-semibold leading-5 text-chalk/50">
-        Note: FM Lab is an unofficial estimate for quick coach comparison. Exact
-        in-game stars can vary with workload and assignments.
+        FM Lab estimates the rating for a single assignment. In-game stars may
+        look lower if a coach is assigned to multiple areas or if workload is
+        high.
       </p>
     </aside>
   );

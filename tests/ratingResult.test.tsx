@@ -2,6 +2,7 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
+  formatCopyText,
   RatingResult,
   shouldShowWeakestFit
 } from "@/components/RatingResult";
@@ -83,5 +84,26 @@ describe("RatingResult verdict display", () => {
         createAssignment("fitness", "Fitness", 3)
       )
     ).toBe(false);
+  });
+
+  it("formats copy text as a concise coach assignment result", () => {
+    const text = formatCopyText(
+      createAssignment("attackingTactical", "Attacking Tactical", 4),
+      [
+        createAssignment("attackingTechnical", "Attacking Technical", 3.5),
+        createAssignment("possessionTactical", "Possession Tactical", 3.5)
+      ],
+      "Worth prioritizing for this training role."
+    );
+
+    expect(text).toContain("FM Lab Coach Assignment");
+    expect(text).toContain("Best use: Attacking Tactical - 4.0 stars");
+    expect(text).toContain(
+      "Also useful: Attacking Technical - 3.5, Possession Tactical - 3.5"
+    );
+    expect(text).toContain(
+      "Decision: Worth prioritizing for this training role."
+    );
+    expect(text).toContain("Note: estimated for quick coach comparison.");
   });
 });
