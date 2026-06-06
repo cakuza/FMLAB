@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AttributeSelect } from "@/components/AttributeSelect";
 import { CategorySelect } from "@/components/CategorySelect";
 import { RatingResult } from "@/components/RatingResult";
@@ -15,6 +15,7 @@ import {
   staffQualityAttributes
 } from "@/lib/attributeLevels";
 import {
+  type AssignmentRating,
   calculateAssignmentRatings,
   getRecommendedAssignments
 } from "@/lib/ratingFormula";
@@ -85,6 +86,18 @@ const examplePresets: {
   }
 ];
 
+export const sortAssignmentRatingsForDisplay = (
+  assignmentRatings: AssignmentRating[]
+) =>
+  assignmentRatings
+    .map((assignment, index) => ({ assignment, index }))
+    .sort(
+      (a, b) =>
+        b.assignment.stars - a.assignment.stars ||
+        b.assignment.score - a.assignment.score ||
+        a.index - b.index
+    );
+
 export function CoachRatingCalculator() {
   const [highlightAssignmentId, setHighlightAssignmentId] =
     useState<TrainingCategoryId>(defaultTrainingCategoryId);
@@ -102,15 +115,7 @@ export function CoachRatingCalculator() {
     [selections]
   );
   const sortedAssignmentRatings = useMemo(
-    () =>
-      assignmentRatings
-        .map((assignment, index) => ({ assignment, index }))
-        .sort(
-          (a, b) =>
-            b.assignment.stars - a.assignment.stars ||
-            b.assignment.score - a.assignment.score ||
-            a.index - b.index
-        ),
+    () => sortAssignmentRatingsForDisplay(assignmentRatings),
     [assignmentRatings]
   );
   const highlightedAssignment = trainingCategoryById[highlightAssignmentId];
@@ -289,17 +294,17 @@ export function CoachRatingCalculator() {
                     key={assignment.id}
                   >
                     <td className="px-3 py-3 font-black text-ink/58">
-                      #{index + 1}
+                      {index + 1}
                     </td>
                     <td className="px-3 py-3 font-black text-ink">
                       {assignment.label}
                     </td>
                     <td className="px-3 py-3">
                       <div className="flex items-center justify-end gap-3">
-                        <StarRating size="xs" value={assignment.stars} />
                         <span className="font-black text-pitch">
                           {assignment.stars.toFixed(1)}
                         </span>
+                        <StarRating size="xs" value={assignment.stars} />
                       </div>
                     </td>
                   </tr>

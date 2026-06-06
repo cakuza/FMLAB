@@ -72,11 +72,11 @@ export const formatCopyText = (
   verdictMeaning: string
 ) => {
   const secondaryText = secondaryAssignments
-    .map((assignment) => `${assignment.label} - ${assignment.stars.toFixed(1)}`)
+    .map((assignment) => `${assignment.label} — ${assignment.stars.toFixed(1)}`)
     .join(", ");
   const lines = [
     "FM Lab Coach Assignment",
-    `Best use: ${topAssignment.label} - ${topAssignment.stars.toFixed(1)} stars`,
+    `Best use: ${topAssignment.label} — ${topAssignment.stars.toFixed(1)} stars`,
     secondaryText ? `Also useful: ${secondaryText}` : "",
     `Decision: ${verdictMeaning}`
   ].filter(Boolean);
@@ -84,16 +84,7 @@ export const formatCopyText = (
   return `${lines.join("\n")}\n\nNote: estimated for quick coach comparison.`;
 };
 
-const copyTextWithFallback = async (text: string) => {
-  if (navigator.clipboard?.writeText) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      // Fall through to the textarea fallback below.
-    }
-  }
-
+const copyTextWithTextarea = (text: string) => {
   const textarea = document.createElement("textarea");
   textarea.value = text;
   textarea.setAttribute("readonly", "");
@@ -109,6 +100,23 @@ const copyTextWithFallback = async (text: string) => {
   } finally {
     document.body.removeChild(textarea);
   }
+};
+
+export const copyTextWithFallback = async (text: string) => {
+  if (copyTextWithTextarea(text)) {
+    return true;
+  }
+
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
 };
 
 export function RatingResult({
