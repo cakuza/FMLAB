@@ -6,7 +6,7 @@ import { trainingCategories } from "@/lib/trainingCategories";
 
 const pageTitle = "FM26 Coach Calculator - Staff Assignment Ratings | FM Lab";
 const pageDescription =
-  "Estimate Football Manager 2026 coach ratings for Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces assignments using visible staff attributes.";
+  "Estimate Football Manager 2026 coach ratings for Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces assignments using coach profile ratings.";
 const ogDescription =
   "Compare FM26 staff assignment ratings before you hire or assign coaches.";
 
@@ -36,7 +36,7 @@ const howToSteps = [
   {
     number: "01",
     title: "Enter attributes",
-    text: "Fill in the coach's visible FM26 staff attributes."
+    text: "Match the word ratings from the coach profile."
   },
   {
     number: "02",
@@ -59,21 +59,21 @@ const howToSteps = [
 const howItWorksCards = [
   {
     marker: "WORDS",
-    title: "Visible FM26 word levels",
+    title: "Enter the coach attributes you see in FM26",
     text:
-      "Use the coach attributes you can see in-game, including coaching and mental ratings."
+      "Use the word ratings from the coach profile, including coaching and mental attributes."
   },
   {
     marker: "RANK",
-    title: "Training role ranking",
+    title: "See every training role ranked",
     text:
-      "FM Lab ranks all 9 assignment roles so you can see where the coach helps most."
+      "FM Lab shows how the coach fits all 9 assignment roles, from strongest to weakest."
   },
   {
     marker: "HIRE",
-    title: "Hiring decision support",
+    title: "Know what to expect before hiring",
     text:
-      "Use it before committing wages or assigning training responsibilities."
+      "Use the ratings to spot specialists, backup options, and roles where the coach may not be worth the wage."
   }
 ];
 
@@ -86,7 +86,7 @@ const faqItems = [
   {
     question: "What attributes should I enter?",
     answer:
-      "Enter the visible coaching and mental staff attributes shown in FM26: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical, Technical, Authority, Determination and Motivating."
+      "Enter the coaching and mental attributes from the FM26 coach profile: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical, Technical, Authority, Determination and Motivating."
   },
   {
     question: "What does the assignment rating mean?",
@@ -106,7 +106,7 @@ const faqItems = [
   {
     question: "Does this guarantee the exact in-game star rating?",
     answer:
-      "No. It is an approximation based on visible attributes and should be used as a practical decision aid, not an official formula."
+      "No. It is an approximation based on the coach profile and should be used as a practical decision aid, not an official formula."
   }
 ];
 
@@ -118,7 +118,7 @@ const structuredData = [
     applicationCategory: "SportsApplication",
     operatingSystem: "Web",
     description:
-      "An unofficial Football Manager 2026 coach assignment calculator for estimating staff ratings from visible attributes.",
+      "An unofficial Football Manager 2026 coach assignment calculator for estimating staff ratings from coach profile attributes.",
     url: siteUrl
   },
   {
@@ -160,17 +160,17 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <section className="relative mb-3 overflow-hidden rounded-lg border border-ink/10 bg-chalk/88 px-4 py-4 shadow-panel sm:px-6 sm:py-5">
+      <section className="relative mb-2 overflow-hidden rounded-lg border border-ink/10 bg-chalk/88 px-4 py-3 shadow-panel sm:px-5 sm:py-4">
         <div className="pitch-lines pointer-events-none absolute inset-0 opacity-[0.075]" />
         <div className="relative max-w-5xl">
           <h1 className="max-w-4xl text-2xl font-black leading-tight text-ink sm:text-3xl lg:text-4xl">
             FM26 Coach Assignment Calculator
           </h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-ink/72 sm:text-base">
+          <p className="mt-1.5 max-w-3xl text-sm leading-6 text-ink/72 sm:text-base">
             Rate Football Manager 2026 coaches for every training assignment
-            using visible staff attributes.
+            using the ratings from the coach profile.
           </p>
-          <p className="mt-2 max-w-3xl border-l-4 border-signal bg-white/45 py-1.5 pl-3 text-xs font-bold leading-5 text-ink/78 sm:text-sm">
+          <p className="mt-2 max-w-3xl border-l-4 border-signal bg-white/45 py-1 pl-3 text-xs font-bold leading-5 text-ink/78 sm:text-sm">
             Compare Attacking, Defending, Possession, Goalkeeping, Fitness and
             Set Pieces ratings before you offer wages.
           </p>
@@ -186,7 +186,7 @@ export default function Home() {
 
       <nav
         aria-label="Page sections"
-        className="mb-3 flex flex-wrap gap-2 text-xs font-black text-pitch sm:text-sm"
+        className="mb-2 flex flex-wrap gap-2 text-xs font-black text-pitch sm:text-sm"
       >
         <a className="rounded-full border border-ink/10 bg-white/75 px-3 py-1.5 hover:bg-touchline/55" href="#calculator">
           Calculator
@@ -202,7 +202,7 @@ export default function Home() {
         </a>
       </nav>
 
-      <section className="mb-3" id="how-to-use-it">
+      <section className="mb-2" id="how-to-use-it">
         <div className="mb-2 flex items-end justify-between gap-4">
           <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
             How to use it
@@ -212,13 +212,13 @@ export default function Home() {
         <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {howToSteps.map((step) => (
             <li
-              className="rounded-lg border border-ink/10 bg-white/78 p-3 shadow-[0_12px_34px_rgba(23,32,28,0.08)]"
+              className="rounded-lg border border-ink/10 bg-white/78 p-2.5 shadow-[0_10px_26px_rgba(23,32,28,0.07)]"
               key={step.number}
             >
               <span className="inline-flex rounded-full bg-pitch px-2 py-0.5 text-[10px] font-black tracking-[0.12em] text-chalk">
                 {step.number}
               </span>
-              <h3 className="mt-2 text-sm font-black leading-5 text-ink">
+              <h3 className="mt-1.5 text-sm font-black leading-5 text-ink">
                 {step.title}
               </h3>
               <p className="mt-1 text-xs leading-5 text-ink/68">{step.text}</p>
@@ -238,18 +238,18 @@ export default function Home() {
         </h2>
         <p className="mt-2 max-w-4xl text-sm leading-6 text-ink/72">
           This tool estimates how well a Football Manager 2026 staff member
-          fits each coaching assignment. Enter the coach&apos;s visible attributes,
+          fits each coaching assignment. Enter the coach&apos;s profile ratings,
           then compare assignment ratings from 1 to 5 stars.
         </p>
         <ul className="mt-3 grid gap-2 text-xs font-bold text-ink/72 sm:grid-cols-3">
           <li className="rounded-lg border border-ink/10 bg-chalk/72 px-3 py-2">
-            Best for: choosing staff assignments before hiring.
+            Best for: checking what a coach can realistically offer before you hire him.
           </li>
           <li className="rounded-lg border border-ink/10 bg-chalk/72 px-3 py-2">
-            Uses: visible FM26 staff attributes only.
+            Input: the coach attributes you see on his FM26 profile.
           </li>
           <li className="rounded-lg border border-ink/10 bg-chalk/72 px-3 py-2">
-            Output: all 9 assignment ratings in one table.
+            Output: a live star rating for every training assignment.
           </li>
         </ul>
       </section>
@@ -258,20 +258,13 @@ export default function Home() {
         <h2 className="text-sm font-black uppercase tracking-[0.16em] text-bench">
           How it works
         </h2>
-        <p className="mt-3 max-w-4xl rounded-lg border border-ink/10 bg-white/72 p-4 text-sm font-semibold leading-6 text-ink/70">
-          Each training assignment combines its main coaching attributes with
-          supporting mental attributes: Determination, Authority and Motivating.
-          FM Lab ranks all 9 assignment slots so you can compare staff
-          candidates, avoid wasting wage budget, and assign each coach where he
-          actually helps.
-        </p>
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           {howItWorksCards.map((item) => (
             <article
-              className="rounded-lg border border-ink/10 bg-white/76 p-4 shadow-[0_12px_34px_rgba(23,32,28,0.08)]"
+              className="rounded-lg border border-ink/10 bg-white/80 p-3.5 shadow-[0_12px_30px_rgba(23,32,28,0.08)]"
               key={item.title}
             >
-              <span className="text-[11px] font-black uppercase tracking-[0.14em] text-pitch/72">
+              <span className="inline-flex rounded-full bg-touchline px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.14em] text-pitch/72">
                 {item.marker}
               </span>
               <h3 className="mt-2 text-base font-black leading-5 text-ink">
@@ -294,7 +287,7 @@ export default function Home() {
             </h2>
             <p className="mt-2 max-w-4xl text-sm font-semibold leading-6 text-ink/62">
               Different FM26 training assignments value different attributes.
-              The table below shows which visible staff attributes matter most
+              The table below shows which coach attributes matter most
               for each coaching role, so you can understand why a coach rates
               higher or lower.
             </p>
