@@ -7,6 +7,10 @@ import { StarRating } from "./StarRating";
 type RatingResultProps = {
   assignmentRatings: AssignmentRating[];
   isDefaultProfile?: boolean;
+  presetActions?: {
+    label: string;
+    onClick: () => void;
+  }[];
   recommendedAssignments: AssignmentRating[];
   selectedAssignmentId: string;
   className?: string;
@@ -22,21 +26,21 @@ const getVerdictTier = (stars: number) => {
     return {
       label: "Elite assignment fit",
       meaning:
-        "Use this coach here first. This looks like a premium assignment fit."
+        "Use him here first. This looks like a premium assignment fit."
     };
   }
 
   if (stars >= 4) {
     return {
       label: "Strong specialist",
-      meaning: "Worth prioritizing for this assignment."
+      meaning: "Worth prioritizing for this training role."
     };
   }
 
   if (stars >= 3) {
     return {
       label: "Useful club-level option",
-      meaning: "Good enough as a useful staff option, but not a premium hire."
+      meaning: "Useful staff option, but not a premium hire."
     };
   }
 
@@ -48,8 +52,8 @@ const getVerdictTier = (stars: number) => {
   }
 
   return {
-    label: "Weak fit",
-    meaning: "Avoid this assignment unless you have no better staff option."
+      label: "Weak fit",
+      meaning: "Avoid this role unless you have no better staff option."
   };
 };
 
@@ -76,7 +80,7 @@ const formatCopyText = (
 
   return [
     "FM Lab Coach Assignment Estimate",
-    `Best fit: ${topAssignment.label} - ${topAssignment.stars.toFixed(1)} stars`,
+    `Best use: ${topAssignment.label} - ${topAssignment.stars.toFixed(1)} stars`,
     secondaryText ? `Also useful for: ${secondaryText}` : "",
     `Verdict: ${verdictLabel}`,
     "Note: Estimate for comparison only."
@@ -88,6 +92,7 @@ const formatCopyText = (
 export function RatingResult({
   assignmentRatings,
   isDefaultProfile = false,
+  presetActions = [],
   recommendedAssignments,
   selectedAssignmentId,
   className = ""
@@ -169,13 +174,26 @@ export function RatingResult({
       {isDefaultProfile ? (
         <div className="mt-3 rounded-lg border border-chalk/12 bg-chalk/8 p-4">
           <p className="text-sm font-black leading-6 text-chalk">
-            Choose a preset or enter a coach&apos;s attributes to see his
-            assignment ratings.
+            Start with a preset or match the coach&apos;s word levels from FM26.
           </p>
           <p className="mt-2 text-xs font-semibold leading-5 text-chalk/56">
-            Presets are the quickest way to see how a specialist profile changes
-            the ranking.
+            Use presets to see how specialist profiles change the ratings, then
+            adjust the attributes to match the coach you are checking.
           </p>
+          {presetActions.length > 0 ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {presetActions.map((preset) => (
+                <button
+                  className="rounded-full border border-signal/35 bg-signal/12 px-3 py-1.5 text-xs font-black text-chalk transition hover:bg-signal/20 focus:outline-none focus:ring-4 focus:ring-signal/20"
+                  key={preset.label}
+                  onClick={preset.onClick}
+                  type="button"
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
+          ) : null}
         </div>
       ) : (
         <>
@@ -264,7 +282,7 @@ export function RatingResult({
                 ) : null}
                 <p className="font-semibold text-chalk/74">
                   <span className="font-black text-touchline/80">
-                    Verdict:
+                    Decision:
                   </span>{" "}
                   <span className="font-bold text-chalk">
                     {verdict.meaning}

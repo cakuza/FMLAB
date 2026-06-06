@@ -12,7 +12,10 @@ export function CategorySelect({ value, onChange }: CategorySelectProps) {
   return (
     <label className="grid gap-2" htmlFor="training-category">
       <span className="text-sm font-black uppercase tracking-[0.14em] text-bench">
-        Highlight assignment
+        Inspect assignment
+      </span>
+      <span className="text-xs font-semibold leading-5 text-ink/58">
+        See which attributes drive a specific training role.
       </span>
       <select
         id="training-category"

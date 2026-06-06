@@ -74,6 +74,10 @@ export default function Home() {
           candidates, avoid wasting wage budget, and assign each coach where he
           actually helps.
         </p>
+        <p className="mt-3 text-sm font-semibold leading-6 text-ink/70">
+          Best used to compare staff candidates before committing wages or
+          assigning training responsibilities.
+        </p>
       </section>
 
       <section className="mt-4 rounded-lg border border-ink/10 bg-white/76 p-4 shadow-panel">

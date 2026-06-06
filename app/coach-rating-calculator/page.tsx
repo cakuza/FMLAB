@@ -98,6 +98,10 @@ export default function CoachRatingCalculatorPage() {
             staff candidates, avoid wasting wage budget, and assign each coach
             where he actually helps.
           </p>
+          <p className="mt-3 font-semibold leading-7 text-ink/72">
+            Best used to compare staff candidates before committing wages or
+            assigning training responsibilities.
+          </p>
         </article>
         <article className="rounded-lg border border-ink/10 bg-white/72 p-5">
           <h2 className="text-xl font-black text-ink">

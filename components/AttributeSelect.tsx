@@ -36,7 +36,7 @@ export function AttributeSelect({
   return (
     <div
       className={[
-        "relative overflow-hidden rounded-md border p-2 transition sm:p-2",
+        "relative overflow-hidden rounded-md border p-1.5 transition sm:p-2",
         emphasis === "primary"
           ? "border-signal/80 bg-signal/10 shadow-sm"
           : "",
@@ -57,13 +57,13 @@ export function AttributeSelect({
       ) : null}
 
       <label
-        className="mb-1.5 block text-xs font-black uppercase leading-4 tracking-[0.04em] text-ink sm:text-sm sm:normal-case sm:tracking-normal"
+        className="mb-1 block text-xs font-black uppercase leading-4 tracking-[0.04em] text-ink/82 sm:text-sm sm:normal-case sm:tracking-normal"
         htmlFor={id}
       >
         {label}
       </label>
 
-      <div className="grid grid-cols-[32px_minmax(0,1fr)_32px] overflow-hidden rounded-md border border-ink/12 bg-chalk sm:grid-cols-[34px_minmax(0,1fr)_34px]">
+      <div className="grid grid-cols-[32px_minmax(0,1fr)_32px] overflow-hidden rounded-md border border-ink/12 bg-chalk shadow-inner sm:grid-cols-[34px_minmax(0,1fr)_34px]">
         <button
           aria-label={`Decrease ${label}`}
           className="flex h-8 items-center justify-center border-r border-ink/10 text-ink transition hover:bg-touchline disabled:cursor-not-allowed disabled:opacity-35 sm:h-9"
@@ -75,7 +75,7 @@ export function AttributeSelect({
         </button>
         <select
           aria-label={`${label} level`}
-          className="h-8 w-full min-w-0 border-0 bg-transparent px-1.5 text-center text-sm font-black text-ink outline-none sm:h-9"
+          className="h-8 w-full min-w-0 border-0 bg-transparent px-1.5 text-center text-sm font-black text-ink outline-none sm:h-9 sm:text-base"
           id={id}
           onChange={(event) => onChange(event.target.value as AttributeLevelId)}
           value={selectedLevel.id}
