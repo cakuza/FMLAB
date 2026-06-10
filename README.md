@@ -120,7 +120,7 @@ internal attribute level model can be changed in `lib/attributeLevels.ts`, and
 assignment weights can be tuned in `lib/trainingCategories.ts`. These values are
 for comparison only and are not presented as official Football Manager data.
 
-FM Lab is an unofficial fan-made tool and is not affiliated with, endorsed by,
-sponsored by, or connected to Sports Interactive, SEGA, or Football Manager. All
-trademarks belong to their respective owners. Ratings are estimates for
+FM Workbench is an unofficial fan-made tool and is not affiliated with, endorsed
+by, sponsored by, or connected to Sports Interactive, SEGA, or Football Manager.
+All trademarks belong to their respective owners. Ratings are estimates for
 comparison only.

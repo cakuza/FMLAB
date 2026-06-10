@@ -4,7 +4,7 @@ import { type AttributeKey, attributeLabels } from "@/lib/attributeLevels";
 import { siteName, siteUrl } from "@/lib/siteMetadata";
 import { trainingCategories } from "@/lib/trainingCategories";
 
-const pageTitle = "FM26 Coach Assignment Calculator | FM Lab";
+const pageTitle = "FM26 Coach Assignment Calculator | FM Workbench";
 const pageDescription =
   "Estimate Football Manager 2026 coach star ratings by assignment. Enter FM26 coach attributes and find the best training area for Attacking, Defending, Possession, Fitness, Goalkeeping and Set Pieces.";
 const ogDescription =
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
 const howRows = [
   { n: "01", title: "Open the coach profile", text: "In FM26, view any coach or staff member you want to evaluate." },
   { n: "02", title: "Enter the attribute words", text: "Match the word ratings (Reasonable, Good, Very Good…) for all 11 attributes." },
-  { n: "03", title: "Read the assignment ratings", text: "FM Lab shows star estimates for all 9 coaching roles, ranked by fit." },
+  { n: "03", title: "Read the assignment ratings", text: "FM Workbench shows star estimates for all 9 coaching roles, ranked by fit." },
   { n: "04", title: "Assign or hire confidently", text: "Know the best role before committing wages or reassigning your staff." }
 ];
 
 const faqItems = [
   {
     question: "Is this the official FM26 coach rating formula?",
-    answer: "No. FM Lab is an unofficial, fan-made tool. The formula is an estimated approximation based on publicly visible FM26 coach attributes. It is not affiliated with Sports Interactive, SEGA, or Football Manager."
+    answer: "No. FM Workbench is an unofficial, fan-made tool. The formula is an estimated approximation based on publicly visible FM26 coach attributes. It is not affiliated with Sports Interactive, SEGA, or Football Manager."
   },
   {
     question: "How accurate is the FM26 Coach Assignment Calculator?",
@@ -64,7 +64,7 @@ const faqItems = [
   },
   {
     question: "Why does FM26 use word-based staff attributes?",
-    answer: "FM26 replaced numerical coach attributes with word-based descriptions (Average, Competent, Good, Very Good, Outstanding) to simplify the interface. FM Lab converts these words to score ranges internally for estimation."
+    answer: "FM26 replaced numerical coach attributes with word-based descriptions (Average, Competent, Good, Very Good, Outstanding) to simplify the interface. FM Workbench converts these words to score ranges internally for estimation."
   },
   {
     question: "Can I use this calculator during a save?",
@@ -124,7 +124,7 @@ export default function Home() {
             <h2 className="home-section-title">Quick answer</h2>
           </div>
           <div className="quick-answer-body">
-            <p>FM Lab estimates which FM26 training assignment fits a coach best. Select the coach&apos;s word-based attributes from their FM26 profile, then compare estimated star ratings for all nine assignment categories: Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces.</p>
+            <p>FM Workbench estimates which FM26 training assignment fits a coach best. Select the coach&apos;s word-based attributes from their FM26 profile, then compare estimated star ratings for all nine assignment categories: Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces.</p>
             <p>Each assignment weights attributes differently. An Attacking Tactical coach needs high Attacking and Tactical ratings. A Fitness coach needs high Fitness. A Set Pieces coach benefits from Set Pieces, Tactical and Technical combined. Authority, Determination and Motivating support every assignment.</p>
             <p>Results are estimates based on visible attribute words. In-game ratings may differ slightly depending on workload and squad context, but the calculator gives a reliable comparison for hiring and assignment decisions.</p>
           </div>
@@ -181,7 +181,7 @@ export default function Home() {
           <div className="geo-blocks">
             <div className="geo-block">
               <h3 className="geo-q">What is the FM26 Coach Assignment Calculator?</h3>
-              <p className="geo-a">FM Lab is an unofficial fan-made web tool that estimates the best training assignment for any FM26 coach. You enter the coach&apos;s visible word attributes and the tool returns estimated star ratings for all nine assignment categories so you can compare and decide quickly.</p>
+              <p className="geo-a">FM Workbench is an unofficial fan-made web tool that estimates the best training assignment for any FM26 coach. You enter the coach&apos;s visible word attributes and the tool returns estimated star ratings for all nine assignment categories so you can compare and decide quickly.</p>
             </div>
             <div className="geo-block">
               <h3 className="geo-q">How does the FM26 coach calculator work?</h3>
@@ -197,7 +197,7 @@ export default function Home() {
             </div>
             <div className="geo-block">
               <h3 className="geo-q">Why are the results approximate?</h3>
-              <p className="geo-a">FM26 coach attributes are displayed as word bands, not exact numbers. Each word covers a range of underlying values. FM Lab estimates from the midpoint of those ranges, so the output is a close guide rather than a precise match. In-game ratings can also vary with workload and squad size.</p>
+              <p className="geo-a">FM26 coach attributes are displayed as word bands, not exact numbers. Each word covers a range of underlying values. FM Workbench estimates from the midpoint of those ranges, so the output is a close guide rather than a precise match. In-game ratings can also vary with workload and squad size.</p>
             </div>
           </div>
         </section>

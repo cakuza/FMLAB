@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteName,
-    template: "%s | FM Lab"
+    template: "%s | FM Workbench"
   },
   description: defaultDescription,
   alternates: { canonical: "/" },
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <footer style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
             <div className="fm-footer">
               <p className="fm-footer-disclaimer">
-                FM Lab is an unofficial, fan-made tool and is not affiliated with Sports Interactive, SEGA, or Football Manager. All trademarks belong to their respective owners. Ratings are estimates for comparison only.
+                FM Workbench is an unofficial, fan-made tool and is not affiliated with Sports Interactive, SEGA, or Football Manager. All trademarks belong to their respective owners. Ratings are estimates for comparison only.
               </p>
               <p className="fm-footer-sub">FM26 Coach Assignment Calculator · {new Date().getFullYear()}</p>
             </div>

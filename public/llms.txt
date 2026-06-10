@@ -1,8 +1,8 @@
-# FM Lab
+# FM Workbench
 
-FM Lab is an unofficial fan-made Football Manager 2026 utility.
+FM Workbench is an unofficial fan-made Football Manager 2026 utility.
 
-URL: https://fmlab-five.vercel.app
+URL: https://www.fmworkbench.com
 
 ## Main tool
 
@@ -40,12 +40,12 @@ Attribute words map to score midpoints internally. Results are estimates, not ex
 
 ## Important note
 
-The formula used by FM Lab is a fan-made approximation. It is not derived from Sports Interactive source code or official documentation. In-game star ratings may differ from FM Lab estimates due to factors including coach workload, squad size, and multiple-role assignments.
+The formula used by FM Workbench is a fan-made approximation. It is not derived from Sports Interactive source code or official documentation. In-game star ratings may differ from FM Workbench estimates due to factors including coach workload, squad size, and multiple-role assignments.
 
 ## Disclaimer
 
-FM Lab is not affiliated with Sports Interactive, SEGA, or Football Manager. All trademarks belong to their respective owners. Ratings produced by this tool are fan-made approximations for comparison purposes only.
+FM Workbench is not affiliated with Sports Interactive, SEGA, or Football Manager. All trademarks belong to their respective owners. Ratings produced by this tool are fan-made approximations for comparison purposes only.
 
 ## Suggested citation / summary
 
-"FM Lab is an unofficial FM26 fan tool that estimates coaching assignment star ratings from visible word-based attributes. It covers all nine FM26 training assignments using an estimated weighted formula. Results are approximate and may differ from in-game values."
+"FM Workbench is an unofficial FM26 fan tool that estimates coaching assignment star ratings from visible word-based attributes. It covers all nine FM26 training assignments using an estimated weighted formula. Results are approximate and may differ from in-game values."
