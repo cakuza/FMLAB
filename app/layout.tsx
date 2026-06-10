@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
+·import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { defaultDescription, siteName, siteUrl } from "@/lib/siteMetadata";
-import NavBar from "@/components/NavBar";
-import Script from "next/script";
+Fix AdSense script placement - move to bodyimport Script from "next/script";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
