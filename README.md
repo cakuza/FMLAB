@@ -35,9 +35,10 @@ FM26 coach assignment estimates:
 - Coaching attributes: Attacking, Defending, Fitness, Goalkeeping, Possession,
   Set Pieces, Tactical and Technical
 - Mental attributes: Authority, Determination and Motivating
+- Knowledge attributes: Tactical Knowledge (affects Set Pieces only)
 
-Legacy or unrelated staff fields are not shown in the main calculator and do not
-affect assignment stars.
+Total: 12 inputs. Legacy or unrelated staff fields are not shown in the main
+calculator and do not affect assignment stars.
 
 ## File Structure
 

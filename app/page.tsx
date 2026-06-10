@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 const howRows = [
   { n: "01", title: "Open the coach profile", text: "In FM26, view any coach or staff member you want to evaluate." },
-  { n: "02", title: "Enter the attribute words", text: "Match the word ratings (Reasonable, Good, Very Good…) for all 11 attributes." },
+  { n: "02", title: "Enter the attribute words", text: "Match the word ratings (Reasonable, Good, Very Good…) for all 12 attributes." },
   { n: "03", title: "Read the assignment ratings", text: "FM Workbench shows star estimates for all 9 coaching roles, ranked by fit." },
   { n: "04", title: "Assign or hire confidently", text: "Know the best role before committing wages or reassigning your staff." }
 ];
@@ -60,7 +60,7 @@ const faqItems = [
   },
   {
     question: "Which attributes matter for Set Pieces coaches in FM26?",
-    answer: "Set Pieces is the primary attribute, with Tactical and Technical sharing secondary weight. Authority, Determination and Motivating contribute support. It is one of the few assignments that rewards a broad technical and tactical base alongside the specialist attribute."
+    answer: "Set Pieces is the primary attribute, with Tactical Knowledge carrying significant secondary weight. Tactical and Technical share additional secondary weight. Authority, Determination and Motivating contribute support. Set Pieces is the only assignment that uses Tactical Knowledge."
   },
   {
     question: "Why does FM26 use word-based staff attributes?",
@@ -189,7 +189,7 @@ export default function Home() {
             </div>
             <div className="geo-block">
               <h3 className="geo-q">Which FM26 coach attributes matter?</h3>
-              <p className="geo-a">The calculator uses 11 attributes from the FM26 coach profile: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical and Technical as the eight coaching attributes, plus Authority, Determination and Motivating as the three mental attributes. Mental attributes support all assignments.</p>
+              <p className="geo-a">The calculator uses 12 attributes from the FM26 coach profile: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical and Technical as the eight coaching attributes, plus Authority, Determination and Motivating as the three mental attributes, and Tactical Knowledge as the knowledge attribute. Tactical Knowledge specifically affects Set Pieces. Mental attributes support all assignments.</p>
             </div>
             <div className="geo-block">
               <h3 className="geo-q">What is the difference between Tactical and Technical assignments?</h3>

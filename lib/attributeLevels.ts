@@ -85,9 +85,14 @@ export const staffQualityAttributes = [
   { key: "motivating", label: "Motivating" }
 ] as const;
 
+export const knowledgeAttributes = [
+  { key: "tacticalKnowledge", label: "Tactical Knowledge" }
+] as const;
+
 export const allAttributes = [
   ...coachingAttributes,
-  ...staffQualityAttributes
+  ...staffQualityAttributes,
+  ...knowledgeAttributes
 ] as const;
 
 export type AttributeKey = (typeof allAttributes)[number]["key"];

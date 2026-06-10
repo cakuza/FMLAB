@@ -10,6 +10,7 @@ import {
   type AttributeSelections,
   coachingAttributes,
   createDefaultSelections,
+  knowledgeAttributes,
   staffQualityAttributes
 } from "@/lib/attributeLevels";
 import { calculateAssignmentRatings } from "@/lib/ratingFormula";
@@ -186,6 +187,25 @@ export function CoachRatingCalculator() {
           </div>
           <div className="attr-grid">
             {staffQualityAttributes.map((a) => (
+              <AttributeSelect
+                key={a.key}
+                id={`attr-${a.key}`}
+                label={a.label}
+                value={selections[a.key]}
+                emphasis={getEmphasis(a.key)}
+                onChange={(v) => updateSelection(a.key, v)}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="attr-section-block">
+          <div className="attr-section-head">
+            <span className="attr-section-title">Knowledge</span>
+            <span className="attr-section-sub">Affects Set Pieces</span>
+          </div>
+          <div className="attr-grid">
+            {knowledgeAttributes.map((a) => (
               <AttributeSelect
                 key={a.key}
                 id={`attr-${a.key}`}

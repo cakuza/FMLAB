@@ -126,12 +126,15 @@ export const trainingCategories: TrainingCategory[] = [
     label: "Set Pieces",
     shortLabel: "SPC",
     description: "Dead-ball routines, delivery quality and restart organization.",
-    keyAttributes: ["setPieces", "tactical", "technical"],
+    keyAttributes: ["setPieces", "tacticalKnowledge", "tactical", "technical"],
     weights: {
-      setPieces: 0.49,
-      tactical: 0.105,
-      technical: 0.105,
-      ...mentalSupportWeights
+      setPieces: 0.42,
+      tacticalKnowledge: 0.24,
+      tactical: 0.08,
+      technical: 0.08,
+      discipline: 0.06,
+      determination: 0.06,
+      motivating: 0.06
     }
   }
 ];

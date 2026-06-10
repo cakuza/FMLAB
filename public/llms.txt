@@ -16,8 +16,11 @@ Helps users estimate which training assignment best fits an FM26 coach based on 
 
 Coaching attributes (8): Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical, Technical.
 Mental attributes (3): Authority, Determination, Motivating.
+Knowledge attributes (1): Tactical Knowledge.
 
-Each attribute accepts one of the following word values from FM26: Average, Competent, Good, Reasonable, Very Good, Outstanding.
+Total inputs: 12. Each attribute accepts one of the following word values from FM26: Average, Competent, Good, Reasonable, Very Good, Outstanding.
+
+Tactical Knowledge affects the Set Pieces assignment only. It defaults to Average if not specified.
 
 ## Outputs
 

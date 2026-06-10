@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   type AttributeSelections,
   allAttributes,
+  attributeLevels,
   createDefaultSelections
 } from "@/lib/attributeLevels";
 import {
@@ -175,7 +176,7 @@ describe("calculateRating", () => {
     }
   });
 
-  it("ignores legacy staff params for main assignment stars", () => {
+  it("ignores truly unknown legacy fields for all assignment stars", () => {
     const baseSelections = createDefaultSelections();
     baseSelections.attacking = "good";
     baseSelections.defending = "competent";
@@ -192,19 +193,19 @@ describe("calculateRating", () => {
     const controlRatings = calculateAssignmentRatings(baseSelections);
     const controlRecommendations = getRecommendedAssignments(baseSelections, 3);
 
-    const legacySelections = {
+    // workingWithYoungsters is not a recognised AttributeKey — must have zero effect
+    const withUnknownField = {
       ...baseSelections,
-      tacticalKnowledge: "elite",
       workingWithYoungsters: "unsuited"
     };
 
-    expect(calculateAssignmentRatings(legacySelections)).toEqual(controlRatings);
-    expect(getRecommendedAssignments(legacySelections, 3)).toEqual(
+    expect(calculateAssignmentRatings(withUnknownField)).toEqual(controlRatings);
+    expect(getRecommendedAssignments(withUnknownField, 3)).toEqual(
       controlRecommendations
     );
 
     for (const assignmentId of assignmentIds) {
-      expect(calculateRating(assignmentId, legacySelections)).toEqual(
+      expect(calculateRating(assignmentId, withUnknownField)).toEqual(
         calculateRating(assignmentId, baseSelections)
       );
     }
@@ -270,6 +271,7 @@ describe("calculateRating", () => {
 
     const maxedSetPieceLead = createSelections("unsuited");
     maxedSetPieceLead.setPieces = "elite";
+    maxedSetPieceLead.tacticalKnowledge = "elite";
     maxedSetPieceLead.technical = "elite";
     maxedSetPieceLead.determination = "elite";
     maxedSetPieceLead.discipline = "elite";
@@ -317,7 +319,9 @@ describe("calculateRating", () => {
     setPiecesWithAverageSupport.setPieces = "elite";
     setPiecesWithAverageSupport.tactical = "average";
     setPiecesWithAverageSupport.technical = "average";
-    expect(calculateRating("setPieces", setPiecesWithAverageSupport).stars).toBe(4);
+    // With the new weights (SP:0.42, TK:0.24 at average default) the elite SP profile
+    // reaches 3.5 stars rather than 4.0; higher TK would push it further.
+    expect(calculateRating("setPieces", setPiecesWithAverageSupport).stars).toBe(3.5);
   });
 
   it("matches FM Scout single-attribute sweeps from an average profile", () => {
@@ -371,9 +375,24 @@ describe("calculateRating", () => {
       },
       {
         key: "setPieces",
-        expectedByLevel: [2, 2, 2.5, 3, 3, 3.5, 3.5, 4].map((stars) => ({
+        // elite SP reaches 3.5 (not 4) because TK defaults to average (0.24 weight)
+        expectedByLevel: [2, 2, 2.5, 3, 3, 3.5, 3.5, 3.5].map((stars) => ({
           setPieces: stars
         }))
+      },
+      {
+        key: "tacticalKnowledge",
+        // TK affects Set Pieces only; all other assignments stay at their base
+        expectedByLevel: [
+          { setPieces: 2.5 },
+          { setPieces: 2.5 },
+          { setPieces: 2.5 },
+          { setPieces: 3 },
+          { setPieces: 3 },
+          { setPieces: 3 },
+          { setPieces: 3 },
+          { setPieces: 3.5 }
+        ]
       },
       {
         key: "fitness",
@@ -446,7 +465,8 @@ describe("calculateRating", () => {
         possessionTechnical: 4,
         goalkeeping: 4,
         fitness: 4,
-        setPieces: 4
+        // SP drops from 4 to 3.5 — TK defaults to average, reducing the SP base weight
+        setPieces: 3.5
       },
       "elite mental average profile"
     );
@@ -515,7 +535,8 @@ describe("calculateRating", () => {
         selections: {
           ...createSelections("unsuited"),
           setPieces: "elite",
-          technical: "elite"
+          technical: "elite",
+          tacticalKnowledge: "average"  // FM Scout reference used TK=average
         },
         expected: {
           attackingTactical: 0.5,
@@ -550,7 +571,8 @@ describe("calculateRating", () => {
           possessionTechnical: 2.5,
           goalkeeping: 1.5,
           fitness: 1.5,
-          setPieces: 4
+          // SP drops 4→3.5 with new weights (TK defaults to average, lower SP primary weight)
+          setPieces: 3.5
         }
       },
       {
@@ -560,7 +582,8 @@ describe("calculateRating", () => {
           determination: "elite",
           motivating: "elite",
           setPieces: "elite",
-          technical: "elite"
+          technical: "elite",
+          tacticalKnowledge: "average"  // FM Scout reference used TK=average
         },
         expected: {
           attackingTactical: 2.5,
@@ -571,7 +594,7 @@ describe("calculateRating", () => {
           possessionTechnical: 3.5,
           goalkeeping: 2.5,
           fitness: 2.5,
-          setPieces: 5
+          setPieces: 4.5
         }
       },
       {
@@ -760,7 +783,8 @@ describe("calculateRating", () => {
           possessionTechnical: 4,
           goalkeeping: 3,
           fitness: 3,
-          setPieces: 4.5
+          // SP drops 4.5→4.0 with new weights (TK defaults to average, lowering SP weight from 0.49 to 0.42)
+          setPieces: 4
         }
       },
       {
@@ -861,5 +885,88 @@ describe("calculateRating", () => {
     }
 
     expect(mismatches).toEqual([]);
+  });
+
+  it("defaults Tactical Knowledge to Average in createDefaultSelections", () => {
+    const d = createDefaultSelections();
+    expect(d.tacticalKnowledge).toBe("average");
+  });
+
+  it("safely defaults missing Tactical Knowledge to Average", () => {
+    const sel = { ...createDefaultSelections() } as Partial<AttributeSelections>;
+    delete sel.tacticalKnowledge;
+    const result = calculateRating("setPieces", sel as AttributeSelections);
+    expect(result.stars).toBeGreaterThanOrEqual(0.5);
+    expect(result.stars).toBeLessThanOrEqual(5);
+    // Should match the average-default result
+    expect(result.stars).toBe(calculateRating("setPieces", createDefaultSelections()).stars);
+  });
+
+  it("Tactical Knowledge affects Set Pieces only", () => {
+    const low = createDefaultSelections();
+    low.tacticalKnowledge = "unsuited";
+    const high = createDefaultSelections();
+    high.tacticalKnowledge = "elite";
+
+    expect(calculateRating("setPieces", high).stars).toBeGreaterThan(
+      calculateRating("setPieces", low).stars
+    );
+
+    const unaffected = [
+      "attackingTactical", "attackingTechnical",
+      "defendingTactical", "defendingTechnical",
+      "possessionTactical", "possessionTechnical",
+      "goalkeeping", "fitness"
+    ] as const;
+
+    for (const id of unaffected) {
+      expect(calculateRating(id, high).stars).toBe(calculateRating(id, low).stars);
+    }
+  });
+
+  it("Tactical Knowledge sweep is monotonically non-decreasing for Set Pieces", () => {
+    let prev = -Infinity;
+    for (const { id } of attributeLevels) {
+      const sel = createDefaultSelections();
+      sel.tacticalKnowledge = id;
+      const stars = calculateRating("setPieces", sel).stars;
+      expect(stars).toBeGreaterThanOrEqual(prev);
+      prev = stars;
+    }
+  });
+
+  it("absent forbidden legacy fields have no effect on any assignment", () => {
+    const base = createDefaultSelections();
+    const withLegacy = {
+      ...base,
+      workingWithYoungsters: "elite",
+      levelOfDiscipline: "elite",
+      generalCoachingQuality: "elite",
+      youthDevelopment: "elite"
+    };
+    expect(calculateAssignmentRatings(withLegacy)).toEqual(
+      calculateAssignmentRatings(base)
+    );
+  });
+
+  it("includes exactly the 12 required inputs and no forbidden legacy fields", () => {
+    const keys = allAttributes.map((a) => a.key);
+    const required = [
+      "attacking", "defending", "fitness", "goalkeeping",
+      "possession", "setPieces", "tactical", "technical",
+      "determination", "discipline", "motivating",
+      "tacticalKnowledge"
+    ];
+    for (const k of required) {
+      expect(keys).toContain(k);
+    }
+    const forbidden = [
+      "workingWithYoungsters", "levelOfDiscipline",
+      "generalCoachingQuality", "youthDevelopment"
+    ];
+    for (const k of forbidden) {
+      expect(keys).not.toContain(k);
+    }
+    expect(keys).toHaveLength(12);
   });
 });
