@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { CoachRatingCalculator } from "@/components/CoachRatingCalculator";
 import { siteName, siteUrl } from "@/lib/siteMetadata";
 
-const pageTitle = "FM26 Coach Calculator — Assignment Ratings | FM Lab";
+const pageTitle = "FM26 Coach Assignment Calculator | FM Lab";
 const pageDescription =
-  "Estimate FM26 coach ratings for every training assignment. Enter coach profile attributes and compare Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces ratings.";
+  "Estimate Football Manager 2026 coach star ratings by assignment. Enter FM26 coach attributes and find the best training area for Attacking, Defending, Possession, Fitness, Goalkeeping and Set Pieces.";
 const ogDescription = "Compare FM26 staff assignment ratings before you hire or assign coaches.";
 const pageUrl = `${siteUrl}/coach-rating-calculator`;
 

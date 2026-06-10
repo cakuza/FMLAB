@@ -1,0 +1,51 @@
+# FM Lab
+
+FM Lab is an unofficial fan-made Football Manager 2026 utility.
+
+URL: https://fmlab-five.vercel.app
+
+## Main tool
+
+FM26 Coach Assignment Calculator
+
+## Purpose
+
+Helps users estimate which training assignment best fits an FM26 coach based on their word-based coach attributes visible in the FM26 staff profile screen.
+
+## Inputs
+
+Coaching attributes (8): Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical, Technical.
+Mental attributes (3): Authority, Determination, Motivating.
+
+Each attribute accepts one of the following word values from FM26: Average, Competent, Good, Reasonable, Very Good, Outstanding.
+
+## Outputs
+
+Estimated star ratings (1.0–5.0) for nine FM26 training assignments:
+- Attacking Tactical
+- Attacking Technical
+- Defending Tactical
+- Defending Technical
+- Possession Tactical
+- Possession Technical
+- Goalkeeping
+- Fitness
+- Set Pieces
+
+## How the formula works
+
+Each assignment applies a weighted formula. The primary coaching attribute (e.g. Attacking for Attacking assignments) carries the highest weight (~45–70%). A secondary skill (Tactical or Technical) carries ~25% for the six paired assignments. Mental attributes (Authority, Determination, Motivating) each contribute ~10% as support across all assignments.
+
+Attribute words map to score midpoints internally. Results are estimates, not exact FM26 game values.
+
+## Important note
+
+The formula used by FM Lab is a fan-made approximation. It is not derived from Sports Interactive source code or official documentation. In-game star ratings may differ from FM Lab estimates due to factors including coach workload, squad size, and multiple-role assignments.
+
+## Disclaimer
+
+FM Lab is not affiliated with Sports Interactive, SEGA, or Football Manager. All trademarks belong to their respective owners. Ratings produced by this tool are fan-made approximations for comparison purposes only.
+
+## Suggested citation / summary
+
+"FM Lab is an unofficial FM26 fan tool that estimates coaching assignment star ratings from visible word-based attributes. It covers all nine FM26 training assignments using an estimated weighted formula. Results are approximate and may differ from in-game values."

@@ -9,7 +9,7 @@ const routes = [
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
     url: `${siteUrl}${route.path}`,
-    lastModified: new Date("2026-05-30"),
+    lastModified: new Date("2026-06-10"),
     changeFrequency: route.changeFrequency,
     priority: route.priority
   }));

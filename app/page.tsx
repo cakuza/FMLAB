@@ -4,9 +4,11 @@ import { type AttributeKey, attributeLabels } from "@/lib/attributeLevels";
 import { siteName, siteUrl } from "@/lib/siteMetadata";
 import { trainingCategories } from "@/lib/trainingCategories";
 
-const pageTitle = "FM Lab — FM26 Coach Assignment Calculator";
+const pageTitle = "FM26 Coach Assignment Calculator | FM Lab";
 const pageDescription =
-  "Find the right role for any FM26 coach. Enter coach attributes and instantly see all 9 assignment ratings — ranked, scored, explained.";
+  "Estimate Football Manager 2026 coach star ratings by assignment. Enter FM26 coach attributes and find the best training area for Attacking, Defending, Possession, Fitness, Goalkeeping and Set Pieces.";
+const ogDescription =
+  "Enter FM26 coach attributes and instantly compare star ratings for all 9 training assignments.";
 
 export const metadata: Metadata = {
   title: { absolute: pageTitle },
@@ -14,10 +16,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     type: "website", url: "/", siteName,
-    title: "FM Lab — FM26 Coach Assignment Calculator",
-    description: pageDescription
+    title: pageTitle,
+    description: ogDescription
   },
-  twitter: { card: "summary", title: pageTitle, description: pageDescription }
+  twitter: { card: "summary", title: pageTitle, description: ogDescription }
 };
 
 const howRows = [
@@ -28,23 +30,66 @@ const howRows = [
 ];
 
 const faqItems = [
-  { question: "Is this official?", answer: "No. FM Lab is an unofficial, fan-made calculator and is not affiliated with Sports Interactive, SEGA or Football Manager." },
-  { question: "What attributes should I enter?", answer: "Enter the coaching and mental attributes from the FM26 coach profile: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical, Technical, Authority, Determination and Motivating." },
-  { question: "What does the assignment rating mean?", answer: "The rating estimates how suitable the coach is for that training assignment, shown as a star score for quick comparison." },
-  { question: "Can I use this before hiring a coach?", answer: "Yes. The calculator is designed to help you compare staff before offering wages or assigning a role." },
-  { question: "Why do some assignments rate differently?", answer: "Each assignment weighs attributes differently. Attacking Tactical, Defending Technical, Fitness and Goalkeeping all use a different attribute mix." },
-  { question: "Is it exact?", answer: "No. It is an approximation based on the coach profile and should be used as a practical decision aid, not an official formula." }
+  {
+    question: "Is this the official FM26 coach rating formula?",
+    answer: "No. FM Lab is an unofficial, fan-made tool. The formula is an estimated approximation based on publicly visible FM26 coach attributes. It is not affiliated with Sports Interactive, SEGA, or Football Manager."
+  },
+  {
+    question: "How accurate is the FM26 Coach Assignment Calculator?",
+    answer: "Results are a close estimate, not a guaranteed match. In-game star ratings can vary based on coach workload, squad size, and whether a coach covers multiple roles. Use the calculator as a comparison guide, not an exact measure."
+  },
+  {
+    question: "What is the difference between Attacking Tactical and Attacking Technical?",
+    answer: "Both assignments require high Attacking skill. Attacking Tactical favours coaches with strong Tactical ability for shape and structure work. Attacking Technical favours coaches with strong Technical ability for skill-based and ball-work sessions."
+  },
+  {
+    question: "What is the difference between Defending Tactical and Defending Technical?",
+    answer: "Both require high Defending skill. Defending Tactical suits coaches who can organise defensive shape and systems. Defending Technical suits coaches who focus on individual defensive technique and positioning."
+  },
+  {
+    question: "What is the difference between Possession Tactical and Possession Technical?",
+    answer: "Both require high Possession skill. Possession Tactical covers structured press and retention systems. Possession Technical covers technical ball-work and close-control sessions."
+  },
+  {
+    question: "Which attributes matter for Fitness coaches in FM26?",
+    answer: "Fitness is the primary attribute for the Fitness assignment. Authority, Determination and Motivating provide supporting weight. Coaching skill attributes like Attacking or Tactical have little influence on this assignment."
+  },
+  {
+    question: "Which attributes matter for Goalkeeping coaches in FM26?",
+    answer: "Goalkeeping is the primary attribute for the Goalkeeping assignment. Authority, Determination and Motivating provide supporting weight. Other coaching attributes have minimal effect on this role."
+  },
+  {
+    question: "Which attributes matter for Set Pieces coaches in FM26?",
+    answer: "Set Pieces is the primary attribute, with Tactical and Technical sharing secondary weight. Authority, Determination and Motivating contribute support. It is one of the few assignments that rewards a broad technical and tactical base alongside the specialist attribute."
+  },
+  {
+    question: "Why does FM26 use word-based staff attributes?",
+    answer: "FM26 replaced numerical coach attributes with word-based descriptions (Average, Competent, Good, Very Good, Outstanding) to simplify the interface. FM Lab converts these words to score ranges internally for estimation."
+  },
+  {
+    question: "Can I use this calculator during a save?",
+    answer: "Yes. The calculator works in any browser alongside your FM26 game. Enter the attribute words directly from the coach profile screen and compare assignments in seconds."
+  }
 ];
 
 const structuredData = [
   {
     "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: siteUrl,
+    description: "Unofficial FM26 coaching utilities and calculators."
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "FM Lab — FM26 Coach Assignment Calculator",
-    applicationCategory: "SportsApplication",
+    name: "FM26 Coach Assignment Calculator",
+    applicationCategory: "GameApplication",
     operatingSystem: "Web",
     description: pageDescription,
-    url: siteUrl
+    url: siteUrl,
+    isAccessibleForFree: true,
+    creator: { "@type": "Organization", name: siteName }
   },
   {
     "@context": "https://schema.org",
@@ -73,6 +118,18 @@ export default function Home() {
       <CoachRatingCalculator />
 
       <div className="below-fold">
+
+        <section className="home-section" id="quick-answer">
+          <div className="home-section-head">
+            <h2 className="home-section-title">Quick answer</h2>
+          </div>
+          <div className="quick-answer-body">
+            <p>FM Lab estimates which FM26 training assignment fits a coach best. Select the coach&apos;s word-based attributes from their FM26 profile, then compare estimated star ratings for all nine assignment categories: Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces.</p>
+            <p>Each assignment weights attributes differently. An Attacking Tactical coach needs high Attacking and Tactical ratings. A Fitness coach needs high Fitness. A Set Pieces coach benefits from Set Pieces, Tactical and Technical combined. Authority, Determination and Motivating support every assignment.</p>
+            <p>Results are estimates based on visible attribute words. In-game ratings may differ slightly depending on workload and squad context, but the calculator gives a reliable comparison for hiring and assignment decisions.</p>
+          </div>
+        </section>
+
         <section className="home-section" id="how">
           <div className="home-section-head">
             <h2 className="home-section-title">How to use it</h2>
@@ -114,6 +171,34 @@ export default function Home() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <section className="home-section" id="about">
+          <div className="home-section-head">
+            <h2 className="home-section-title">About the calculator</h2>
+          </div>
+          <div className="geo-blocks">
+            <div className="geo-block">
+              <h3 className="geo-q">What is the FM26 Coach Assignment Calculator?</h3>
+              <p className="geo-a">FM Lab is an unofficial fan-made web tool that estimates the best training assignment for any FM26 coach. You enter the coach&apos;s visible word attributes and the tool returns estimated star ratings for all nine assignment categories so you can compare and decide quickly.</p>
+            </div>
+            <div className="geo-block">
+              <h3 className="geo-q">How does the FM26 coach calculator work?</h3>
+              <p className="geo-a">Each attribute word (Average, Competent, Good, Very Good, Outstanding) maps to a score range. The calculator applies a weighted formula for each assignment, where the primary coaching attribute carries most of the weight and mental attributes provide supporting scores. The output is an estimated star rating from 1 to 5.</p>
+            </div>
+            <div className="geo-block">
+              <h3 className="geo-q">Which FM26 coach attributes matter?</h3>
+              <p className="geo-a">The calculator uses 11 attributes from the FM26 coach profile: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical and Technical as the eight coaching attributes, plus Authority, Determination and Motivating as the three mental attributes. Mental attributes support all assignments.</p>
+            </div>
+            <div className="geo-block">
+              <h3 className="geo-q">What is the difference between Tactical and Technical assignments?</h3>
+              <p className="geo-a">Tactical assignments (Attacking Tactical, Defending Tactical, Possession Tactical) value a coach&apos;s Tactical rating as their secondary skill. Technical assignments value Technical instead. The primary skill — Attacking, Defending or Possession — is the same for both variants of each pair.</p>
+            </div>
+            <div className="geo-block">
+              <h3 className="geo-q">Why are the results approximate?</h3>
+              <p className="geo-a">FM26 coach attributes are displayed as word bands, not exact numbers. Each word covers a range of underlying values. FM Lab estimates from the midpoint of those ranges, so the output is a close guide rather than a precise match. In-game ratings can also vary with workload and squad size.</p>
+            </div>
           </div>
         </section>
 
