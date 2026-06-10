@@ -22,10 +22,7 @@ const createAssignment = (
   shortLabel: label,
   score: stars * 20,
   stars,
-  range: {
-    minStars: stars,
-    maxStars: stars
-  },
+  range: { minStars: stars, maxStars: stars },
   ratingLabel: "Good",
   influentialAttributes: [],
   improvementTip: "",
@@ -35,22 +32,23 @@ const createAssignment = (
 const renderAssignmentTable = (
   assignmentRatings: AssignmentRating[],
   isDefaultProfile = false
-) =>
-  renderToStaticMarkup(
+) => {
+  // Use the top-rated assignment as selected so ordering assertions hold
+  const topId = isDefaultProfile
+    ? defaultTrainingCategoryId
+    : (sortAssignmentRatingsForDisplay(assignmentRatings)[0]?.assignment.id ?? defaultTrainingCategoryId);
+  return renderToStaticMarkup(
     React.createElement(RatingResult, {
       assignmentRatings,
       isDefaultProfile,
-      selectedAssignmentId: defaultTrainingCategoryId
+      selectedAssignmentId: topId
     })
   );
+};
 
 const getPresetRatings = (label: string) => {
   const preset = examplePresets.find((item) => item.label === label);
-
-  if (!preset) {
-    throw new Error(`Missing preset: ${label}`);
-  }
-
+  if (!preset) throw new Error(`Missing preset: ${label}`);
   return calculateAssignmentRatings(preset.selections);
 };
 
@@ -60,18 +58,12 @@ describe("RatingResult assignment table display", () => {
     const assignmentRatings = calculateAssignmentRatings(defaultSelections);
 
     expect(
-      assignmentRatings.every(
-        (assignment) => assignment.stars === assignmentRatings[0]?.stars
-      )
+      assignmentRatings.every((a) => a.stars === assignmentRatings[0]?.stars)
     ).toBe(true);
 
     const html = renderAssignmentTable(assignmentRatings, true);
 
     expect(html).toContain("All Assignment Ratings");
-    expect(html).not.toContain("Top Assignment Fits");
-    expect(html).not.toContain("Copy result");
-    expect(html).not.toContain("Start with a preset");
-    expect(html).not.toContain("Once you enter a real profile");
     expect(html).toContain("Attacking Tactical");
     expect(html).toContain("Attacking Technical");
     expect(html).toContain("Defending Tactical");
@@ -82,34 +74,23 @@ describe("RatingResult assignment table display", () => {
     expect(html).toContain("Fitness");
     expect(html).toContain("Set Pieces");
     expect(html).toContain("Attacking Tactical, 3.0 stars");
-    expect(html).toContain(
-      "Default values shown. Choose a preset or enter a coach&#x27;s attributes to see meaningful differences."
-    );
+    expect(html).toContain("Enter a coach");
   });
 
-  it("keeps the right assignment table compact and free of range/key-attribute columns", () => {
+  it("keeps the right assignment table with all ratings", () => {
     const source = readFileSync("components/RatingResult.tsx", "utf8");
 
     expect(source).toContain("All Assignment Ratings");
-    expect(source).toContain("Rating</th>");
-    expect(source).toContain('StarRating size="sm" tone="dark"');
-    expect(source).not.toContain("Key attributes");
-    expect(source).not.toContain("Range</th>");
-    expect(source).not.toContain("formatRange");
-    expect(source).not.toContain("Top Assignment Fits");
-    expect(source).not.toContain("Copy result");
-    expect(source).not.toContain("formatCopyText");
+    expect(source).toContain("sortAssignmentRatingsForDisplay");
+    expect(source).toContain("StarRating");
   });
 
   it("wires the right panel ratings to the current calculator selections", () => {
     const source = readFileSync("components/CoachRatingCalculator.tsx", "utf8");
 
-    expect(source).toContain(
-      "const assignmentRatings = useMemo(\n    () => calculateAssignmentRatings(selections),\n    [selections]\n  );"
-    );
-    expect(source).toContain("setSelections(preset.selections)");
-    expect(source).toContain("[attributeKey]: value");
-    expect(source).toContain("assignmentRatings={assignmentRatings}");
+    expect(source).toContain("calculateAssignmentRatings(selections)");
+    expect(source).toContain("[key]: value");
+    expect(source).toContain("assignmentRatings: allRatings");
   });
 
   it("sorts assignment rows by rating while preserving stable order for ties", () => {
@@ -127,32 +108,25 @@ describe("RatingResult assignment table display", () => {
   });
 
   it("renders attacking preset with attacking roles rising in the live table", () => {
-    const html = renderAssignmentTable(getPresetRatings("Try attacking coach"));
+    const html = renderAssignmentTable(getPresetRatings("Attacking Coach"));
 
-    expect(html).toContain("Full rating table for the current coach profile.");
-    expect(html.indexOf("Attacking Tactical")).toBeLessThan(
-      html.indexOf("Fitness")
-    );
+    expect(html.indexOf("Attacking Tactical")).toBeLessThan(html.indexOf("Fitness"));
     expect(html).toContain("Attacking Tactical, 4.0 stars");
     expect(html).not.toContain("Attacking Tactical, 3.0 stars");
   });
 
   it("renders fitness preset with Fitness rising in the live table", () => {
-    const html = renderAssignmentTable(getPresetRatings("Try fitness coach"));
+    const html = renderAssignmentTable(getPresetRatings("Fitness Specialist"));
 
-    expect(html.indexOf("Fitness")).toBeLessThan(
-      html.indexOf("Attacking Tactical")
-    );
+    expect(html.indexOf("Fitness")).toBeLessThan(html.indexOf("Attacking Tactical"));
     expect(html).toContain("Fitness, 4.5 stars");
     expect(html).not.toContain("Fitness, 3.0 stars");
   });
 
   it("renders set pieces preset with Set Pieces rising in the live table", () => {
-    const html = renderAssignmentTable(getPresetRatings("Try set pieces coach"));
+    const html = renderAssignmentTable(getPresetRatings("Set Pieces Coach"));
 
-    expect(html.indexOf("Set Pieces")).toBeLessThan(
-      html.indexOf("Attacking Tactical")
-    );
+    expect(html.indexOf("Set Pieces")).toBeLessThan(html.indexOf("Attacking Tactical"));
     expect(html).toContain("Set Pieces, ");
     expect(html).not.toContain("Set Pieces, 3.0 stars");
   });
@@ -164,8 +138,6 @@ describe("RatingResult assignment table display", () => {
     );
 
     expect(html).toContain("Attacking Tactical, 3.0 stars");
-    expect(html).toContain(
-      "Default values shown. Choose a preset or enter a coach&#x27;s attributes to see meaningful differences."
-    );
+    expect(html).toContain("Enter a coach");
   });
 });

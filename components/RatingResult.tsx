@@ -2,19 +2,21 @@
 
 import React, { useMemo } from "react";
 import type { AssignmentRating } from "@/lib/ratingFormula";
+import { getRatingInfo } from "@/lib/ratingLabels";
 import { StarRating } from "./StarRating";
 
-type RatingResultProps = {
+type Props = {
   assignmentRatings: AssignmentRating[];
   isDefaultProfile?: boolean;
   selectedAssignmentId: string;
-  className?: string;
+  onSelectAssignment?: (id: string) => void;
+  compact?: boolean;
 };
 
 export const sortAssignmentRatingsForDisplay = (
-  assignmentRatings: AssignmentRating[]
+  ratings: AssignmentRating[]
 ) =>
-  assignmentRatings
+  ratings
     .map((assignment, index) => ({ assignment, index }))
     .sort(
       (a, b) =>
@@ -23,99 +25,220 @@ export const sortAssignmentRatingsForDisplay = (
         a.index - b.index
     );
 
+function ResultCard({
+  rating,
+  bestRating,
+  isDefault
+}: {
+  rating: AssignmentRating;
+  bestRating: AssignmentRating;
+  isDefault: boolean;
+}) {
+  const info = getRatingInfo(rating.score);
+  const isBest = bestRating.id === rating.id;
+
+  return (
+    <div className="result-card">
+      <div className="rc-header">
+        <div>
+          <span className="rc-category-tag">Selected Assignment</span>
+          <h2 className="rc-assignment-name">{rating.label}</h2>
+        </div>
+        {isBest && <span className="rc-best-badge">Best Fit</span>}
+      </div>
+
+      {isDefault ? (
+        <div className="rc-default-msg">
+          <p>Enter a coach&apos;s attributes to see their estimated rating.</p>
+        </div>
+      ) : (
+        <>
+          <div className="rc-stars-row">
+            <StarRating value={rating.stars} size={28} />
+            <div className="rc-stars-meta">
+              <span className="rc-stars-value">{rating.stars.toFixed(1)}</span>
+              <span style={{ fontSize: 14, fontWeight: 700, color: info.color, whiteSpace: "nowrap" }}>
+                {info.label}
+              </span>
+            </div>
+          </div>
+
+          <div className="rc-range">
+            <span className="rc-range-label">Est. range</span>
+            <span className="rc-range-value">
+              {rating.range.minStars.toFixed(1)} – {rating.range.maxStars.toFixed(1)} ★
+            </span>
+          </div>
+
+          <div className="rc-attrs">
+            <div className="rc-attrs-title">Key attributes</div>
+            {rating.influentialAttributes.map((attr) => (
+              <div key={attr.key} className="rc-attr-row">
+                <span className="rc-attr-name">{attr.label}</span>
+                <div className="rc-attr-bar-wrap">
+                  <div
+                    className="rc-attr-bar"
+                    style={{ width: `${(attr.weight * 100).toFixed(0)}%` }}
+                  />
+                </div>
+                <span className="rc-attr-pct">{(attr.weight * 100).toFixed(0)}%</span>
+              </div>
+            ))}
+          </div>
+
+          {!isBest && (
+            <div className="rc-best-note">
+              <span className="rc-best-note-label">Best fit:</span>
+              <strong className="rc-best-note-name">{bestRating.label}</strong>
+              <StarRating value={bestRating.stars} size={11} />
+            </div>
+          )}
+
+          <div className="rc-tip">
+            <span className="rc-tip-icon">›</span>
+            <span className="rc-tip-text">{rating.improvementTip}</span>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function TopAssignments({
+  ratings,
+  selectedId,
+  onSelect
+}: {
+  ratings: AssignmentRating[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
+  const top3 = ratings.slice(0, 3);
+  return (
+    <div className="top-assignments">
+      <div className="section-label">Top Assignments</div>
+      {top3.map((r, i) => {
+        const info = getRatingInfo(r.score);
+        return (
+          <button
+            key={r.id}
+            className={`top-asgn-row${r.id === selectedId ? " selected" : ""}`}
+            onClick={() => onSelect(r.id)}
+            type="button"
+          >
+            <span className="top-asgn-rank">{i + 1}</span>
+            <span className="top-asgn-name">{r.label}</span>
+            <StarRating value={r.stars} size={13} />
+            <span className="top-asgn-label" style={{ color: info.color }}>{info.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function AllRatingsTable({
+  ratings,
+  selectedId,
+  onSelect
+}: {
+  ratings: AssignmentRating[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
+  return (
+    <div className="ratings-table-wrap">
+      <div className="section-label">All Assignment Ratings</div>
+      <table className="ratings-table">
+        <thead>
+          <tr>
+            <th className="rt-rank">#</th>
+            <th className="rt-name">Assignment</th>
+            <th className="rt-stars">Rating</th>
+            <th className="rt-label">Quality</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ratings.map((r, i) => {
+            const info = getRatingInfo(r.score);
+            return (
+              <tr
+                key={r.id}
+                className={`rt-row${r.id === selectedId ? " selected" : ""}`}
+                onClick={() => onSelect(r.id)}
+              >
+                <td className="rt-rank">{i === 0 ? "★" : i + 1}</td>
+                <td className="rt-name">{r.label}</td>
+                <td
+                  className="rt-stars"
+                  aria-label={`${r.label}, ${r.stars.toFixed(1)} stars`}
+                >
+                  <StarRating value={r.stars} size={13} />
+                </td>
+                <td className="rt-label" style={{ color: info.color }}>{info.label}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <p className="rt-note">
+        Ratings are approximations. In-game stars may differ if a coach covers multiple roles or workload is high.
+      </p>
+    </div>
+  );
+}
+
+function StarLegend() {
+  const rows = [
+    { stars: "4.5 – 5.0", desc: "Elite assignment fit" },
+    { stars: "4.0 – 4.5", desc: "Strong specialist" },
+    { stars: "3.0 – 4.0", desc: "Useful club option" },
+    { stars: "2.0 – 3.0", desc: "Backup / depth" },
+    { stars: "< 2.0", desc: "Weak fit" }
+  ];
+  return (
+    <div className="star-legend">
+      <div className="section-label" style={{ marginBottom: 8 }}>What do the stars mean?</div>
+      {rows.map((r) => (
+        <div key={r.stars} className="sl-row">
+          <span className="sl-stars">{r.stars}</span>
+          <span className="sl-desc">{r.desc}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function RatingResult({
   assignmentRatings,
   isDefaultProfile = false,
   selectedAssignmentId,
-  className = ""
-}: RatingResultProps) {
-  const sortedAssignments = useMemo(
-    () =>
-      sortAssignmentRatingsForDisplay(assignmentRatings).map(
-        ({ assignment }) => assignment
-      ),
+  onSelectAssignment = () => {},
+  compact = false
+}: Props) {
+  const sorted = useMemo(
+    () => sortAssignmentRatingsForDisplay(assignmentRatings).map(({ assignment }) => assignment),
     [assignmentRatings]
   );
+  const selected = assignmentRatings.find((r) => r.id === selectedAssignmentId) ?? assignmentRatings[0];
+  const best = sorted[0];
+
+  if (!selected || !best) return null;
+
+  if (compact) {
+    return (
+      <div className="result-panel">
+        <ResultCard rating={selected} bestRating={best} isDefault={isDefaultProfile} />
+      </div>
+    );
+  }
 
   return (
-    <aside
-      className={[
-        "overflow-hidden rounded-lg border border-white/10 p-4 lg:sticky lg:top-[4.75rem] lg:max-h-[calc(100vh-5.5rem)] lg:overflow-y-auto",
-        "bg-gradient-to-b from-[#1d2723] to-ink text-chalk shadow-panel",
-        className
-      ].join(" ")}
-    >
-      <p className="text-sm font-black uppercase tracking-[0.16em] text-signal">
-        All Assignment Ratings
-      </p>
-
-      <p className="mt-2 text-xs font-semibold leading-5 text-chalk/56">
-        {isDefaultProfile
-          ? "Default values shown. Choose a preset or enter a coach's attributes to see meaningful differences."
-          : "Full rating table for the current coach profile."}
-      </p>
-
-      <div className="mt-3 overflow-hidden rounded-lg border border-chalk/12">
-        <table className="w-full border-collapse text-left text-xs">
-          <thead className="bg-chalk/8 text-[0.68rem] uppercase tracking-[0.12em] text-touchline/72">
-            <tr>
-              <th className="w-9 px-2 py-2 font-black">#</th>
-              <th className="px-2 py-2 font-black">Assignment</th>
-              <th className="px-2 py-2 text-right font-black">Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedAssignments.map((assignment, index) => {
-              const isSelected = assignment.id === selectedAssignmentId;
-
-              return (
-                <tr
-                  className={[
-                    "border-t border-chalk/10",
-                    isSelected ? "bg-signal/12" : "bg-chalk/5"
-                  ].join(" ")}
-                  key={assignment.id}
-                >
-                  <td className="px-2 py-2 font-black text-touchline/62">
-                    {index + 1}
-                  </td>
-                  <td className="px-2 py-2 font-black text-chalk">
-                    {assignment.label}
-                  </td>
-                  <td
-                    aria-label={`${assignment.label}, ${assignment.stars.toFixed(1)} stars`}
-                    className="px-2 py-2"
-                    title={`${assignment.stars.toFixed(1)} stars`}
-                  >
-                    <div className="flex items-center justify-end">
-                      <StarRating size="sm" tone="dark" value={assignment.stars} />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      <details className="mt-3 rounded-lg border border-chalk/10 bg-chalk/6 p-3">
-        <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.12em] text-touchline/68">
-          What do the stars mean?
-        </summary>
-        <ul className="mt-2 grid gap-1 text-xs font-semibold leading-5 text-chalk/62">
-          <li>4.5-5.0: Elite assignment fit</li>
-          <li>4.0-4.5: Strong specialist</li>
-          <li>3.0-4.0: Useful club-level option</li>
-          <li>2.0-3.0: Backup/depth option</li>
-          <li>Below 2.0: Weak fit</li>
-        </ul>
-      </details>
-
-      <p className="mt-2 text-xs font-semibold leading-5 text-chalk/50">
-        FM Lab estimates the rating for a single assignment. In-game stars may
-        look lower if a coach is assigned to multiple areas or if workload is
-        high.
-      </p>
-    </aside>
+    <div className="result-panel">
+      <ResultCard rating={selected} bestRating={best} isDefault={isDefaultProfile} />
+      <TopAssignments ratings={sorted} selectedId={selectedAssignmentId} onSelect={onSelectAssignment} />
+      <AllRatingsTable ratings={sorted} selectedId={selectedAssignmentId} onSelect={onSelectAssignment} />
+      <StarLegend />
+    </div>
   );
 }

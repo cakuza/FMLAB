@@ -2,234 +2,212 @@
 
 import React, { useMemo, useState } from "react";
 import { AttributeSelect } from "@/components/AttributeSelect";
-import { CategorySelect } from "@/components/CategorySelect";
 import { RatingResult } from "@/components/RatingResult";
+import { StarRating } from "@/components/StarRating";
 import {
   type AttributeKey,
   type AttributeLevelId,
   type AttributeSelections,
-  attributeLabels,
   coachingAttributes,
   createDefaultSelections,
   staffQualityAttributes
 } from "@/lib/attributeLevels";
-import {
-  calculateAssignmentRatings
-} from "@/lib/ratingFormula";
+import { calculateAssignmentRatings } from "@/lib/ratingFormula";
 import {
   type TrainingCategoryId,
   defaultTrainingCategoryId,
   trainingCategoryById
 } from "@/lib/trainingCategories";
 
-export const examplePresets: {
-  label: string;
-  selections: AttributeSelections;
-}[] = [
+export const examplePresets: { label: string; selections: AttributeSelections }[] = [
   {
-    label: "Try attacking coach",
+    label: "Attacking Coach",
     selections: {
       ...createDefaultSelections(),
-      attacking: "very-good",
-      tactical: "very-good",
-      technical: "good",
-      possession: "good",
-      defending: "competent",
-      fitness: "average",
-      goalkeeping: "reasonable",
-      setPieces: "average",
-      determination: "good",
-      discipline: "good",
-      motivating: "very-good"
+      attacking: "very-good", tactical: "very-good", technical: "good",
+      possession: "good", defending: "competent", fitness: "average",
+      goalkeeping: "reasonable", setPieces: "average",
+      determination: "good", discipline: "good", motivating: "very-good"
     }
   },
   {
-    label: "Try fitness coach",
+    label: "Fitness Specialist",
     selections: {
       ...createDefaultSelections(),
-      attacking: "competent",
-      defending: "average",
-      fitness: "outstanding",
-      goalkeeping: "reasonable",
-      possession: "average",
-      setPieces: "competent",
-      tactical: "average",
-      technical: "average",
-      determination: "good",
-      discipline: "good",
-      motivating: "good"
+      attacking: "competent", defending: "average", fitness: "outstanding",
+      goalkeeping: "reasonable", possession: "average", setPieces: "competent",
+      tactical: "average", technical: "average",
+      determination: "good", discipline: "good", motivating: "good"
     }
   },
   {
-    label: "Try set pieces coach",
+    label: "Set Pieces Coach",
     selections: {
       ...createDefaultSelections(),
-      attacking: "average",
-      defending: "average",
-      fitness: "competent",
-      goalkeeping: "reasonable",
-      possession: "average",
-      setPieces: "very-good",
-      tactical: "good",
-      technical: "good",
-      determination: "good",
-      discipline: "good",
-      motivating: "good"
+      attacking: "average", defending: "average", fitness: "competent",
+      goalkeeping: "reasonable", possession: "average", setPieces: "very-good",
+      tactical: "good", technical: "good",
+      determination: "good", discipline: "good", motivating: "good"
     }
   }
 ];
 
-export function CoachRatingCalculator() {
-  const [highlightAssignmentId, setHighlightAssignmentId] =
-    useState<TrainingCategoryId>(defaultTrainingCategoryId);
-  const [selections, setSelections] = useState(createDefaultSelections);
-  const isDefaultProfile = Object.values(selections).every(
-    (value) => value === "average"
-  );
+const assignmentGroups = [
+  { label: "Attacking", ids: ["attackingTactical", "attackingTechnical"] as TrainingCategoryId[] },
+  { label: "Defending", ids: ["defendingTactical", "defendingTechnical"] as TrainingCategoryId[] },
+  { label: "Possession", ids: ["possessionTactical", "possessionTechnical"] as TrainingCategoryId[] },
+  { label: "Specialist", ids: ["goalkeeping", "fitness", "setPieces"] as TrainingCategoryId[] }
+];
 
-  const assignmentRatings = useMemo(
-    () => calculateAssignmentRatings(selections),
+export function CoachRatingCalculator() {
+  const [selections, setSelections] = useState<AttributeSelections>(createDefaultSelections);
+  const [selectedId, setSelectedId] = useState<TrainingCategoryId>(defaultTrainingCategoryId);
+
+  const isDefault = useMemo(
+    () => Object.values(selections).every((v) => v === "average"),
     [selections]
   );
-  const highlightedAssignment = trainingCategoryById[highlightAssignmentId];
-  const highlightedWeights = new Map<AttributeKey, number>(
-    Object.entries(highlightedAssignment.weights) as [AttributeKey, number][]
-  );
-  const primaryAttributeKeys = new Set(highlightedAssignment.keyAttributes);
 
-  const getAttributeEmphasis = (attributeKey: AttributeKey) => {
-    const weight = highlightedWeights.get(attributeKey);
+  const allRatings = useMemo(() => calculateAssignmentRatings(selections), [selections]);
 
-    if (!weight) {
-      return "normal";
-    }
+  const ratingMap = useMemo(() => {
+    const m: Record<string, (typeof allRatings)[number]> = {};
+    allRatings.forEach((r) => { m[r.id] = r; });
+    return m;
+  }, [allRatings]);
 
-    return primaryAttributeKeys.has(attributeKey) ? "primary" : "support";
+  const selectedAssignment = trainingCategoryById[selectedId];
+  const primaryKeys = new Set(selectedAssignment.keyAttributes);
+
+  const getEmphasis = (key: AttributeKey) => {
+    if (!selectedAssignment.weights[key]) return "normal" as const;
+    return primaryKeys.has(key) ? "primary" as const : "support" as const;
   };
 
-  const updateSelection = (
-    attributeKey: AttributeKey,
-    value: AttributeLevelId
-  ) => {
-    setSelections((current) => ({
-      ...current,
-      [attributeKey]: value
-    }));
-  };
-  const applyPreset = (preset: (typeof examplePresets)[number]) => {
-    setSelections(preset.selections);
-  };
+  const updateSelection = (key: AttributeKey, value: AttributeLevelId) =>
+    setSelections((prev) => ({ ...prev, [key]: value }));
 
-  const primaryText = highlightedAssignment.keyAttributes
-    .map((key) => attributeLabels[key])
-    .join(", ");
-  const supportText = Object.keys(highlightedAssignment.weights)
-    .filter(
-      (key): key is AttributeKey =>
-        !primaryAttributeKeys.has(key as AttributeKey) &&
-        Boolean(attributeLabels[key as AttributeKey])
-    )
-    .map((key) => attributeLabels[key])
-    .join(", ");
+  const applyPreset = (preset: (typeof examplePresets)[number]) =>
+    setSelections({ ...createDefaultSelections(), ...preset.selections });
+
+  const resultProps = {
+    assignmentRatings: allRatings,
+    isDefaultProfile: isDefault,
+    selectedAssignmentId: selectedId,
+    onSelectAssignment: (id: string) => setSelectedId(id as TrainingCategoryId)
+  };
 
   return (
-    <>
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_430px]">
-        <section className="order-2 rounded-lg border border-ink/10 bg-white/80 p-3 shadow-panel lg:order-1">
-          <div className="mb-3 rounded-lg border border-ink/10 bg-touchline/45 p-3">
-            <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-pitch/80">
-              Choose a preset or enter a coach&apos;s attributes to see his best
-              training role.
-            </p>
-            <div className="flex flex-wrap items-center gap-2">
-              {examplePresets.map((preset) => (
-                <button
-                  className="rounded-full border border-pitch/18 bg-white px-3.5 py-2 text-xs font-black text-ink transition hover:border-pitch/45 hover:bg-touchline focus:outline-none focus:ring-4 focus:ring-pitch/16"
-                  key={preset.label}
-                  onClick={() => applyPreset(preset)}
-                  type="button"
-                >
-                  {preset.label}
-                </button>
-              ))}
-              <button
-                className="rounded-full border border-ink/12 bg-chalk px-3.5 py-2 text-xs font-black text-ink/70 transition hover:border-pitch/40 hover:text-ink focus:outline-none focus:ring-4 focus:ring-pitch/16"
-                onClick={() => setSelections(createDefaultSelections())}
-                type="button"
-              >
-                Reset
-              </button>
-            </div>
-          </div>
+    <div className="calc-page">
 
-          <div className="mb-3 grid gap-3 rounded-lg border border-ink/10 bg-chalk p-3 md:grid-cols-[0.42fr_1fr]">
-            <CategorySelect
-              value={highlightAssignmentId}
-              onChange={setHighlightAssignmentId}
-            />
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.14em] text-pitch">
-                Inspecting {highlightedAssignment.label}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-ink/72">
-                Main levers:{" "}
-                <strong className="text-ink">{primaryText}</strong>.
-                {supportText ? (
-                  <>
-                    {" "}
-                    Support:{" "}
-                    <span className="font-semibold text-ink/80">
-                      {supportText}
-                    </span>
-                    .
-                  </>
-                ) : null}
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4 xl:grid-cols-2">
-            <section>
-              <h2 className="mb-2 text-base font-black text-ink">Coaching</h2>
-              <div className="grid gap-2 sm:grid-cols-2">
-                {coachingAttributes.map((attribute) => (
-                  <AttributeSelect
-                    emphasis={getAttributeEmphasis(attribute.key)}
-                    id={`attribute-${attribute.key}`}
-                    key={attribute.key}
-                    label={attribute.label}
-                    onChange={(value) => updateSelection(attribute.key, value)}
-                    value={selections[attribute.key]}
-                  />
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <h2 className="mb-2 text-base font-black text-ink">Mental</h2>
-              <div className="grid gap-2 sm:grid-cols-2">
-                {staffQualityAttributes.map((attribute) => (
-                  <AttributeSelect
-                    emphasis={getAttributeEmphasis(attribute.key)}
-                    id={`attribute-${attribute.key}`}
-                    key={attribute.key}
-                    label={attribute.label}
-                    onChange={(value) => updateSelection(attribute.key, value)}
-                    value={selections[attribute.key]}
-                  />
-                ))}
-              </div>
-            </section>
-          </div>
-        </section>
-
-        <RatingResult
-          assignmentRatings={assignmentRatings}
-          className="order-1 lg:order-2"
-          isDefaultProfile={isDefaultProfile}
-          selectedAssignmentId={highlightAssignmentId}
-        />
+      {/* Mobile-only: compact result card at top (before selector/inputs) */}
+      <div className="mobile-top-result">
+        <RatingResult {...resultProps} compact={true} />
       </div>
-    </>
+
+      {/* Assignment selector — full-width row */}
+      <div className="calc-selector-bar">
+        <div className="csb-head">
+          <span className="csb-label">Assignment</span>
+          <span className="csb-sep">·</span>
+          <span className="csb-hint">select to highlight relevant inputs</span>
+        </div>
+        <div className="assignment-selector">
+          {assignmentGroups.map((group) => (
+            <div key={group.label} className="asgn-group">
+              <div className="asgn-group-label">{group.label}</div>
+              <div className="asgn-group-tabs">
+                {group.ids.map((id) => {
+                  const cat = trainingCategoryById[id];
+                  const r = ratingMap[id];
+                  return (
+                    <button
+                      key={id}
+                      className={`asgn-tab${id === selectedId ? " selected" : ""}`}
+                      onClick={() => setSelectedId(id)}
+                      type="button"
+                    >
+                      <span>{cat.shortLabel}</span>
+                      {r && (
+                        <span className="asgn-tab-stars">
+                          <StarRating value={r.stars} size={9} />
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Attribute inputs — left column on desktop, below selector on mobile */}
+      <div className="calc-left">
+        <div className="preset-buttons">
+          <span className="preset-label">Try a preset:</span>
+          {examplePresets.map((p) => (
+            <button key={p.label} className="preset-btn" onClick={() => applyPreset(p)} type="button">
+              {p.label}
+            </button>
+          ))}
+          <button
+            className="preset-btn reset"
+            onClick={() => { setSelections(createDefaultSelections()); setSelectedId(defaultTrainingCategoryId); }}
+            type="button"
+          >
+            Reset
+          </button>
+        </div>
+
+        <div className="attr-section-block">
+          <div className="attr-section-head">
+            <span className="attr-section-title">Coaching Attributes</span>
+            <span className="attr-section-sub">8 attributes from the FM26 coach profile</span>
+          </div>
+          <div className="attr-grid">
+            {coachingAttributes.map((a) => (
+              <AttributeSelect
+                key={a.key}
+                id={`attr-${a.key}`}
+                label={a.label}
+                value={selections[a.key]}
+                emphasis={getEmphasis(a.key)}
+                onChange={(v) => updateSelection(a.key, v)}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="attr-section-block">
+          <div className="attr-section-head">
+            <span className="attr-section-title">Mental Attributes</span>
+            <span className="attr-section-sub">Support all assignments</span>
+          </div>
+          <div className="attr-grid">
+            {staffQualityAttributes.map((a) => (
+              <AttributeSelect
+                key={a.key}
+                id={`attr-${a.key}`}
+                label={a.label}
+                value={selections[a.key]}
+                emphasis={getEmphasis(a.key)}
+                onChange={(v) => updateSelection(a.key, v)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile-only: full results below inputs */}
+        <div className="mobile-bottom-result">
+          <RatingResult {...resultProps} />
+        </div>
+      </div>
+
+      {/* Desktop-only: full result panel in right column */}
+      <div className="calc-result">
+        <RatingResult {...resultProps} />
+      </div>
+    </div>
   );
 }

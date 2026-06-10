@@ -21,3 +21,17 @@ export const getRatingLabel = (score: number): RatingLabel => {
       ?.label ?? "Weak"
   );
 };
+
+export const ratingColors: Record<RatingLabel, string> = {
+  Elite: "#1fd172",
+  Excellent: "#22c55e",
+  "Very Good": "#4ade80",
+  Good: "#86efac",
+  Average: "rgba(212,232,224,0.55)",
+  Weak: "rgba(212,232,224,0.3)"
+};
+
+export const getRatingInfo = (score: number): { label: RatingLabel; color: string } => {
+  const label = getRatingLabel(score);
+  return { label, color: ratingColors[label] };
+};

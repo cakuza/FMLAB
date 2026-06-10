@@ -102,3 +102,14 @@ export const createDefaultSelections = (): AttributeSelections =>
   Object.fromEntries(
     allAttributes.map((attribute) => [attribute.key, defaultAttributeLevel])
   ) as AttributeSelections;
+
+export const attributeLevelColors: Record<AttributeLevelId, string> = {
+  unsuited: "#f87171",
+  reasonable: "#fb923c",
+  competent: "#fbbf24",
+  average: "rgba(212,232,224,0.4)",
+  good: "#86efac",
+  "very-good": "#4ade80",
+  outstanding: "#22c55e",
+  elite: "#1fd172"
+};
