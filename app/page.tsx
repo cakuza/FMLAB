@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CoachRatingCalculator } from "@/components/CoachRatingCalculator";
 import { type AttributeKey, attributeLabels } from "@/lib/attributeLevels";
 import { siteName, siteUrl } from "@/lib/siteMetadata";
@@ -185,7 +186,7 @@ export default function Home() {
             </div>
             <div className="geo-block">
               <h3 className="geo-q">How does the FM26 coach calculator work?</h3>
-              <p className="geo-a">Each attribute word (Average, Competent, Good, Very Good, Outstanding) maps to a score range. The calculator applies a weighted formula for each assignment, where the primary coaching attribute carries most of the weight and mental attributes provide supporting scores. The output is an estimated star rating from 1 to 5.</p>
+              <p className="geo-a">Each attribute word (Average, Competent, Good, Very Good, Outstanding) maps to a score range. The calculator applies a weighted formula for each assignment, where the primary coaching attribute carries most of the weight and mental attributes provide supporting scores. The output is an estimated star rating from 0.5 to 5 stars.</p>
             </div>
             <div className="geo-block">
               <h3 className="geo-q">Which FM26 coach attributes matter?</h3>
@@ -199,6 +200,24 @@ export default function Home() {
               <h3 className="geo-q">Why are the results approximate?</h3>
               <p className="geo-a">FM26 coach attributes are displayed as word bands, not exact numbers. Each word covers a range of underlying values. FM Workbench estimates from the midpoint of those ranges, so the output is a close guide rather than a precise match. In-game ratings can also vary with workload and squad size.</p>
             </div>
+          </div>
+        </section>
+
+        <section className="home-section" id="accuracy">
+          <div className="home-section-head">
+            <h2 className="home-section-title">How accurate is FM Workbench?</h2>
+          </div>
+          <div className="accuracy-block">
+            <p>FM Workbench was calibrated against 180 observed FM26 coach-rating outputs across 20 controlled profiles. 96.7% of results matched exactly, and every remaining difference was within 0.5 stars. The calculator remains an unofficial fan-made estimate, and in-game results may vary.</p>
+            <ul className="accuracy-stats" aria-label="Calibration statistics">
+              <li><strong>20</strong> controlled profiles</li>
+              <li><strong>180</strong> outputs compared</li>
+              <li><strong>174</strong> exact matches</li>
+              <li><strong>96.7%</strong> exact-match rate</li>
+              <li><strong>≤ 0.5★</strong> max difference</li>
+              <li><strong>0.017★</strong> mean error</li>
+            </ul>
+            <Link href="/methodology" className="accuracy-link">Read the methodology →</Link>
           </div>
         </section>
 

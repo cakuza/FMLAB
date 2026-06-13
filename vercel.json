@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/coach-rating-calculator",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
+}

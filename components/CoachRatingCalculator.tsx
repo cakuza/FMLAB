@@ -218,13 +218,9 @@ export function CoachRatingCalculator() {
           </div>
         </div>
 
-        {/* Mobile-only: full results below inputs */}
-        <div className="mobile-bottom-result">
-          <RatingResult {...resultProps} />
-        </div>
       </div>
 
-      {/* Desktop-only: full result panel in right column */}
+      {/* Single result panel — positioned by grid on desktop, flows after inputs on mobile */}
       <div className="calc-result">
         <RatingResult {...resultProps} />
       </div>

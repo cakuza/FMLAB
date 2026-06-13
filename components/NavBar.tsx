@@ -8,8 +8,8 @@ export default function NavBar() {
       </Link>
       <span className="fm-nav-product">FM26 Coach Calculator</span>
       <div className="fm-nav-links">
-        <a href="#how" className="fm-nav-link">How to use</a>
-        <a href="#faq" className="fm-nav-link">FAQ</a>
+        <Link href="/methodology" className="fm-nav-link">Methodology</Link>
+        <Link href="/about" className="fm-nav-link">About</Link>
       </div>
     </nav>
   );

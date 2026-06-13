@@ -24,7 +24,7 @@ Tactical Knowledge affects the Set Pieces assignment only. It defaults to Averag
 
 ## Outputs
 
-Estimated star ratings (1.0–5.0) for nine FM26 training assignments:
+Estimated star ratings (0.5–5.0) for nine FM26 training assignments:
 - Attacking Tactical
 - Attacking Technical
 - Defending Tactical
@@ -37,9 +37,18 @@ Estimated star ratings (1.0–5.0) for nine FM26 training assignments:
 
 ## How the formula works
 
-Each assignment applies a weighted formula. The primary coaching attribute (e.g. Attacking for Attacking assignments) carries the highest weight (~45–70%). A secondary skill (Tactical or Technical) carries ~25% for the six paired assignments. Mental attributes (Authority, Determination, Motivating) each contribute ~10% as support across all assignments.
+Each assignment applies a weighted formula. The primary coaching attribute (e.g. Attacking for Attacking assignments) carries the highest weight (~45–70%). A secondary skill (Tactical or Technical) carries ~25% for the six paired assignments. Mental attributes (Authority, Determination, Motivating) each contribute ~10% as support across all assignments. Set Pieces also uses Tactical Knowledge at 24% weight.
 
 Attribute words map to score midpoints internally. Results are estimates, not exact FM26 game values.
+
+## Calibration
+
+FM Workbench was calibrated against 180 observed FM26 coach-rating outputs across 20 controlled profiles.
+- 96.7% exact-match rate (174 of 180 outputs matched exactly)
+- Maximum observed difference: 0.5 stars
+- Mean absolute error: 0.017 stars
+
+Methodology: https://www.fmworkbench.com/methodology
 
 ## Important note
 

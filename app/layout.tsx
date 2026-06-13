@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { defaultDescription, siteName, siteUrl } from "@/lib/siteMetadata";
 import NavBar from "@/components/NavBar";
+import Link from "next/link";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -58,6 +59,13 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <main style={{ flex: 1 }}>{children}</main>
           <footer style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
             <div className="fm-footer">
+              <nav className="fm-footer-nav" aria-label="Footer navigation">
+                <Link href="/" className="fm-footer-nav-link">Calculator</Link>
+                <Link href="/methodology" className="fm-footer-nav-link">Methodology</Link>
+                <Link href="/about" className="fm-footer-nav-link">About</Link>
+                <Link href="/privacy" className="fm-footer-nav-link">Privacy</Link>
+                <Link href="/contact" className="fm-footer-nav-link">Contact</Link>
+              </nav>
               <p className="fm-footer-disclaimer">
                 FM Workbench is an unofficial, fan-made tool and is not affiliated with Sports Interactive, SEGA, or Football Manager. All trademarks belong to their respective owners. Ratings are estimates for comparison only.
               </p>

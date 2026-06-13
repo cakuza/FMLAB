@@ -124,12 +124,10 @@ details[open] .faq-chevron { transform: rotate(90deg); }
   padding-bottom: 12px;
 }
 
-/* Mobile-only zones */
+/* Mobile layout: compact card at top, full panel after inputs (ResultCard hidden since compact covers it) */
 .mobile-top-result { display: block; }
-.mobile-bottom-result { display: block; }
-/* Hide the result card in the bottom zone — it already appears at the top */
-.mobile-bottom-result .result-card { display: none; }
-.calc-result { display: none; }
+.calc-result { display: block; }
+.calc-result .result-card { display: none; }
 
 /* Desktop: 2-column grid — result panel spans both rows on right */
 @media (min-width: 981px) {
@@ -145,10 +143,10 @@ details[open] .faq-chevron { transform: rotate(90deg); }
     align-items: start;
   }
   .calc-result       { display: block; grid-area: result; }
+  .calc-result .result-card { display: block; }
   .calc-selector-bar { grid-area: selector; }
   .calc-left         { grid-area: inputs; }
   .mobile-top-result  { display: none; }
-  .mobile-bottom-result { display: none; }
 }
 
 .calc-selector-bar {
@@ -344,4 +342,104 @@ details[open] .faq-chevron { transform: rotate(90deg); }
 @media (max-width: 480px) {
   .how-grid { grid-template-columns: 1fr; }
   .asgn-tab { min-width: 50px; font-size: 10px; padding: 5px 6px; }
+}
+
+/* ── Footer Navigation ──────────────────────────────────────────────────── */
+.fm-footer-nav {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px;
+  margin-bottom: 12px;
+}
+.fm-footer-nav-link {
+  font-size: 11px; font-weight: 600; color: rgba(212,232,224,0.35);
+  transition: color 0.15s;
+}
+.fm-footer-nav-link:hover { color: rgba(212,232,224,0.65); }
+
+/* ── Accuracy / Methodology Section ────────────────────────────────────── */
+.accuracy-block {
+  max-width: 760px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px;
+}
+.accuracy-block > p {
+  font-size: 13px; color: var(--text-sec); line-height: 1.65; margin: 0 0 16px;
+}
+.accuracy-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  list-style: none; padding: 0; margin: 0 0 16px;
+}
+.accuracy-stats li {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px;
+  font-size: 11px; color: var(--text-sec); line-height: 1.45;
+}
+.accuracy-stats li strong {
+  display: block; font-size: 15px; font-weight: 700;
+  color: var(--green); margin-bottom: 2px;
+}
+.accuracy-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 600; color: var(--green);
+  border-bottom: 1px solid rgba(31,209,114,0.3); padding-bottom: 1px;
+  transition: border-color 0.15s;
+}
+.accuracy-link:hover { border-color: var(--green); }
+@media (max-width: 600px) {
+  .accuracy-stats { grid-template-columns: repeat(2, 1fr); }
+  .accuracy-block { padding: 16px; }
+}
+
+/* ── Content Pages (methodology, about, privacy, contact) ───────────────── */
+.content-page { max-width: 800px; margin: 0 auto; padding: 0 20px 80px; }
+.content-body { padding-top: 32px; }
+.content-body h1 {
+  font-size: 24px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em;
+}
+.content-body .content-sub {
+  font-size: 13px; color: var(--text-sec); margin: 0 0 32px;
+}
+.content-body h2 {
+  font-size: 16px; font-weight: 700; margin: 32px 0 10px;
+  color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px;
+}
+.content-body h3 { font-size: 13px; font-weight: 700; margin: 18px 0 6px; }
+.content-body p {
+  font-size: 13px; color: var(--text-sec); line-height: 1.7; margin: 0 0 10px;
+}
+.content-body ul, .content-body ol {
+  font-size: 13px; color: var(--text-sec); line-height: 1.7;
+  padding-left: 20px; margin: 0 0 10px;
+}
+.content-body li { margin-bottom: 4px; }
+.content-body a { color: var(--green); }
+.content-body a:hover { text-decoration: underline; }
+.content-body table {
+  width: 100%; border-collapse: collapse;
+  border: 1px solid var(--border); border-radius: 8px;
+  overflow: hidden; margin: 12px 0 20px;
+  font-size: 12px;
+}
+.content-body th {
+  background: rgba(255,255,255,0.03); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim);
+  padding: 9px 14px; text-align: left;
+}
+.content-body td {
+  padding: 8px 14px; color: var(--text-sec);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.content-body td:first-child { font-weight: 600; color: var(--text); }
+.content-disclaimer {
+  margin-top: 32px; padding: 14px 16px;
+  background: rgba(255,255,255,0.025); border-left: 3px solid rgba(31,209,114,0.3);
+  border-radius: 0 8px 8px 0; font-size: 12px; color: var(--text-dim); line-height: 1.6;
+}
+.content-back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--green);
+  margin-top: 24px;
+}
+.content-back-link:hover { text-decoration: underline; }
+@media (max-width: 768px) {
+  .content-page { padding: 0 14px 60px; }
 }
