@@ -205,18 +205,10 @@ export default function Home() {
 
         <section className="home-section" id="accuracy">
           <div className="home-section-head">
-            <h2 className="home-section-title">How accurate is FM Workbench?</h2>
+            <h2 className="home-section-title">A practical assignment estimate</h2>
           </div>
           <div className="accuracy-block">
-            <p>FM Workbench was calibrated against 180 observed FM26 coach-rating outputs across 20 controlled profiles. 96.7% of results matched exactly, and every remaining difference was within 0.5 stars. The calculator remains an unofficial fan-made estimate, and in-game results may vary.</p>
-            <ul className="accuracy-stats" aria-label="Calibration statistics">
-              <li><strong>20</strong> controlled profiles</li>
-              <li><strong>180</strong> outputs compared</li>
-              <li><strong>174</strong> exact matches</li>
-              <li><strong>96.7%</strong> exact-match rate</li>
-              <li><strong>≤ 0.5★</strong> max difference</li>
-              <li><strong>0.017★</strong> mean error</li>
-            </ul>
+            <p>FM Workbench combines the relevant coaching, mental and knowledge attributes into a consistent 0.5–5 star estimate. It is an unofficial fan-made tool and may differ from in-game results.</p>
             <Link href="/methodology" className="accuracy-link">Read the methodology →</Link>
           </div>
         </section>

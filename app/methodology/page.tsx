@@ -7,7 +7,7 @@ import { attributeLabels, type AttributeKey } from "@/lib/attributeLevels";
 export const metadata: Metadata = {
   title: "Methodology",
   description:
-    "How FM Workbench estimates FM26 coach assignment star ratings — 12 visible inputs, 9 assignment outputs, calibration method and accuracy results.",
+    "How FM Workbench estimates FM26 coach assignment star ratings — 12 visible inputs, 9 assignment outputs, and the attribute weights behind each assignment.",
   alternates: { canonical: "/methodology" },
   openGraph: {
     type: "website",
@@ -172,55 +172,12 @@ export default function MethodologyPage() {
           </tbody>
         </table>
 
-        <h2>Calibration method</h2>
-        <p>
-          The formula was calibrated by comparing FM Workbench outputs to observed FM26
-          in-game star ratings for controlled coach profiles. Each profile had known
-          word-level attributes entered into FM26, and the resulting in-game star rating
-          for each assignment was recorded.
-        </p>
-        <p>
-          20 controlled coach profiles were constructed covering a range of attribute
-          combinations: uniform profiles (all attributes at the same level), specialist
-          profiles (one attribute very high, others low), and mixed profiles representative
-          of real-world coach builds.
-        </p>
-        <p>
-          FM Scout was used to retrieve comparable star-rating data for cross-reference.
-        </p>
-
-        <h2>Accuracy results</h2>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Metric</th>
-              <th scope="col">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Profiles tested</td><td>20</td></tr>
-            <tr><td>Assignment outputs compared</td><td>180</td></tr>
-            <tr><td>Exact matches</td><td>174</td></tr>
-            <tr><td>Exact-match rate</td><td>96.7%</td></tr>
-            <tr><td>Maximum observed difference</td><td>0.5 stars</td></tr>
-            <tr><td>Mean absolute error</td><td>0.017 stars</td></tr>
-          </tbody>
-        </table>
-        <p>
-          Every output that did not match exactly was within 0.5 stars of the observed
-          FM26 value. No output differed by more than one half-star step.
-        </p>
-        <p>
-          In realistic mixed-profile cases, the recommended top assignment matched the
-          FM Scout reference in all tested scenarios.
-        </p>
-
         <h2>Known edge cases and limitations</h2>
         <p>
-          The remaining 3.3% of outputs (6 of 180) differed by exactly 0.5 stars. These
-          cases tend to occur at boundary values where the word-band midpoint sits close
-          to a star threshold. The direction of any difference was consistent — FM
-          Workbench did not over- or under-estimate systematically.
+          Because each word band covers a range of underlying values, a coach whose
+          attributes sit at the low or high end of their band may see a slight difference
+          from the calculator output. These cases tend to occur where the word-band
+          midpoint sits close to a star threshold.
         </p>
         <p>
           In-game star ratings in FM26 can also vary due to factors outside the

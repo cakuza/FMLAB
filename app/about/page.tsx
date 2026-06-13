@@ -56,9 +56,7 @@ export default function AboutPage() {
           <li>Goalkeeping, Fitness, and Set Pieces</li>
         </ul>
         <p>
-          The formula uses 12 visible attributes and has been calibrated against 180
-          observed FM26 outputs across 20 controlled profiles, achieving a 96.7%
-          exact-match rate.{" "}
+          The formula uses 12 visible attributes with different weights per assignment.{" "}
           <Link href="/methodology">Read the methodology</Link> for full details.
         </p>
 

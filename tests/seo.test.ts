@@ -42,23 +42,24 @@ describe("SEO structure", () => {
     expect(src).toContain("0.5 to 5");
   });
 
-  it("homepage accuracy section contains calibration figures", () => {
+  it("homepage trust section contains methodology link", () => {
     const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
-    expect(src).toContain("96.7");
-    expect(src).toContain("180");
-    expect(src).toContain("174");
-    expect(src).toContain("0.017");
+    expect(src).toContain("0.5");
+    expect(src).toContain("/methodology");
+    expect(src).not.toContain("96.7");
+    expect(src).not.toContain("174");
+    expect(src).not.toContain("0.017");
   });
 
-  it("methodology page contains required accuracy figures", () => {
+  it("methodology page contains required disclaimers", () => {
     const src = readFileSync(
       resolve(process.cwd(), "app/methodology/page.tsx"),
       "utf8"
     );
-    expect(src).toContain("96.7");
-    expect(src).toContain("180");
     expect(src).toContain("unofficial");
     expect(src).toContain("fan-made");
+    expect(src).not.toContain("96.7");
+    expect(src).not.toContain("0.017");
   });
 
   it("methodology page mentions Tactical Knowledge for Set Pieces", () => {
