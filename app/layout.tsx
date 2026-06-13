@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { defaultDescription, siteName, siteUrl } from "@/lib/siteMetadata";
 import NavBar from "@/components/NavBar";
-import Script from "next/script";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -45,12 +44,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${spaceMono.variable}`}>
-      <body className="antialiased">
-        <Script
+      <head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2198254554444215"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
+      </head>
+      <body className="antialiased">
         <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
           <NavBar />
           <main style={{ flex: 1 }}>{children}</main>
