@@ -20,8 +20,6 @@ Knowledge attributes (1): Tactical Knowledge.
 
 Total inputs: 12. Each attribute accepts one of the following word values from FM26: Average, Competent, Good, Reasonable, Very Good, Outstanding.
 
-Tactical Knowledge affects the Set Pieces assignment only. It defaults to Average if not specified.
-
 ## Outputs
 
 Estimated star ratings (0.5–5.0) for nine FM26 training assignments:
@@ -35,11 +33,11 @@ Estimated star ratings (0.5–5.0) for nine FM26 training assignments:
 - Fitness
 - Set Pieces
 
-## How the formula works
+## How the model works
 
-Each assignment applies a weighted formula. The primary coaching attribute (e.g. Attacking for Attacking assignments) carries the highest weight (~45–70%). A secondary skill (Tactical or Technical) carries ~25% for the six paired assignments. Mental attributes (Authority, Determination, Motivating) each contribute ~10% as support across all assignments. Set Pieces also uses Tactical Knowledge at 24% weight.
+FM Workbench converts each coach's word-based attributes into a consistent internal model. Each assignment is evaluated using a combination of specialist coaching ability, tactical or technical fit, mental attributes and relevant knowledge. Different assignments prioritise these signals differently. The internal weighting and conversion logic are proprietary.
 
-Attribute words map to score midpoints internally. Results are estimates, not exact FM26 game values.
+Results are estimates, not exact FM26 game values.
 
 ## Methodology
 
@@ -47,7 +45,7 @@ https://www.fmworkbench.com/methodology
 
 ## Important note
 
-The formula used by FM Workbench is a fan-made approximation. It is not derived from Sports Interactive source code or official documentation. In-game star ratings may differ from FM Workbench estimates due to factors including coach workload, squad size, and multiple-role assignments.
+FM Workbench is a fan-made approximation. It is not derived from Sports Interactive source code or official documentation. In-game star ratings may differ from FM Workbench estimates due to factors including coach workload, squad size, and multiple-role assignments.
 
 ## Disclaimer
 
@@ -55,4 +53,4 @@ FM Workbench is not affiliated with Sports Interactive, SEGA, or Football Manage
 
 ## Suggested citation / summary
 
-"FM Workbench is an unofficial FM26 fan tool that estimates coaching assignment star ratings from visible word-based attributes. It covers all nine FM26 training assignments using an estimated weighted formula. Results are approximate and may differ from in-game values."
+"FM Workbench is an unofficial FM26 fan tool that estimates coaching assignment star ratings from visible word-based attributes. It covers all nine FM26 training assignments. Results are approximate and may differ from in-game values."

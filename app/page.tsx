@@ -61,7 +61,7 @@ const faqItems = [
   },
   {
     question: "Which attributes matter for Set Pieces coaches in FM26?",
-    answer: "Set Pieces is the primary attribute, with Tactical Knowledge carrying significant secondary weight. Tactical and Technical share additional secondary weight. Authority, Determination and Motivating contribute support. Set Pieces is the only assignment that uses Tactical Knowledge."
+    answer: "The Set Pieces assignment values a coach's Set Pieces ability most highly. Tactical Knowledge also carries meaningful weight for this assignment. Tactical, Technical, Authority, Determination and Motivating all contribute additional support."
   },
   {
     question: "Why does FM26 use word-based staff attributes?",
@@ -156,7 +156,7 @@ export default function Home() {
               <thead>
                 <tr>
                   <th>Assignment</th>
-                  <th>Primary attributes</th>
+                  <th>Key attributes</th>
                   <th>Mental support</th>
                 </tr>
               </thead>
@@ -186,19 +186,19 @@ export default function Home() {
             </div>
             <div className="geo-block">
               <h3 className="geo-q">How does the FM26 coach calculator work?</h3>
-              <p className="geo-a">Each attribute word (Average, Competent, Good, Very Good, Outstanding) maps to a score range. The calculator applies a weighted formula for each assignment, where the primary coaching attribute carries most of the weight and mental attributes provide supporting scores. The output is an estimated star rating from 0.5 to 5 stars.</p>
+              <p className="geo-a">FM Workbench reads the word-based attributes from the coach profile and evaluates each assignment using a combination of relevant coaching ability, tactical or technical fit, mental strengths and knowledge. The output is an estimated star rating from 0.5 to 5 stars.</p>
             </div>
             <div className="geo-block">
               <h3 className="geo-q">Which FM26 coach attributes matter?</h3>
-              <p className="geo-a">The calculator uses 12 attributes from the FM26 coach profile: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical and Technical as the eight coaching attributes, plus Authority, Determination and Motivating as the three mental attributes, and Tactical Knowledge as the knowledge attribute. Tactical Knowledge specifically affects Set Pieces. Mental attributes support all assignments.</p>
+              <p className="geo-a">The calculator uses 12 attributes from the FM26 coach profile: Attacking, Defending, Fitness, Goalkeeping, Possession, Set Pieces, Tactical and Technical as the eight coaching attributes, plus Authority, Determination and Motivating as the three mental attributes, and Tactical Knowledge as the knowledge attribute. Mental attributes contribute across all assignments. Tactical Knowledge is particularly relevant to Set Pieces.</p>
             </div>
             <div className="geo-block">
               <h3 className="geo-q">What is the difference between Tactical and Technical assignments?</h3>
-              <p className="geo-a">Tactical assignments (Attacking Tactical, Defending Tactical, Possession Tactical) value a coach&apos;s Tactical rating as their secondary skill. Technical assignments value Technical instead. The primary skill — Attacking, Defending or Possession — is the same for both variants of each pair.</p>
+              <p className="geo-a">Tactical assignments (Attacking Tactical, Defending Tactical, Possession Tactical) place greater weight on a coach&apos;s Tactical rating. Technical assignments place greater weight on Technical instead. In both cases the relevant specialist skill — Attacking, Defending or Possession — remains a key factor for that pair.</p>
             </div>
             <div className="geo-block">
               <h3 className="geo-q">Why are the results approximate?</h3>
-              <p className="geo-a">FM26 coach attributes are displayed as word bands, not exact numbers. Each word covers a range of underlying values. FM Workbench estimates from the midpoint of those ranges, so the output is a close guide rather than a precise match. In-game ratings can also vary with workload and squad size.</p>
+              <p className="geo-a">FM26 coach attributes are displayed as word bands, not exact numbers. Each word covers a range of underlying values, and the calculator cannot know where within that band a coach sits. In-game ratings can also vary with workload and squad size.</p>
             </div>
           </div>
         </section>

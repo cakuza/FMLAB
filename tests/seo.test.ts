@@ -51,7 +51,9 @@ describe("SEO structure", () => {
     expect(src).not.toContain("0.017");
   });
 
-  it("methodology page contains required disclaimers", () => {
+  // --- Methodology page ---
+
+  it("methodology page exists and contains unofficial fan-made disclaimer", () => {
     const src = readFileSync(
       resolve(process.cwd(), "app/methodology/page.tsx"),
       "utf8"
@@ -62,22 +64,109 @@ describe("SEO structure", () => {
     expect(src).not.toContain("0.017");
   });
 
-  it("methodology page mentions Tactical Knowledge for Set Pieces", () => {
-    const src = readFileSync(
-      resolve(process.cwd(), "app/methodology/page.tsx"),
-      "utf8"
-    );
-    expect(src).toContain("Tactical Knowledge");
-    expect(src).toContain("Set Pieces");
-  });
-
-  it("methodology page states 0.5 to 5 star output range", () => {
+  it("methodology page mentions 0.5 to 5 star output range", () => {
     const src = readFileSync(
       resolve(process.cwd(), "app/methodology/page.tsx"),
       "utf8"
     );
     expect(src).toContain("0.5");
     expect(src).not.toContain("1 to 5");
+  });
+
+  it("methodology page lists the 12 visible inputs", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "app/methodology/page.tsx"),
+      "utf8"
+    );
+    expect(src).toContain("Tactical Knowledge");
+    expect(src).toContain("Authority");
+    expect(src).toContain("Determination");
+    expect(src).toContain("Goalkeeping");
+  });
+
+  it("methodology page references all nine assignment outputs", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "app/methodology/page.tsx"),
+      "utf8"
+    );
+    expect(src).toContain("Attacking Tactical");
+    expect(src).toContain("Defending Technical");
+    expect(src).toContain("Possession Tactical");
+    expect(src).toContain("Goalkeeping");
+    expect(src).toContain("Fitness");
+    expect(src).toContain("Set Pieces");
+  });
+
+  it("methodology page states internal weighting logic is proprietary", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "app/methodology/page.tsx"),
+      "utf8"
+    );
+    expect(src.toLowerCase()).toContain("proprietary");
+  });
+
+  it("methodology page does not expose exact formula percentages", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "app/methodology/page.tsx"),
+      "utf8"
+    );
+    expect(src).not.toContain("42%");
+    expect(src).not.toContain("24%");
+    expect(src).not.toContain("8%");
+    expect(src).not.toContain("6%");
+  });
+
+  it("methodology page does not contain word-band numerical range table", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "app/methodology/page.tsx"),
+      "utf8"
+    );
+    expect(src).not.toContain("1–3");
+    expect(src).not.toContain("4–6");
+    expect(src).not.toContain("7–9");
+    expect(src).not.toContain("10–11");
+    expect(src).not.toContain("12–14");
+    expect(src).not.toContain("15–17");
+    expect(src).not.toContain("18–19");
+  });
+
+  it("methodology page does not contain midpoint conversion details", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "app/methodology/page.tsx"),
+      "utf8"
+    );
+    expect(src).not.toContain("midpoint");
+    expect(src).not.toContain("normalises");
+    expect(src).not.toContain("normalizes");
+  });
+
+  it("methodology page does not contain exact assignment formula mappings", () => {
+    const src = readFileSync(
+      resolve(process.cwd(), "app/methodology/page.tsx"),
+      "utf8"
+    );
+    expect(src).not.toContain("Primary attribute");
+    expect(src).not.toContain("formula weights");
+    expect(src).not.toContain("Tactical Knowledge has no effect");
+    expect(src).not.toContain("only attribute unique");
+  });
+
+  it("llms.txt does not expose formula weights or midpoint mapping", () => {
+    const src = readFileSync(resolve(process.cwd(), "public/llms.txt"), "utf8");
+    expect(src).not.toContain("45–70%");
+    expect(src).not.toContain("~25%");
+    expect(src).not.toContain("~10%");
+    expect(src).not.toContain("24% weight");
+    expect(src).not.toContain("midpoint");
+    expect(src).not.toContain("affects the Set Pieces assignment only");
+  });
+
+  it("homepage does not expose formula weights", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).not.toContain("42%");
+    expect(src).not.toContain("24%");
+    expect(src).not.toContain("midpoint");
+    expect(src).not.toContain("Set Pieces is the only assignment");
   });
 
   it("privacy page mentions Google AdSense", () => {
