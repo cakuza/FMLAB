@@ -240,6 +240,44 @@ details[open] .faq-chevron { transform: rotate(90deg); }
 .attr-select:focus { outline: none; border-color: rgba(31,209,114,0.4); }
 .attr-select:hover { border-color: rgba(212,232,224,0.2); }
 
+.attr-control-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.attr-step-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface2);
+  color: var(--text-sec);
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+  user-select: none;
+  cursor: pointer;
+}
+.attr-step-btn:hover:not(:disabled) {
+  border-color: rgba(31, 209, 114, 0.35);
+  color: var(--green);
+  background: var(--green-dim);
+}
+.attr-step-btn:focus {
+  outline: none;
+  border-color: rgba(31, 209, 114, 0.4);
+}
+.attr-step-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
 /* Result Card */
 .result-card {
   background: var(--surface); border: 1px solid var(--border-hi);
@@ -337,11 +375,15 @@ details[open] .faq-chevron { transform: rotate(90deg); }
   .fm-nav-links { display: none; }
   .tool-page { padding: 0 14px 48px; }
   .how-grid { grid-template-columns: 1fr 1fr; }
-  .attr-select { min-width: 108px; font-size: 12px; }
+  .attr-select { min-width: 86px; font-size: 12px; padding: 6px 22px 6px 6px; background-position: right 6px center; }
+  .attr-step-btn { width: 24px; height: 24px; font-size: 12px; border-radius: 5px; }
+  .attr-control-group { gap: 3px; }
 }
 @media (max-width: 480px) {
   .how-grid { grid-template-columns: 1fr; }
   .asgn-tab { min-width: 50px; font-size: 10px; padding: 5px 6px; }
+  .attr-step-btn { display: none; }
+  .attr-select { min-width: 108px; font-size: 12px; padding: 6px 28px 6px 9px; background-position: right 9px center; }
 }
 
 /* ── Footer Navigation ──────────────────────────────────────────────────── */

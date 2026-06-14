@@ -7,9 +7,9 @@ import { trainingCategories } from "@/lib/trainingCategories";
 
 const pageTitle = "FM26 Coach Assignment Calculator | FM Workbench";
 const pageDescription =
-  "Estimate Football Manager 2026 coach star ratings by assignment. Enter FM26 coach attributes and find the best training area for Attacking, Defending, Possession, Fitness, Goalkeeping and Set Pieces.";
+  "Free FM coach calculator built for Football Manager 26. Enter a coach’s word-based attributes and compare estimated ratings across all nine FM26 training assignments.";
 const ogDescription =
-  "Enter FM26 coach attributes and instantly compare star ratings for all 9 training assignments.";
+  "Free FM coach calculator built for Football Manager 26. Enter a coach’s word-based attributes and compare estimated ratings across all nine FM26 training assignments.";
 
 export const metadata: Metadata = {
   title: { absolute: pageTitle },
@@ -70,6 +70,10 @@ const faqItems = [
   {
     question: "Can I use this calculator during a save?",
     answer: "Yes. The calculator works in any browser alongside your FM26 game. Enter the attribute words directly from the coach profile screen and compare assignments in seconds."
+  },
+  {
+    question: "Can I use this FM coach calculator for older Football Manager versions?",
+    answer: "FM Workbench is designed specifically for FM26 and its word-based coach attributes and training assignments. Older Football Manager versions may use different attributes, categories or rating behaviour, so their results may not match."
   }
 ];
 
@@ -85,6 +89,13 @@ const structuredData = [
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "FM26 Coach Assignment Calculator",
+    alternateName: [
+      "FM Coach Calculator",
+      "Football Manager Coach Calculator",
+      "FM26 Coach Calculator",
+      "FM26 Coach Rating Calculator",
+      "FM26 Coach Assignment Calculator"
+    ],
     applicationCategory: "GameApplication",
     operatingSystem: "Web",
     description: pageDescription,
@@ -125,7 +136,7 @@ export default function Home() {
             <h2 className="home-section-title">Quick answer</h2>
           </div>
           <div className="quick-answer-body">
-            <p>FM Workbench estimates which FM26 training assignment fits a coach best. Select the coach&apos;s word-based attributes from their FM26 profile, then compare estimated star ratings for all nine assignment categories: Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces.</p>
+            <p>FM Workbench is an FM coach calculator built specifically for Football Manager 26 and its word-based staff attributes. It estimates which FM26 training assignment fits a coach best. Select the coach&apos;s word-based attributes from their FM26 profile, then compare estimated star ratings for all nine assignment categories: Attacking, Defending, Possession, Goalkeeping, Fitness and Set Pieces.</p>
             <p>Each assignment weights attributes differently. An Attacking Tactical coach needs high Attacking and Tactical ratings. A Fitness coach needs high Fitness. A Set Pieces coach benefits from Set Pieces, Tactical and Technical combined. Authority, Determination and Motivating support every assignment.</p>
             <p>Results are estimates based on visible attribute words. In-game ratings may differ slightly depending on workload and squad context, but the calculator gives a reliable comparison for hiring and assignment decisions.</p>
           </div>

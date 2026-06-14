@@ -185,4 +185,67 @@ describe("SEO structure", () => {
       expect(entry.priority).toBeDefined();
     }
   });
+
+  it("verifies homepage title remains 'FM26 Coach Assignment Calculator | FM Workbench'", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).toContain('const pageTitle = "FM26 Coach Assignment Calculator | FM Workbench";');
+  });
+
+  it("verifies H1 remains 'FM26 Coach Assignment Calculator'", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).toContain('<h1 className="tool-heading">FM26 Coach Assignment Calculator</h1>');
+  });
+
+  it("verifies meta description naturally contains 'FM coach calculator'", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).toContain('const pageDescription =');
+    expect(src).toContain('Free FM coach calculator built for Football Manager 26.');
+  });
+
+  it("verifies canonical remains 'https://www.fmworkbench.com/'", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).toContain('alternates: { canonical: "/" }');
+  });
+
+  it("verifies the version-compatibility FAQ is visible", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).toContain('Can I use this FM coach calculator for older Football Manager versions?');
+    expect(src).toContain('FM Workbench is designed specifically for FM26 and its word-based coach attributes');
+  });
+
+  it("verifies FAQPage JSON-LD matches the visible FAQ", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).toContain('mainEntity: faqItems.map');
+  });
+
+  it("verifies WebApplication contains approved alternate names", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).toContain('name: "FM26 Coach Assignment Calculator",');
+    expect(src).toContain('alternateName: [');
+    expect(src).toContain('"FM Coach Calculator",');
+    expect(src).toContain('"Football Manager Coach Calculator",');
+    expect(src).toContain('"FM26 Coach Calculator",');
+    expect(src).toContain('"FM26 Coach Rating Calculator",');
+    expect(src).toContain('"FM26 Coach Assignment Calculator"');
+  });
+
+  it("verifies no /fm-coach-calculator duplicate page route exists", () => {
+    const fs = require("fs");
+    const exists = fs.existsSync(resolve(process.cwd(), "app/fm-coach-calculator/page.tsx")) || 
+                   fs.existsSync(resolve(process.cwd(), "app/fm-coach-calculator/page.ts"));
+    expect(exists).toBe(false);
+  });
+
+  it("verifies no proprietary formula details were added", () => {
+    const src = readFileSync(resolve(process.cwd(), "app/page.tsx"), "utf8");
+    expect(src).not.toContain("0.45");
+    expect(src).not.toContain("0.25");
+  });
+
+  it("verifies no existing redirect, sitemap or methodology protection was reverted", () => {
+    const vercelConfig = readFileSync(resolve(process.cwd(), "vercel.json"), "utf8");
+    expect(vercelConfig).toContain("/coach-rating-calculator");
+    const methodologyPage = readFileSync(resolve(process.cwd(), "app/methodology/page.tsx"), "utf8");
+    expect(methodologyPage.toLowerCase()).toContain("proprietary");
+  });
 });

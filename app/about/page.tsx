@@ -45,7 +45,7 @@ export default function AboutPage() {
         <h2>The FM26 Coach Assignment Calculator</h2>
         <p>
           The current main tool is the{" "}
-          <Link href="/">FM26 Coach Assignment Calculator</Link>. Enter the word-level
+          <Link href="/">FM coach calculator for FM26</Link>. Enter the word-level
           attributes from any coach profile in FM26, and the calculator returns estimated
           star ratings for all nine training assignment categories:
         </p>

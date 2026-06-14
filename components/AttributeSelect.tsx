@@ -19,21 +19,52 @@ export function AttributeSelect({
   const emphasisClass =
     emphasis === "primary" ? "attr-primary" : emphasis === "support" ? "attr-support" : "";
 
+  const currentIndex = attributeLevels.findIndex((level) => level.id === value);
+  const isMin = currentIndex <= 0;
+  const isMax = currentIndex >= attributeLevels.length - 1;
+
+  const handleStep = (direction: -1 | 1) => {
+    const nextIndex = currentIndex + direction;
+    if (nextIndex >= 0 && nextIndex < attributeLevels.length) {
+      onChange(attributeLevels[nextIndex].id);
+    }
+  };
+
   return (
     <div className={`attr-row ${emphasisClass}`}>
       <span className="attr-dot" style={{ background: dotColor }} />
       <label className="attr-label" htmlFor={id}>{label}</label>
-      <div className="attr-select-wrap">
-        <select
-          id={id}
-          className="attr-select"
-          value={value}
-          onChange={(e) => onChange(e.target.value as AttributeLevelId)}
+      <div className="attr-control-group">
+        <button
+          className="attr-step-btn decrement"
+          onClick={() => handleStep(-1)}
+          type="button"
+          aria-label={`Decrease ${label}`}
+          disabled={isMin}
         >
-          {attributeLevels.map((level) => (
-            <option key={level.id} value={level.id}>{level.label}</option>
-          ))}
-        </select>
+          –
+        </button>
+        <div className="attr-select-wrap">
+          <select
+            id={id}
+            className="attr-select"
+            value={value}
+            onChange={(e) => onChange(e.target.value as AttributeLevelId)}
+          >
+            {attributeLevels.map((level) => (
+              <option key={level.id} value={level.id}>{level.label}</option>
+            ))}
+          </select>
+        </div>
+        <button
+          className="attr-step-btn increment"
+          onClick={() => handleStep(1)}
+          type="button"
+          aria-label={`Increase ${label}`}
+          disabled={isMax}
+        >
+          +
+        </button>
       </div>
     </div>
   );
