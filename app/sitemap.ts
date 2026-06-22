@@ -4,6 +4,8 @@ import { siteUrl } from "@/lib/siteMetadata";
 const routes = [
   { path: "",             changeFrequency: "weekly",  priority: 1.0 },
   { path: "/methodology", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/fm26-staff-attributes-explained", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/fm26-coach-star-ratings-guide", changeFrequency: "monthly", priority: 0.8 },
   { path: "/about",       changeFrequency: "monthly", priority: 0.7 },
   { path: "/contact",     changeFrequency: "yearly",  priority: 0.4 },
   { path: "/privacy",     changeFrequency: "yearly",  priority: 0.3 }

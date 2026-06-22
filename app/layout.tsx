@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { defaultDescription, siteName, siteUrl } from "@/lib/siteMetadata";
@@ -62,6 +62,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
               <nav className="fm-footer-nav" aria-label="Footer navigation">
                 <Link href="/" className="fm-footer-nav-link">Calculator</Link>
                 <Link href="/methodology" className="fm-footer-nav-link">Methodology</Link>
+                <Link href="/fm26-staff-attributes-explained" className="fm-footer-nav-link">Attributes Guide</Link>
+                <Link href="/fm26-coach-star-ratings-guide" className="fm-footer-nav-link">Star Ratings Guide</Link>
                 <Link href="/about" className="fm-footer-nav-link">About</Link>
                 <Link href="/privacy" className="fm-footer-nav-link">Privacy</Link>
                 <Link href="/contact" className="fm-footer-nav-link">Contact</Link>

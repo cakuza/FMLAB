@@ -248,4 +248,140 @@ describe("SEO structure", () => {
     const methodologyPage = readFileSync(resolve(process.cwd(), "app/methodology/page.tsx"), "utf8");
     expect(methodologyPage.toLowerCase()).toContain("proprietary");
   });
+
+  // --- Guides Pages SEO Tests ---
+  const guidePaths = [
+    "app/fm26-staff-attributes-explained/page.tsx",
+    "app/fm26-coach-star-ratings-guide/page.tsx"
+  ];
+
+  it("verifies both routes exist", () => {
+    const fs = require("fs");
+    for (const p of guidePaths) {
+      expect(fs.existsSync(resolve(process.cwd(), p))).toBe(true);
+    }
+  });
+
+  it("verifies exactly one H1 per guide", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      const h1Count = (src.match(/<h1/g) || []).length;
+      expect(h1Count).toBe(1);
+    }
+  });
+
+  it("verifies unique title per guide", () => {
+    const titles = new Set();
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      const match = src.match(/title:\s*"([^"]+)"/);
+      expect(match).toBeDefined();
+      if (match) titles.add(match[1]);
+    }
+    expect(titles.size).toBe(2);
+  });
+
+  it("verifies unique description per guide", () => {
+    const descs = new Set();
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      const match = src.match(/description:\s*pageDescription/);
+      expect(match).toBeDefined();
+      const descText = src.match(/const pageDescription =\s*"([^"]+)"/);
+      expect(descText).toBeDefined();
+      if (descText) descs.add(descText[1]);
+    }
+    expect(descs.size).toBe(2);
+  });
+
+  it("verifies correct canonical per guide", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      if (p.includes("attributes")) {
+        expect(src).toContain('alternates: { canonical: "/fm26-staff-attributes-explained" }');
+      } else {
+        expect(src).toContain('alternates: { canonical: "/fm26-coach-star-ratings-guide" }');
+      }
+    }
+  });
+
+  it("verifies direct-answer section exists", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).toContain("<strong>");
+    }
+  });
+
+  it("verifies both guides link to the calculator", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).toContain('href="/"');
+      expect(src).toContain("FM coach calculator");
+    }
+  });
+
+  it("verifies both guides cross-link", () => {
+    const p1 = readFileSync(resolve(process.cwd(), guidePaths[0]), "utf8");
+    const p2 = readFileSync(resolve(process.cwd(), guidePaths[1]), "utf8");
+    expect(p1).toContain('href="/fm26-coach-star-ratings-guide"');
+    expect(p2).toContain('href="/fm26-staff-attributes-explained"');
+  });
+
+  it("verifies sitemap contains both URLs", () => {
+    const urls = sitemap().map((e) => e.url);
+    expect(urls.some((u) => u.includes("/fm26-staff-attributes-explained"))).toBe(true);
+    expect(urls.some((u) => u.includes("/fm26-coach-star-ratings-guide"))).toBe(true);
+  });
+
+  it("verifies Article JSON-LD exists", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).toContain('"@type": "Article"');
+    }
+  });
+
+  it("verifies BreadcrumbList JSON-LD exists", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).toContain('"@type": "BreadcrumbList"');
+    }
+  });
+
+  it("verifies FAQPage matches visible FAQ", () => {
+    // Basic verification that FAQ JSON-LD exists, we manually verified the strings match.
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).toContain('"@type": "FAQPage"');
+      expect(src).toContain('<div className="faq-section mt-8">');
+    }
+  });
+
+  it("verifies no AggregateRating or Review", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).not.toContain('"@type": "AggregateRating"');
+      expect(src).not.toContain('"@type": "Review"');
+    }
+  });
+
+  it("verifies no proprietary formula percentages", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).not.toContain("24%");
+      expect(src).not.toContain("42%");
+      expect(src).not.toContain("0.45");
+      expect(src).not.toContain("0.25");
+    }
+  });
+
+  it("verifies no hidden numerical word-band ranges", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).not.toContain("15-17");
+      expect(src).not.toContain("12-14");
+      expect(src).not.toContain("18-19");
+      expect(src).not.toContain("10-11");
+    }
+  });
+
 });

@@ -54,3 +54,11 @@ FM Workbench is not affiliated with Sports Interactive, SEGA, or Football Manage
 ## Suggested citation / summary
 
 "FM Workbench is an unofficial FM26 fan tool that estimates coaching assignment star ratings from visible word-based attributes. It covers all nine FM26 training assignments. Results are approximate and may differ from in-game values."
+
+## Guides
+
+- FM26 Staff Attributes Explained: https://www.fmworkbench.com/fm26-staff-attributes-explained
+  A guide to understanding how qualitative staff attributes in Football Manager 2026 work, including the eight word levels and 12 key inputs.
+
+- FM26 Coach Star Ratings Guide: https://www.fmworkbench.com/fm26-coach-star-ratings-guide
+  Explains how coach star ratings are assignment-specific estimates, why they fluctuate, and how to build a balanced coaching team.
