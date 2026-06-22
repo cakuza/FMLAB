@@ -384,4 +384,55 @@ describe("SEO structure", () => {
     }
   });
 
+  it("verifies factual consistency regarding Tactical Knowledge", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src.toLowerCase()).not.toContain("tactical knowledge is particularly crucial for tactical coaching assignments");
+      expect(src.toLowerCase()).toContain("tactical knowledge is relevant to");
+      expect(src.toLowerCase()).toContain("set pieces");
+    }
+  });
+
+  it("verifies 12 attributes aren't universally applied", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      if (p.includes("attributes")) {
+        expect(src).toContain("Not all 12 attributes contribute to every assignment");
+      }
+    }
+  });
+
+  it("verifies no exaggerated claims are present", () => {
+    const forbidden = [
+      "act as a multiplier",
+      "Holy Trinity",
+      "temporary morale",
+      "no more than two",
+      "true value",
+      "exact assignment ratings",
+      "most accurate",
+      "guarantees"
+    ];
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      for (const phrase of forbidden) {
+        expect(src).not.toContain(phrase);
+      }
+    }
+  });
+
+  it("verifies identical inputs explanation", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src.toLowerCase()).toContain("identical word inputs produce identical fm workbench estimates");
+    }
+  });
+
+  it("verifies in-game differences are cautious", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect(src).toContain("In-game results may differ because visible bands hide exact underlying values");
+    }
+  });
+
 });

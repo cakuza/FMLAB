@@ -72,6 +72,22 @@ export default function StaffAttributesExplainedPage() {
               "@type": "Answer",
               text: "Coaches with identical word bands may still perform slightly differently due to where they fall within that hidden band. However, for practical purposes, evaluating their combination of Mental and Coaching attributes is the best way to separate them. Our calculator can estimate their assignment rating to help you decide."
             }
+          },
+          {
+            "@type": "Question",
+            name: "Do all attributes affect every training assignment?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "No. Specialist, Tactical or Technical, and mental attributes contribute differently depending on the specific assignment. For example, Tactical Knowledge is relevant to Set Pieces, while Fitness relies primarily on the Fitness attribute."
+            }
+          },
+          {
+            "@type": "Question",
+            name: "Why does the calculator differ from the game sometimes?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "In-game results may differ because visible bands hide exact underlying values and because assignment workload may affect displayed coaching quality. FM Workbench provides an estimate based on the visible word bands."
+            }
           }
         ]
       }
@@ -90,58 +106,58 @@ export default function StaffAttributesExplainedPage() {
           <h1 className="tool-heading">FM26 Staff Attributes Explained</h1>
 
           <p>
-            <strong>What are staff attributes in FM26?</strong> In Football Manager 2026, staff attributes have shifted from a 1–20 numerical scale to qualitative descriptive bands. These levels determine a coach&apos;s capability in specific areas like Attacking, Defending, or Fitness without exposing the exact underlying number. This fundamental shift requires managers to rethink how they evaluate and recruit their backroom staff.
+            <strong>What are staff attributes in FM26?</strong> In Football Manager 2026, staff attributes have shifted from a 1–20 numerical scale to qualitative descriptive bands. These levels determine a coach&apos;s capability in specific areas like Attacking, Defending, or Fitness without exposing the exact underlying number. This shift encourages managers to evaluate backroom staff more holistically.
           </p>
 
           <h2>The Shift from Numbers to Qualitative Bands</h2>
           <p>
-            For years, Football Manager players relied on the traditional 1–20 scale to evaluate staff. A coach with an 18 in Attacking and a 19 in Tactical Knowledge was an immediate, obvious hire. In FM26, Sports Interactive has removed these exact numbers for staff, replacing them with a series of qualitative words. This change makes building a coaching staff feel more like real-life football management—you have a general sense of a coach&apos;s proficiency, but not absolute mathematical certainty.
+            For years, players relied on the traditional 1–20 scale to evaluate staff. In FM26, Sports Interactive has replaced these exact numbers with qualitative words. Visible FM26 words represent broad attribute bands, meaning two coaches with the same word rating might have slight differences under the hood. FM Workbench uses a deterministic estimate based on the words entered; identical word inputs produce identical FM Workbench estimates.
           </p>
           
           <h3>The Eight Word Levels</h3>
           <p>
-            Every staff attribute in FM26 is categorized into one of eight qualitative word levels. Understanding these levels is the foundation of building a world-class training setup:
+            Every staff attribute is categorized into one of eight qualitative word levels. Here is a practical, comparative interpretation of these bands:
           </p>
           <div className="overflow-x-auto my-6">
             <table className="w-full text-left border-collapse min-w-[600px]">
               <thead>
                 <tr className="border-b border-[rgba(255,255,255,0.1)]">
                   <th className="py-3 px-4 font-semibold text-[var(--accent-primary)]">Word Level</th>
-                  <th className="py-3 px-4 font-semibold text-[var(--accent-primary)]">Explanation</th>
+                  <th className="py-3 px-4 font-semibold text-[var(--accent-primary)]">Interpretation</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-[rgba(255,255,255,0.05)]">
                   <td className="py-3 px-4 font-medium">Unsuited</td>
-                  <td className="py-3 px-4">The lowest possible rating. A coach with this rating is completely ill-equipped for tasks requiring this attribute and should be kept far away from related training sessions.</td>
+                  <td className="py-3 px-4">A very weak rating. A coach with this rating is generally unsuited for tasks requiring this attribute.</td>
                 </tr>
                 <tr className="border-b border-[rgba(255,255,255,0.05)]">
                   <td className="py-3 px-4 font-medium">Reasonable</td>
-                  <td className="py-3 px-4">A very basic level of competence. Acceptable for lower-league clubs but insufficient for professional development at a high standard.</td>
+                  <td className="py-3 px-4">A limited level of competence. Acceptable for lower-league clubs but may struggle at higher professional standards.</td>
                 </tr>
                 <tr className="border-b border-[rgba(255,255,255,0.05)]">
                   <td className="py-3 px-4 font-medium">Competent</td>
-                  <td className="py-3 px-4">A functional rating. The coach understands the fundamentals but lacks the expertise to elevate players to their maximum potential.</td>
+                  <td className="py-3 px-4">A functional rating. The coach understands the fundamentals for this area.</td>
                 </tr>
                 <tr className="border-b border-[rgba(255,255,255,0.05)]">
                   <td className="py-3 px-4 font-medium">Average</td>
-                  <td className="py-3 px-4">The baseline professional standard. An Average coach is reliable but unremarkable, fitting perfectly into mid-table or lower-tier professional setups.</td>
+                  <td className="py-3 px-4">The middle band. An Average coach provides a standard level of capability.</td>
                 </tr>
                 <tr className="border-b border-[rgba(255,255,255,0.05)]">
                   <td className="py-3 px-4 font-medium">Good</td>
-                  <td className="py-3 px-4">A strong, dependable attribute. Coaches with Good ratings can contribute effectively to top-flight training grounds and help players reach their potential.</td>
+                  <td className="py-3 px-4">A positive, dependable attribute. Coaches with Good ratings contribute effectively to training sessions.</td>
                 </tr>
                 <tr className="border-b border-[rgba(255,255,255,0.05)]">
                   <td className="py-3 px-4 font-medium">Very Good</td>
-                  <td className="py-3 px-4">High-level expertise. These coaches are highly sought after and provide excellent training quality, significantly accelerating player growth.</td>
+                  <td className="py-3 px-4">A strong level of expertise. These coaches provide excellent training quality.</td>
                 </tr>
                 <tr className="border-b border-[rgba(255,255,255,0.05)]">
                   <td className="py-3 px-4 font-medium">Outstanding</td>
-                  <td className="py-3 px-4">Exceptional ability. Coaches at this level are among the best in the sport, offering premium training sessions that top clubs demand.</td>
+                  <td className="py-3 px-4">Exceptional ability. Coaches at this level offer highly effective training sessions.</td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4 font-medium">Elite</td>
-                  <td className="py-3 px-4">The absolute pinnacle. An Elite attribute means the coach is a world-class specialist in this area, capable of maximizing the development of even the most talented wonderkids.</td>
+                  <td className="py-3 px-4">The highest visible band. An Elite attribute indicates the coach is highly specialized in this area.</td>
                 </tr>
               </tbody>
             </table>
@@ -149,77 +165,71 @@ export default function StaffAttributesExplainedPage() {
 
           <h2>The 12 Key Attributes for Training</h2>
           <p>
-            When evaluating a coach for the training ground, there are 12 visible inputs you need to consider. These are divided into three distinct groups: Coaching, Mental, and Knowledge.
+            When evaluating a coach for the training ground, there are 12 visible inputs to consider. Not all 12 attributes contribute to every assignment. Specialist, Tactical or Technical, and mental attributes contribute differently depending on the assignment.
           </p>
 
           <h3>1. Coaching Attributes (The Technical Skills)</h3>
-          <p>
-            These eight attributes represent the coach&apos;s practical ability to run specific types of drills on the grass:
-          </p>
           <ul>
-            <li><strong>Attacking:</strong> Ability to coach offensive movement, final third entries, and chance creation.</li>
-            <li><strong>Defending:</strong> Ability to coach defensive shape, pressing triggers, and tackling.</li>
-            <li><strong>Fitness:</strong> Ability to run physical conditioning, stamina, and injury-prevention routines.</li>
-            <li><strong>Goalkeeping:</strong> Ability to train shot-stopping, handling, and distribution for keepers.</li>
-            <li><strong>Possession:</strong> Ability to coach ball retention, passing networks, and control.</li>
-            <li><strong>Set Pieces:</strong> Ability to drill attacking and defending corners, free kicks, and throw-ins.</li>
-            <li><strong>Tactical:</strong> Ability to coach tactical familiarity, team shape, and strategic understanding.</li>
-            <li><strong>Technical:</strong> Ability to improve individual player technique, first touch, and ball control.</li>
+            <li><strong>Attacking:</strong> Ability to coach offensive movement and chance creation.</li>
+            <li><strong>Defending:</strong> Ability to coach defensive shape and tackling.</li>
+            <li><strong>Fitness:</strong> Ability to run physical conditioning and stamina routines.</li>
+            <li><strong>Goalkeeping:</strong> Ability to train shot-stopping and handling for keepers.</li>
+            <li><strong>Possession:</strong> Ability to coach ball retention and control.</li>
+            <li><strong>Set Pieces:</strong> Ability to drill attacking and defending corners and free kicks.</li>
+            <li><strong>Tactical:</strong> Ability to coach tactical familiarity and team shape.</li>
+            <li><strong>Technical:</strong> Ability to improve individual player technique and first touch.</li>
           </ul>
 
           <h3>2. Mental Attributes (The Soft Skills)</h3>
           <p>
-            Often referred to as the &quot;Holy Trinity&quot; by experienced managers, these three attributes act as a multiplier for a coach&apos;s technical skills. A coach with Elite Attacking but Average mental attributes will struggle to run a truly effective session.
+            These three attributes support a coach&apos;s specific coaching skills during sessions:
           </p>
           <ul>
-            <li><strong>Authority (formerly Level of Discipline):</strong> Determines how well the coach commands respect and keeps players focused during grueling sessions.</li>
-            <li><strong>Determination:</strong> Reflects the coach&apos;s personal drive to improve players and push them to their limits.</li>
-            <li><strong>Motivating:</strong> Dictates the coach&apos;s ability to inspire players, keeping morale and effort high during training.</li>
+            <li><strong>Authority (formerly Level of Discipline):</strong> Determines how well the coach commands respect.</li>
+            <li><strong>Determination:</strong> Reflects the coach&apos;s personal drive to improve players.</li>
+            <li><strong>Motivating:</strong> Dictates the coach&apos;s ability to inspire players during training.</li>
           </ul>
 
           <h3>3. Knowledge Attributes</h3>
-          <p>
-            While scouts use several knowledge attributes, coaches rely primarily on one key input for their training ground effectiveness:
-          </p>
           <ul>
-            <li><strong>Tactical Knowledge:</strong> The coach&apos;s overall understanding of the game&apos;s tactical systems. This is particularly crucial for Tactical coaching assignments.</li>
+            <li><strong>Tactical Knowledge:</strong> The coach&apos;s overall understanding of tactical systems. In the current FM Workbench model, Tactical Knowledge is relevant to the Set Pieces assignment. It is not used for ordinary Tactical assignments like Attacking Tactical or Defending Tactical.</li>
           </ul>
 
           <h2>Practical Coach-Comparison Workflow</h2>
           <p>
-            Evaluating staff without exact numbers can feel intimidating, but an experienced Football Manager player uses a systematic workflow to find the right personnel. Here is the recommended approach:
+            Evaluating staff using broad word bands requires a systematic workflow:
           </p>
           <ol>
-            <li><strong>Identify the gap:</strong> Determine exactly which training assignment you need to fill (e.g., Attacking Technical).</li>
-            <li><strong>Filter for the primary attributes:</strong> Use the staff search to filter for coaches who have at least a &quot;Good&quot; or &quot;Very Good&quot; in the primary requirements (in this case, Attacking and Technical).</li>
-            <li><strong>Check the Mental foundation:</strong> Filter out coaches who have poor Authority, Determination, or Motivating. Aim for a baseline of at least &quot;Average&quot; across these three.</li>
-            <li><strong>Estimate the Star Rating:</strong> Plug the visible word bands into the <Link href="/">FM26 Coach Assignment Calculator</Link> to get an estimated star rating for the specific assignment.</li>
-            <li><strong>Compare candidates:</strong> If two coaches offer the same estimated star rating, look at their personality, preferred formation, or secondary coaching attributes to make the final call.</li>
+            <li><strong>Identify the assignment:</strong> Determine exactly which training assignment you need to fill.</li>
+            <li><strong>Filter for the primary attributes:</strong> Use the staff search to filter for coaches who have strong ratings in the primary requirements for that specific assignment.</li>
+            <li><strong>Check the Mental foundation:</strong> Review the coach&apos;s Authority, Determination, and Motivating ratings to see if they offer strong support.</li>
+            <li><strong>Estimate the Star Rating:</strong> Enter the visible word bands into the <Link href="/">FM coach calculator</Link> to get an estimated star rating.</li>
+            <li><strong>Compare alternatives:</strong> Look at secondary attributes, cost, and personality to make the final call.</li>
           </ol>
 
-          <h3>A Fictional Comparison Example</h3>
+          <h3>A Hypothetical Comparison Example</h3>
           <p>
-            Imagine you are deciding between two coaches for a Defending Tactical assignment.
+            Imagine you are evaluating two hypothetical coaches for a Defending Tactical assignment.
           </p>
           <ul>
-            <li><strong>Coach A:</strong> Elite Defending, Very Good Tactical, but only Competent in Authority, Determination, and Motivating.</li>
+            <li><strong>Coach A:</strong> Elite Defending, Very Good Tactical, Competent Authority, Determination, and Motivating.</li>
             <li><strong>Coach B:</strong> Very Good Defending, Very Good Tactical, and Very Good across all three Mental attributes.</li>
           </ul>
           <p>
-            A novice manager might be blinded by Coach A&apos;s &quot;Elite&quot; Defending tag. However, an experienced player knows that Coach B&apos;s superior mental foundation will likely yield a higher star rating and more effective training sessions overall. The synergy between the 12 attributes is what ultimately dictates coaching quality.
+            By entering both hypothetical profiles into the FM Workbench calculator, you can receive an estimated star rating for each. Because Coaching stars are assignment-specific estimates that combine primary technical skills with supporting mental attributes, comparing their calculator outputs provides a practical baseline before signing either coach.
           </p>
 
           <h2>Common Mistakes to Avoid</h2>
           <ul>
-            <li><strong>Ignoring Authority, Determination, and Motivating:</strong> As demonstrated above, elite technical skills mean nothing if the coach cannot control or inspire the squad.</li>
-            <li><strong>Chasing &quot;Elite&quot; tags blindly:</strong> A balanced profile of &quot;Very Good&quot; attributes is almost always better than a heavily skewed profile with one &quot;Elite&quot; attribute and several &quot;Unsuited&quot; or &quot;Reasonable&quot; ones.</li>
-            <li><strong>Hiring generalists for specialist roles:</strong> While a coach with &quot;Good&quot; across every single attribute looks great, they will likely be outperformed by a specialist when assigned to a single, focused training category.</li>
+            <li><strong>Ignoring Mental Attributes:</strong> A coach&apos;s specific coaching skills (like Defending or Attacking) are supported by their mental foundation.</li>
+            <li><strong>Focusing solely on one attribute:</strong> A combination of attributes determines the final estimate. An Elite attribute in one category does not guarantee a high star rating if the supporting attributes are Unsuited.</li>
+            <li><strong>Assuming all attributes apply everywhere:</strong> Remember that Tactical Knowledge is relevant to Set Pieces, while Tactical (the coaching attribute) supports assignments like Attacking Tactical and Defending Tactical.</li>
           </ul>
 
           <div className="p-6 my-8 rounded-lg" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)" }}>
             <h2 className="mt-0 text-xl font-bold">Ready to evaluate your backroom staff?</h2>
             <p className="mb-4">
-              Stop guessing how word bands translate to training quality. Use our calculator to instantly estimate the star rating for any coach based on their visible attributes.
+              Use our calculator to estimate the star rating for any coach based on their visible attributes.
             </p>
             <Link href="/" className="inline-block px-6 py-3 font-semibold text-black rounded" style={{ background: "var(--accent-primary)" }}>
               Open the FM coach calculator
@@ -243,15 +253,27 @@ export default function StaffAttributesExplainedPage() {
               <h3 className="text-lg font-semibold mb-2">How do I compare two coaches with the exact same word bands?</h3>
               <p>Coaches with identical word bands may still perform slightly differently due to where they fall within that hidden band. However, for practical purposes, evaluating their combination of Mental and Coaching attributes is the best way to separate them. Our calculator can estimate their assignment rating to help you decide.</p>
             </div>
+            
+            <div className="faq-item mb-6">
+              <h3 className="text-lg font-semibold mb-2">Do all attributes affect every training assignment?</h3>
+              <p>No. Specialist, Tactical or Technical, and mental attributes contribute differently depending on the specific assignment. For example, Tactical Knowledge is relevant to Set Pieces, while Fitness relies primarily on the Fitness attribute.</p>
+            </div>
+            
+            <div className="faq-item mb-6">
+              <h3 className="text-lg font-semibold mb-2">Why does the calculator differ from the game sometimes?</h3>
+              <p>In-game results may differ because visible bands hide exact underlying values and because assignment workload may affect displayed coaching quality. FM Workbench provides an estimate based on the visible word bands.</p>
+            </div>
           </div>
 
           <hr className="my-8 border-[rgba(255,255,255,0.1)]" />
           
           <p className="text-sm text-gray-400">
-            For more information on how assignments work, read our <Link href="/fm26-coach-star-ratings-guide" className="text-[var(--accent-primary)] hover:underline">FM26 Coach Star Ratings Guide</Link> or view our <Link href="/methodology" className="text-[var(--accent-primary)] hover:underline">Methodology</Link>.
+            For more information on how assignments work, read our <Link href="/fm26-coach-star-ratings-guide" className="text-[var(--accent-primary)] hover:underline">FM26 Coach Star Ratings Guide</Link> or view our <Link href="/methodology" className="text-[var(--accent-primary)] hover:underline">Methodology notes</Link>.
           </p>
 
           <div className="mt-8 text-xs text-gray-500">
+            <h3 className="font-semibold text-gray-400 mb-2">Sources and methodology notes</h3>
+            <p className="mb-2">This guide is based on standard Football Manager 2026 qualitative attribute structures. FM Workbench is unofficial and does not claim access to an official published formula. The estimated outputs represent a practical tool derived from the visible bands.</p>
             <p>Last updated: June 23, 2026.</p>
             <p>FM Workbench is an unofficial fan-made tool. It is not affiliated with, endorsed by, or sponsored by Sports Interactive or SEGA. All Football Manager trademarks belong to their respective owners.</p>
           </div>

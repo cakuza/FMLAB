@@ -54,7 +54,7 @@ export default function CoachStarRatingsGuidePage() {
             name: "How are coach star ratings calculated in FM26?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Coach star ratings are assignment-specific estimates calculated from a coach's visible qualitative attributes (like Attacking, Tactical, and Determination). They range from 0.5 stars to 5.0 stars and indicate the overall quality of training the coach can provide for a specific category."
+              text: "Coach star ratings are assignment-specific estimates. They range from 0.5 stars to 5.0 stars and indicate the estimated quality of training the coach can provide for a specific category based on their visible attributes."
             }
           },
           {
@@ -62,7 +62,7 @@ export default function CoachStarRatingsGuidePage() {
             name: "Why did my coach's star rating drop during the season?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Star ratings can fluctuate due to several dynamic factors, including increased coaching workload, changes in squad size, or the coach attending a coaching course. A rating dropping does not mean the coach's underlying attributes worsened."
+              text: "Star ratings can fluctuate due to several factors, including changes in the coach's visible attributes, assignment overlap, and increased coaching workload."
             }
           },
           {
@@ -70,7 +70,23 @@ export default function CoachStarRatingsGuidePage() {
             name: "Is there a huge difference between a 4.5-star and 5.0-star coach?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "The difference between 4.5 and 5.0 stars is marginal. While a 5.0-star coach is the gold standard, a 4.5-star coach will still provide world-class training and excellent player development."
+              text: "A 4.5-star coach may already be an excellent practical option, but the value of upgrading to 5.0 depends on club context, cost, workload and alternatives."
+            }
+          },
+          {
+            "@type": "Question",
+            name: "How does Tactical Knowledge work?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "In the FM Workbench model, Tactical Knowledge is relevant to the Set Pieces assignment. Ordinary tactical assignments like Attacking Tactical use the Attacking and Tactical coaching attributes instead."
+            }
+          },
+          {
+            "@type": "Question",
+            name: "Why does the calculator differ from the game sometimes?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "In-game results may differ because visible bands hide exact underlying values and because assignment workload may affect displayed coaching quality. Identical word inputs produce identical FM Workbench estimates."
             }
           }
         ]
@@ -90,95 +106,98 @@ export default function CoachStarRatingsGuidePage() {
           <h1 className="tool-heading">FM26 Coach Star Ratings Guide</h1>
 
           <p>
-            <strong>How are coach star ratings calculated in FM26?</strong> Coach star ratings are assignment-specific estimates calculated from a coach&apos;s visible qualitative attributes (like Attacking, Tactical, and Determination). They range from 0.5 stars to 5.0 stars and indicate the overall quality of training the coach can provide for a specific category. A higher star rating generally translates to more effective training sessions and better player development.
+            <strong>How are coach star ratings calculated in FM26?</strong> Coach star ratings are assignment-specific estimates. They range from 0.5 stars to 5.0 stars and indicate the estimated quality of training the coach can provide for a specific category based on their visible attributes. A higher estimated star rating indicates a stronger coaching profile for that specific role.
           </p>
 
           <h2>The Assignment-Specific Nature of Star Ratings</h2>
           <p>
-            The most common mistake new managers make is assuming a coach has a universal star rating. In Football Manager 2026, a coach is never simply &quot;a 4-star coach.&quot; Instead, their star rating is entirely dependent on the specific training assignment you ask them to handle.
+            A common misconception is assuming a coach has a universal star rating. In Football Manager 2026, coaching stars are assignment-specific estimates. Their star rating is entirely dependent on the specific training assignment you ask them to handle.
           </p>
           <p>
-            For example, a coach might be a phenomenal 4.5-star Attacking Technical coach due to their &quot;Elite&quot; Attacking and Technical attributes. However, if you assign that exact same coach to handle Fitness training, they might drop to a 1.0-star rating because their Fitness attribute is &quot;Unsuited.&quot; You must always evaluate coaches in the context of the specific role they will play on your training ground.
+            For example, a coach might have a strong estimate for an Attacking Technical role due to their Attacking and Technical attributes. However, if you assign that exact same coach to handle Fitness training, their estimated rating may drop to 1.0 star if their Fitness attribute is Unsuited. Always evaluate coaches in the context of the specific role they will play on your training ground.
           </p>
 
           <h2>The Nine Training Assignments</h2>
           <p>
-            In FM26, first-team and youth training are broken down into nine distinct assignment categories. To maximize your team&apos;s development, you ideally want a high-star coach leading each of these nine areas:
+            In FM26, training is broken down into nine distinct assignment categories. To develop your team, you typically look for specialists leading each of these nine areas:
           </p>
           <ol>
-            <li><strong>Attacking Tactical:</strong> Focuses on attacking shape, movement, and system familiarity.</li>
-            <li><strong>Attacking Technical:</strong> Focuses on individual offensive skills, finishing, and final third execution.</li>
-            <li><strong>Defending Tactical:</strong> Focuses on defensive shape, pressing triggers, and offside traps.</li>
-            <li><strong>Defending Technical:</strong> Focuses on individual tackling, marking, and defensive fundamentals.</li>
-            <li><strong>Possession Tactical:</strong> Focuses on retaining shape while holding the ball and transitioning.</li>
-            <li><strong>Possession Technical:</strong> Focuses on first touch, passing accuracy, and ball control.</li>
+            <li><strong>Attacking Tactical:</strong> Focuses on attacking shape and movement.</li>
+            <li><strong>Attacking Technical:</strong> Focuses on individual offensive skills and finishing.</li>
+            <li><strong>Defending Tactical:</strong> Focuses on defensive shape and offside traps.</li>
+            <li><strong>Defending Technical:</strong> Focuses on individual tackling and marking.</li>
+            <li><strong>Possession Tactical:</strong> Focuses on retaining shape while holding the ball.</li>
+            <li><strong>Possession Technical:</strong> Focuses on first touch and passing accuracy.</li>
             <li><strong>Goalkeeping:</strong> Focuses on shot-stopping, handling, and distribution.</li>
-            <li><strong>Fitness:</strong> Focuses on stamina, strength, quickness, and injury prevention.</li>
-            <li><strong>Set Pieces:</strong> Focuses on attacking and defending corners, free kicks, and throw-ins.</li>
+            <li><strong>Fitness:</strong> Focuses on stamina, strength, and quickness.</li>
+            <li><strong>Set Pieces:</strong> Focuses on attacking and defending corners and free kicks.</li>
           </ol>
 
           <h3>Tactical vs. Technical Coaching</h3>
           <p>
-            You will notice that Attacking, Defending, and Possession are split into &quot;Tactical&quot; and &quot;Technical&quot; sub-categories. 
+            Attacking, Defending, and Possession are split into Tactical and Technical sub-categories. 
           </p>
           <ul>
-            <li><strong>Tactical assignments</strong> heavily weigh the coach&apos;s &quot;Tactical&quot; attribute and their &quot;Tactical Knowledge&quot;. These sessions improve the team&apos;s overall strategic understanding and cohesion.</li>
-            <li><strong>Technical assignments</strong> lean heavily on the coach&apos;s &quot;Technical&quot; attribute. These sessions focus on improving the individual player&apos;s underlying attributes on the ball.</li>
+            <li><strong>Tactical assignments</strong> use the specific Coaching attribute (e.g., Attacking) and the Tactical attribute, supported by mental attributes. (Note: Tactical Knowledge is used for Set Pieces in our model).</li>
+            <li><strong>Technical assignments</strong> use the specific Coaching attribute and the Technical attribute, supported by mental attributes.</li>
+            <li><strong>Goalkeeping</strong> primarily uses the Goalkeeping attribute, supported by mental attributes.</li>
+            <li><strong>Fitness</strong> primarily uses the Fitness attribute, supported by mental attributes.</li>
           </ul>
 
           <h2>Why Ratings May Change Over Time</h2>
           <p>
-            It can be frustrating to hire a 4.5-star coach only to see their rating drop to 4.0 stars a few months later. Star ratings are not static; they are dynamic estimates that reflect the current reality of your training ground.
+            It can be surprising to hire a coach and later see their rating drop. Star ratings are estimates that reflect the current reality of your training ground.
           </p>
           <p>
             Ratings may fluctuate for several reasons:
           </p>
           <ul>
-            <li><strong>Staff Development:</strong> Coaches, like players, have Current Ability and Potential Ability. Their underlying attributes can improve over time, naturally increasing their star rating.</li>
-            <li><strong>Coaching Badges:</strong> Sending a coach on a coaching course can temporarily reduce their effectiveness or alter their attributes, causing minor rating shifts.</li>
-            <li><strong>Squad Size Changes:</strong> An influx of new youth intakes or a bloated first-team squad can stretch your coaching staff thinner, though this usually manifests more heavily in the workload penalty.</li>
+            <li><strong>Changes in the coach&apos;s visible attributes:</strong> Staff Development means coaches have Current Ability and Potential Ability. Their underlying attributes can improve or decline over time, increasing or decreasing their star rating.</li>
+            <li><strong>Workload and assignment overlap:</strong> Assignment workload may affect displayed coaching quality.</li>
+            <li><strong>Game/database updates:</strong> Underlying attribute values or calculations may shift with official game updates.</li>
+            <li><strong>Hidden positions within broad word bands:</strong> In-game results may differ from calculator estimates because visible bands hide exact underlying values.</li>
           </ul>
 
           <h3>The Impact of Coach Workload</h3>
           <p>
-            Even a 5.0-star coach will fail to deliver world-class training if their workload is listed as &quot;Heavy.&quot; When a coach is assigned to too many categories, or when the ratio of players to coaches is too high, the effectiveness of their training sessions diminishes. 
+            Assignment workload may affect displayed coaching quality. When a coach is assigned to too many categories, or when the ratio of players to coaches is high, the effectiveness of their training sessions may diminish visually in the game.
           </p>
           <p>
-            While the exact mathematical penalty for a heavy workload is hidden by the game engine, the visual feedback is clear. Always aim to keep your coaching workload at &quot;Light&quot; or &quot;Average&quot; by hiring enough staff to distribute the burden, ensuring your high-star coaches can perform at their maximum capability.
+            Workload should be reviewed in your own save, balancing the number of assignments per coach with your club&apos;s requirements and resources, rather than following a strict universal limit.
           </p>
 
           <h2>Practical Discussion: 4.5 vs. 5.0 Stars</h2>
           <p>
-            Many managers obsess over achieving a perfect 5.0-star rating across all nine categories. While this is an excellent long-term goal for elite clubs, it is rarely necessary for success.
+            Many managers target a 5.0-star rating across all nine categories, but this depends on your club&apos;s situation.
           </p>
           <p>
-            The difference between a 4.5-star coach and a 5.0-star coach is marginal. A 4.5-star coach still represents top-tier, world-class training that will reliably develop wonderkids and keep the first team sharp. If you have the choice between spending your entire wage budget to upgrade a 4.5-star coach to a 5.0-star coach, or using those funds to hire better scouts or upgrade facilities, the latter is almost always the smarter strategic choice.
+            A 4.5-star coach may already be an excellent practical option, but the value of upgrading to 5.0 depends on club context, cost, workload and alternatives. If you have the choice between spending your budget to upgrade a 4.5-star coach or using those funds to hire better scouts or upgrade facilities, consider your broader strategic goals.
           </p>
 
           <h2>Balanced Coaching-Team Checklist</h2>
           <p>
-            To build a cohesive and highly effective backroom staff, follow this checklist during the offseason:
+            To build a cohesive backroom staff, consider this checklist during the offseason:
           </p>
           <ul>
-            <li>[ ] Assign at least one dedicated specialist to each of the nine training categories.</li>
-            <li>[ ] Ensure no primary coach is assigned to more than two categories to prevent workload penalties.</li>
-            <li>[ ] Check the overall coaching workload bar to ensure it reads &quot;Average&quot; or &quot;Light&quot;.</li>
-            <li>[ ] Verify that your Head Coach (you) or Assistant Manager is filling any glaring gaps while you recruit new staff.</li>
-            <li>[ ] Review staff contracts to ensure key 4.5-star or 5.0-star coaches aren&apos;t poached by rival clubs.</li>
+            <li>[ ] Identify specialists for each of the nine training categories.</li>
+            <li>[ ] Review assignment workload to ensure coaches aren&apos;t over-burdened.</li>
+            <li>[ ] Monitor the overall coaching workload bar.</li>
+            <li>[ ] Check if your Head Coach (you) or Assistant Manager can fill gaps while you recruit.</li>
+            <li>[ ] Review staff contracts to retain key coaches.</li>
           </ul>
 
           <h2>Calculator Estimates vs. In-Game Reality</h2>
           <p>
-            Our calculator provides an excellent baseline estimate of a coach&apos;s capability based purely on their profile attributes. However, because FM Workbench is an unofficial fan-made tool, there may occasionally be minor discrepancies between our calculated estimate and the final star rating displayed in the FM26 training screen.
+            Our calculator provides a deterministic estimate based on the words entered. Identical word inputs produce identical FM Workbench estimates.
           </p>
           <p>
-            These differences usually occur because the game engine factors in dynamic, real-time variables like exact squad sizes, temporary morale issues, or slight fractional differences within the broad qualitative word bands. The calculator isolates the coach&apos;s pure mathematical potential to give you the most accurate pre-signing evaluation possible.
+            In-game results may differ because visible bands hide exact underlying values and because assignment workload may affect displayed coaching quality. FM Workbench is unofficial and does not claim access to an official published formula.
           </p>
 
           <div className="p-6 my-8 rounded-lg" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)" }}>
-            <h2 className="mt-0 text-xl font-bold">Calculate Your Coach&apos;s True Value</h2>
+            <h2 className="mt-0 text-xl font-bold">Calculate Your Coach&apos;s Estimated Value</h2>
             <p className="mb-4">
-              Don&apos;t wait until after you&apos;ve offered a contract to find out a coach is only 3 stars. Use our tool to estimate their exact assignment ratings right from the scouting screen.
+              Use our tool to estimate their assignment ratings based on their visible word attributes.
             </p>
             <Link href="/" className="inline-block px-6 py-3 font-semibold text-black rounded" style={{ background: "var(--accent-primary)" }}>
               Open the FM coach calculator
@@ -190,27 +209,39 @@ export default function CoachStarRatingsGuidePage() {
           <div className="faq-section mt-8">
             <div className="faq-item mb-6">
               <h3 className="text-lg font-semibold mb-2">How are coach star ratings calculated in FM26?</h3>
-              <p>Coach star ratings are assignment-specific estimates calculated from a coach&apos;s visible qualitative attributes (like Attacking, Tactical, and Determination). They range from 0.5 stars to 5.0 stars and indicate the overall quality of training the coach can provide for a specific category.</p>
+              <p>Coach star ratings are assignment-specific estimates. They range from 0.5 stars to 5.0 stars and indicate the estimated quality of training the coach can provide for a specific category based on their visible attributes.</p>
             </div>
             
             <div className="faq-item mb-6">
               <h3 className="text-lg font-semibold mb-2">Why did my coach&apos;s star rating drop during the season?</h3>
-              <p>Star ratings can fluctuate due to several dynamic factors, including increased coaching workload, changes in squad size, or the coach attending a coaching course. A rating dropping does not mean the coach&apos;s underlying attributes worsened.</p>
+              <p>Star ratings can fluctuate due to several factors, including changes in the coach&apos;s visible attributes, assignment overlap, and increased coaching workload.</p>
             </div>
             
             <div className="faq-item mb-6">
               <h3 className="text-lg font-semibold mb-2">Is there a huge difference between a 4.5-star and 5.0-star coach?</h3>
-              <p>The difference between 4.5 and 5.0 stars is marginal. While a 5.0-star coach is the gold standard, a 4.5-star coach will still provide world-class training and excellent player development.</p>
+              <p>A 4.5-star coach may already be an excellent practical option, but the value of upgrading to 5.0 depends on club context, cost, workload and alternatives.</p>
+            </div>
+            
+            <div className="faq-item mb-6">
+              <h3 className="text-lg font-semibold mb-2">How does Tactical Knowledge work?</h3>
+              <p>In the FM Workbench model, Tactical Knowledge is relevant to the Set Pieces assignment. Ordinary tactical assignments like Attacking Tactical use the Attacking and Tactical coaching attributes instead.</p>
+            </div>
+            
+            <div className="faq-item mb-6">
+              <h3 className="text-lg font-semibold mb-2">Why does the calculator differ from the game sometimes?</h3>
+              <p>In-game results may differ because visible bands hide exact underlying values and because assignment workload may affect displayed coaching quality. Identical word inputs produce identical FM Workbench estimates.</p>
             </div>
           </div>
 
           <hr className="my-8 border-[rgba(255,255,255,0.1)]" />
           
           <p className="text-sm text-gray-400">
-            For more information on the underlying inputs, read our <Link href="/fm26-staff-attributes-explained" className="text-[var(--accent-primary)] hover:underline">FM26 Staff Attributes Explained</Link> guide or view our <Link href="/methodology" className="text-[var(--accent-primary)] hover:underline">Methodology</Link>.
+            For more information on the underlying inputs, read our <Link href="/fm26-staff-attributes-explained" className="text-[var(--accent-primary)] hover:underline">FM26 Staff Attributes Explained</Link> guide or view our <Link href="/methodology" className="text-[var(--accent-primary)] hover:underline">Methodology notes</Link>.
           </p>
 
           <div className="mt-8 text-xs text-gray-500">
+            <h3 className="font-semibold text-gray-400 mb-2">Sources and methodology notes</h3>
+            <p className="mb-2">This guide is based on standard Football Manager 2026 qualitative attribute structures. FM Workbench is unofficial and does not claim access to an official published formula. The estimated outputs represent a practical tool derived from the visible bands.</p>
             <p>Last updated: June 23, 2026.</p>
             <p>FM Workbench is an unofficial fan-made tool. It is not affiliated with, endorsed by, or sponsored by Sports Interactive or SEGA. All Football Manager trademarks belong to their respective owners.</p>
           </div>
