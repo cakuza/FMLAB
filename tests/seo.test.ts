@@ -435,4 +435,118 @@ describe("SEO structure", () => {
     }
   });
 
+  // --- Hotfix regression tests ---
+
+  it("star ratings guide does not contain the incorrect '1.0 star' Fitness claim", () => {
+    const src = readFileSync(resolve(process.cwd(), guidePaths[1]), "utf8");
+    expect(src).not.toContain("drop to 1.0 star");
+    expect(src).not.toContain("1.0 star if their Fitness");
+  });
+
+  it("star ratings guide does not replace the removed claim with another exact star output", () => {
+    const src = readFileSync(resolve(process.cwd(), guidePaths[1]), "utf8");
+    // The example paragraph must not assert a specific star number for the Fitness scenario
+    expect(src).not.toMatch(/Fitness.*?\b[0-9]+\.[05] star/);
+    expect(src).not.toMatch(/[0-9]+\.[05] star.*?Fitness.*?Unsuited/);
+  });
+
+  it("llms.txt contains all eight canonical word bands in canonical order", () => {
+    const llms = readFileSync(resolve(process.cwd(), "public/llms.txt"), "utf8");
+    const bands = ["Unsuited", "Reasonable", "Competent", "Average", "Good", "Very Good", "Outstanding", "Elite"];
+    for (const band of bands) {
+      expect(llms).toContain(band);
+    }
+    // Verify canonical order: Unsuited appears before Elite
+    expect(llms.indexOf("Unsuited")).toBeLessThan(llms.indexOf("Elite"));
+    // Verify Unsuited and Elite are on the word-values line, not just in other contexts
+    expect(llms).toContain("Unsuited, Reasonable, Competent, Average, Good, Very Good, Outstanding, Elite");
+  });
+
+  it("each guide has page-specific twitter:title and twitter:description in metadata", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      // twitter block must be present in the metadata export
+      expect(src).toContain("twitter:");
+      expect(src).toContain('card: "summary"');
+      // title and description must reference the page-specific constants, not hardcoded strings
+      expect(src).toContain("title: pageTitle");
+      expect(src).toContain("description: pageDescription");
+    }
+  });
+
+  it("guides use native script tag for JSON-LD, not next/script", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      // Must not import the next/script Script component
+      expect(src).not.toContain('import Script from "next/script"');
+      // Must contain native script element with the JSON-LD type
+      expect(src).toContain('<script');
+      expect(src).toContain('type="application/ld+json"');
+    }
+  });
+
+  it("each guide emits exactly one Article, one BreadcrumbList, and one FAQPage schema", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      expect((src.match(/"@type": "Article"/g) || []).length).toBe(1);
+      expect((src.match(/"@type": "BreadcrumbList"/g) || []).length).toBe(1);
+      expect((src.match(/"@type": "FAQPage"/g) || []).length).toBe(1);
+    }
+  });
+
+  it("visible FAQ item count matches FAQ JSON-LD question count per guide", () => {
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      const visibleCount = (src.match(/<div className="faq-item mb-6">/g) || []).length;
+      const jsonLdCount = (src.match(/"@type": "Question"/g) || []).length;
+      expect(visibleCount).toBeGreaterThan(0);
+      expect(visibleCount).toBe(jsonLdCount);
+    }
+  });
+
+  it("guide sitemap dates: guide pages use 2026-06-23, existing pages retain 2026-06-13", () => {
+    const entries = sitemap();
+    const guideEntries = entries.filter(
+      (e) => e.url.includes("fm26-staff-attributes-explained") || e.url.includes("fm26-coach-star-ratings-guide")
+    );
+    const otherEntries = entries.filter(
+      (e) => !e.url.includes("fm26-staff-attributes-explained") && !e.url.includes("fm26-coach-star-ratings-guide")
+    );
+    for (const e of guideEntries) {
+      expect((e.lastModified as Date).toISOString()).toContain("2026-06-23");
+    }
+    for (const e of otherEntries) {
+      expect((e.lastModified as Date).toISOString()).toContain("2026-06-13");
+    }
+  });
+
+  it("formula files are unchanged: ratingFormula exports calculateRating", () => {
+    const src = readFileSync(resolve(process.cwd(), "lib/ratingFormula.ts"), "utf8");
+    expect(src).toContain("export const calculateRating");
+    expect(src).toContain("export const calculateAssignmentRatings");
+    // Must not contain publicly disclosed weights
+    expect(src).not.toContain("// PUBLIC:");
+  });
+
+  it("formula files are unchanged: trainingCategories has exactly nine entries", () => {
+    const src = readFileSync(resolve(process.cwd(), "lib/trainingCategories.ts"), "utf8");
+    const idCount = (src.match(/id: "/g) || []).length;
+    expect(idCount).toBe(9);
+  });
+
+  it("formula files are unchanged: attributeLevels has exactly eight levels", () => {
+    const src = readFileSync(resolve(process.cwd(), "lib/attributeLevels.ts"), "utf8");
+    expect((src.match(/id: "/g) || []).length).toBe(8);
+  });
+
+  it("guide pages do not contain new formula weights or percentages", () => {
+    const newForbidden = ["0.42", "0.24", "0.08", "0.06", "0.7", "8%", "6%", "70%"];
+    for (const p of guidePaths) {
+      const src = readFileSync(resolve(process.cwd(), p), "utf8");
+      for (const phrase of newForbidden) {
+        expect(src).not.toContain(phrase);
+      }
+    }
+  });
+
 });

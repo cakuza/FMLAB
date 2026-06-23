@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteUrl } from "@/lib/siteMetadata";
-import Script from "next/script";
 
 const pageTitle = "FM26 Coach Star Ratings Guide | FM Workbench";
 const pageDescription =
@@ -16,6 +15,11 @@ export const metadata: Metadata = {
     type: "article",
     url: canonicalUrl,
     siteName: "FM Workbench",
+    title: pageTitle,
+    description: pageDescription
+  },
+  twitter: {
+    card: "summary",
     title: pageTitle,
     description: pageDescription
   }
@@ -96,8 +100,7 @@ export default function CoachStarRatingsGuidePage() {
 
   return (
     <>
-      <Script
-        id="schema-fm26-coach-stars"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
@@ -114,7 +117,7 @@ export default function CoachStarRatingsGuidePage() {
             A common misconception is assuming a coach has a universal star rating. In Football Manager 2026, coaching stars are assignment-specific estimates. Their star rating is entirely dependent on the specific training assignment you ask them to handle.
           </p>
           <p>
-            For example, a coach might have a strong estimate for an Attacking Technical role due to their Attacking and Technical attributes. However, if you assign that exact same coach to handle Fitness training, their estimated rating may drop to 1.0 star if their Fitness attribute is Unsuited. Always evaluate coaches in the context of the specific role they will play on your training ground.
+            For example, a coach might have a strong estimate for an Attacking Technical role due to their Attacking and Technical attributes. However, if you assign that exact same coach to handle Fitness training, their estimated rating may drop significantly if their Fitness attribute is Unsuited. The final estimate also depends on the supporting mental attributes entered. Always evaluate coaches in the context of the specific role they will play on your training ground.
           </p>
 
           <h2>The Nine Training Assignments</h2>

@@ -18,7 +18,7 @@ Coaching attributes (8): Attacking, Defending, Fitness, Goalkeeping, Possession,
 Mental attributes (3): Authority, Determination, Motivating.
 Knowledge attributes (1): Tactical Knowledge.
 
-Total inputs: 12. Each attribute accepts one of the following word values from FM26: Average, Competent, Good, Reasonable, Very Good, Outstanding.
+Total inputs: 12. Each attribute accepts one of the following word values from FM26: Unsuited, Reasonable, Competent, Average, Good, Very Good, Outstanding, Elite.
 
 ## Outputs
 

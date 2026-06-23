@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteUrl } from "@/lib/siteMetadata";
-import Script from "next/script";
 
 const pageTitle = "FM26 Staff Attributes Explained | FM Workbench";
 const pageDescription =
@@ -16,6 +15,11 @@ export const metadata: Metadata = {
     type: "article",
     url: canonicalUrl,
     siteName: "FM Workbench",
+    title: pageTitle,
+    description: pageDescription
+  },
+  twitter: {
+    card: "summary",
     title: pageTitle,
     description: pageDescription
   }
@@ -96,8 +100,7 @@ export default function StaffAttributesExplainedPage() {
 
   return (
     <>
-      <Script
-        id="schema-fm26-staff-attributes"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
